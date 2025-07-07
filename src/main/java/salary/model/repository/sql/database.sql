@@ -42,30 +42,10 @@ create TABLE Payslips
     int               id primary key,
     employees_id      int REFERENCES employees (id),
     work_Records_id   int REFERENCES work_records (id),
-    Salary_Components int REFERENCES Salary_Components (id),
-    Deductions        int references Deductions (id),
     issueDate         date,
     period nvarchar(10)
 );
 create sequence Payslips_seq start with 1 increment by 1;
-
-
-create TABLE Salary_Components
-(
-    int         id primary key,
-    Payslips_id int REFERENCES Payslips (id)
-);
-create sequence Salary_Components_seq start with 1 increment by 1;
-
-
-
-create TABLE Deductions
-(
-    int         id primary key,
-    Payslips_id int REFERENCES Payslips (id)
-);
-create sequence Deductions_seq start with 1 increment by 1;
-
 
 
 CREATE TABLE work_records
@@ -101,8 +81,6 @@ CREATE TABLE loan_items
     amount_paid   number,
     payment_date  DATE,
     total_payment number
-
-
 );
 
 create sequence loan_items_seq start with 1 increment by 1;
