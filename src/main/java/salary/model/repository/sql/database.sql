@@ -83,10 +83,12 @@ create sequence work_records_seq start with 1 increment by 1;
 CREATE TABLE loans
 (
     id                 number PRIMARY KEY,
+    employees_id       int REFERENCES employees(id),
     loan_type          nVARCHAR2(10),
     loan_amount        NUMBER,
     loan_interest      NUMBER,
-    total_installments NUMBER
+    total_installments NUMBER,
+    loan_start_date Date
 );
 create sequence loan_seq start with 1 increment by 1;
 
@@ -95,9 +97,12 @@ CREATE TABLE loan_items
 (
     id            number PRIMARY KEY,
     loans_id      int REFERENCES loans (id) ON DELETE CASCADE,
+    payslips_id   int REFERENCES payslips (id),
     amount_paid   number,
     payment_date  DATE,
     total_payment number
+
+
 );
 
 create sequence loan_items_seq start with 1 increment by 1;
