@@ -86,4 +86,134 @@ CREATE TABLE loan_items
 create sequence loan_items_seq start with 1 increment by 1;
 
 
+CREATE OR REPLACE VIEW v_payslip_summary AS
+SELECT
+    p.id                     AS payslip_id,
+    e.id                    AS employee_id,
+    e.full_name             AS employee_name,
+    p.period                AS period,
+    p.issueDate             AS issue_date,
+
+    -- پایه حقوق
+    wr.days_worked * e.daily_salary                      AS base_salary,
+
+    -- مزایا
+    NVL(e.num_children, 0) * (500000 / 30) * wr.days_worked       AS child_allowance,
+    CASE WHEN e.is_married = 1 THEN (1000000 / 30) * wr.days_worked ELSE 0 END AS marriage_allowance,
+    (2000000 / 30) * wr.days_worked                       AS housing_allowance,
+    (1000000 / 30) * wr.days_worked                       AS food_allowance,
+    (800000 / 30) * wr.days_worked                        AS transport_allowance,
+
+    -- اضافه‌کاری
+    (e.daily_salary / 8) * 1.4 * wr.over_time_hours       AS overtime,
+
+    -- مجموع مزایا + حقوق پایه + اضافه‌کاری
+    (
+        (wr.days_worked * e.daily_salary) +
+        NVL(e.num_children, 0) * (500000 / 30) * wr.days_worked +
+        CASE WHEN e.is_married = 1 THEN (1000000 / 30) * wr.days_worked ELSE 0 END +
+        (2000000 / 30) * wr.days_worked +
+        (1000000 / 30) * wr.days_worked +
+        (800000 / 30) * wr.days_worked +
+        (e.daily_salary / 8) * 1.4 * wr.over_time_hours
+        ) AS gross_salary,
+
+    -- بیمه (۲۳٪ از حقوق ناخالص)
+    ROUND(
+            (
+                (wr.days_worked * e.daily_salary) +
+                NVL(e.num_children, 0) * (500000 / 30) * wr.days_worked +
+                CASE WHEN e.is_married = 1 THEN (1000000 / 30) * wr.days_worked ELSE 0 END +
+                (2000000 / 30) * wr.days_worked +
+                (1000000 / 30) * wr.days_worked +
+                (800000 / 30) * wr.days_worked +
+                (e.daily_salary / 8) * 1.4 * wr.over_time_hours
+                ) * 0.23, 0
+    ) AS insurance,
+
+    -- کسر تاخیر
+    (e.daily_salary / 8) * wr.under_time_hours            AS under_time_deduction,
+
+    -- مساعده
+    wr.advance                                             AS advance,
+
+    -- وام (جمع مبالغ قسطی ثبت‌شده در loan_items برای این payslip)
+    (SELECT NVL(SUM(li.amount_paid), 0)
+     FROM loan_items li
+     WHERE li.payslips_id = p.id)                         AS loan_payment,
+
+    -- مالیات (محاسبه تقریبی پله‌ای از حقوق ناخالص - معافیت)
+    CASE
+        WHEN (
+                 (wr.days_worked * e.daily_salary) +
+                 NVL(e.num_children, 0) * (500000 / 30) * wr.days_worked +
+                 CASE WHEN e.is_married = 1 THEN (1000000 / 30) * wr.days_worked ELSE 0 END +
+                 (2000000 / 30) * wr.days_worked +
+                 (1000000 / 30) * wr.days_worked +
+                 (800000 / 30) * wr.days_worked +
+                 (e.daily_salary / 8) * 1.4 * wr.over_time_hours
+                 ) <= 240000000 THEN 0
+        ELSE
+            CASE
+                WHEN ((...gross...) - 240000000) <= 160000000 THEN ((...gross...) - 240000000) * 0.10
+                WHEN ((...gross...) - 240000000) <= 360000000 THEN
+                    (160000000 * 0.10) + (((...gross...) - 240000000 - 160000000) * 0.15)
+                ELSE
+                    (160000000 * 0.10) + (200000000 * 0.15) + (((...gross...) - 240000000 - 160000000 - 200000000) * 0.20)
+                END
+        END AS tax,
+
+    -- مجموع کسورات
+    (
+        ROUND(
+                (
+                    (wr.days_worked * e.daily_salary) +
+                    NVL(e.num_children, 0) * (500000 / 30) * wr.days_worked +
+                    CASE WHEN e.is_married = 1 THEN (1000000 / 30) * wr.days_worked ELSE 0 END +
+                    (2000000 / 30) * wr.days_worked +
+                    (1000000 / 30) * wr.days_worked +
+                    (800000 / 30) * wr.days_worked +
+                    (e.daily_salary / 8) * 1.4 * wr.over_time_hours
+                    ) * 0.23, 0
+        )
+            + (e.daily_salary / 8) * wr.under_time_hours
+            + wr.advance
+            + (SELECT NVL(SUM(li.amount_paid), 0)
+               FROM loan_items li
+               WHERE li.payslips_id = p.id)
+            + 0 -- مالیات جداگانه بالا آمده، برای خلاصه می‌تونی جمع بزنی
+        ) AS total_deductions,
+
+    -- خالص پرداختی
+    (
+        (
+            (wr.days_worked * e.daily_salary) +
+            NVL(e.num_children, 0) * (500000 / 30) * wr.days_worked +
+            CASE WHEN e.is_married = 1 THEN (1000000 / 30) * wr.days_worked ELSE 0 END +
+            (2000000 / 30) * wr.days_worked +
+            (1000000 / 30) * wr.days_worked +
+            (800000 / 30) * wr.days_worked +
+            (e.daily_salary / 8) * 1.4 * wr.over_time_hours
+            )
+            - ROUND(
+                (
+                    (wr.days_worked * e.daily_salary) +
+                    NVL(e.num_children, 0) * (500000 / 30) * wr.days_worked +
+                    CASE WHEN e.is_married = 1 THEN (1000000 / 30) * wr.days_worked ELSE 0 END +
+                    (2000000 / 30) * wr.days_worked +
+                    (1000000 / 30) * wr.days_worked +
+                    (800000 / 30) * wr.days_worked +
+                    (e.daily_salary / 8) * 1.4 * wr.over_time_hours
+                    ) * 0.23, 0
+              )
+            - (e.daily_salary / 8) * wr.under_time_hours
+            - wr.advance
+            - (SELECT NVL(SUM(li.amount_paid), 0)
+               FROM loan_items li
+               WHERE li.payslips_id = p.id)
+        ) AS net_salary
+
+FROM payslips p
+         JOIN employees e ON p.employees_id = e.id
+         JOIN work_records wr ON p.work_records_id = wr.id;
 
