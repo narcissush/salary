@@ -19,5 +19,5 @@ public class LoanItem implements Serializable {
     private LocalDate paymentDate;   // تاریخ پرداخت
     private double amountPaid;       // مبلغ پرداختی
     private Payslip payslip;         // اگر با فیش حقوقی پرداخت شده
-    private double totalPayment;     // مجموع کل پرداختی تا این قسط (اختیاری)
+    private double totalPayment;     // مجموع کل پرداختی تا این قسط
 }

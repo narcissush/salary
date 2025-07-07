@@ -13,8 +13,8 @@ import java.util.List;
 
 public class Loan implements Serializable {
     private int id;
-    private Employee employee;           // پرسنلی که وام را گرفته
-    private String loanType;             // نوع وام (مثلاً مسکن، ازدواج)
+    private Employee employee;
+    private String loanType;
     private double loanAmount;           // مبلغ کل وام
     private double loanInterest;         // درصد بهره سالیانه
     private int totalInstallments;       // تعداد کل اقساط
@@ -22,21 +22,18 @@ public class Loan implements Serializable {
 
     private List<LoanItem> installments; // لیست اقساط این وام
 
-    // محاسبه مبلغ قسط ماهیانه به روش ساده (می‌تونه به روش استاندارد هم ارتقا پیدا کنه)
+    // محاسبه مبلغ قسط ماهیانه
     public double getMonthlyInstallment() {
         double monthlyRate = (loanInterest / 100) / 12;
-        int n = totalInstallments;
-        double r = monthlyRate;
-        if (r == 0) return loanAmount / n;
-
-        return (loanAmount * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+        if (monthlyRate == 0) {
+            return loanAmount / totalInstallments;
+        }
+        double factor = Math.pow(1 + monthlyRate, totalInstallments);
+        return (loanAmount * monthlyRate * factor) / (factor - 1);
     }
 
     // محاسبه کل پرداختی
     public double getTotalPaid() {
-//        if (installments == null) return 0;
-//        return installments.stream().mapToDouble(LoanItem::getAmountPaid).sum();
-
         if (installments == null) {
             return 0;
         } else {

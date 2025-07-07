@@ -14,17 +14,14 @@ import java.time.LocalDate;
 public class Payslip implements Serializable {
     private int id;
 
-    private Employee employee;                  // اطلاعات کارمند
-    private WorkRecord workRecord;              // رکورد کاری همان ماه
-    private SalaryComponents salaryComponents;  // مزایا و حقوق
-    private Deductions deductions;              // کسورات
-
-    private LocalDate issueDate;                // تاریخ صدور فیش
-    private String period;                      // مثلاً "تیر 1403" یا "2025-07"
-
+    private Employee employee;
+    private WorkRecord workRecord;
+    private SalaryComponents salaryComponents;
+    private Deductions deductions;
+    private LocalDate issueDate;
+    private String period;
 
 
-    // حقوق نهایی قابل پرداخت
     public double totalSalary(){
         return salaryComponents.getTotalSalaryComponents()-deductions.getTotalDeductions();
     }

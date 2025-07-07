@@ -18,11 +18,11 @@ public class Deductions implements Serializable {
     List<LoanItem> loanList;
 
     public double getTax() {
-        double exemption = 240_000_000; // معافیت ماهانه
+        double exemption = 240_000_000;
         double taxable = Math.max(0, payslip.getSalaryComponents().getTotalSalaryComponents() - exemption);
         double tax = 0;
 
-        double[] limits = {160_000_000, 200_000_000, 200_000_000}; // بازه‌ها
+        double[] limits = {160_000_000, 200_000_000, 200_000_000};
         double[] rates = {0.10, 0.15, 0.20, 0.30};
 
         double remaining = taxable;
