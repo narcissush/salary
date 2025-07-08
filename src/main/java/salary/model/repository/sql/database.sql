@@ -95,202 +95,130 @@ CREATE TABLE Employee_Allowances
 create sequence Employee_Allowances_seq start with 1 increment by 1;
 
 
+CREATE OR REPLACE VIEW SalaryReportNet AS
+WITH base_data AS (
+    /* زیر‌پرسش فعلی شما برای محاسبه gross_salary و loan_payment و under_time */
+    SELECT
+        Pay.id                     AS Payslips_id,
+        u.user_name               AS users_user_name,
+        -- ... سایر ستون‌ها ...
+        wr.days_worked * e.daily_salary AS base_salary,
+        wr.over_time_Hours * (e.daily_Salary/8*1.4) AS over_time,
+        NVL(e.number_of_children,0)*(5000000/30)*wr.days_worked AS child_allowance,
+        CASE WHEN e.married=1 THEN (8000000/30)*wr.days_worked ELSE 0 END AS marriage_allowance,
+        (9000000/30)*wr.days_worked AS housing_allowance,
+        (60000000/30)*wr.days_worked AS food_allowance,
+        (30000000/30)*wr.days_worked AS transport_allowance,
 
-CREATE OR REPLACE VIEW v_test_summary AS
-WITH base_data AS (SELECT p.id                                                                    AS payslip_id,
-                          e.id                                                                    AS employee_id,
-                          e.first_name,
-                          e.last_name,
-                          e.married,
-                          e.number_of_children,
-                          e.daily_salary,
-                          p.period,
-                          p.issuedate,
-                          wr.days_worked,
-                          wr.over_time_hours,
-                          wr.under_time_hours,
-                          wr.advance,
+        /* جمع حقوق و مزایا */
+        (
+            wr.days_worked * e.daily_salary
+                + wr.over_time_Hours * (e.daily_Salary/8*1.4)
+                + NVL(e.number_of_children,0)*(5000000/30)*wr.days_worked
+                + CASE WHEN e.married=1 THEN (8000000/30)*wr.days_worked ELSE 0 END
+                + (9000000/30)*wr.days_worked
+                + (60000000/30)*wr.days_worked
+                + (30000000/30)*wr.days_worked
+            ) AS gross_salary,
 
-                          -- پایه حقوق
-                          wr.days_worked * e.daily_salary                                         AS base_salary,
+        /* مجموع اقساط وام ثبت‌شده */
+        (SELECT NVL(SUM(li.amount_paid),0)
+         FROM loan_items li
+         WHERE li.payslips_id = Pay.id
+        ) AS loan_payment,
 
-                          -- مزایا
-                          NVL(e.number_of_children, 0) * (500000 / 30) * wr.days_worked           AS child_allowance,
-                          CASE WHEN e.married = 1 THEN (1000000 / 30) * wr.days_worked ELSE 0 END AS marriage_allowance,
-                          (2000000 / 30) * wr.days_worked                                         AS housing_allowance,
-                          (1000000 / 30) * wr.days_worked                                         AS food_allowance,
-                          (800000 / 30) * wr.days_worked                                          AS transport_allowance,
+        wr.under_Time_Hours * (e.daily_Salary/8) AS under_time_payment,
 
-                          -- اضافه‌کاری
-                          (e.daily_salary / 8) * 1.4 * wr.over_time_hours                         AS overtime,
-
-                          -- مجموع اقساط وام ثبت‌شده
-                          (SELECT NVL(SUM(li.amount_paid), 0)
-                           FROM loan_items li
-                           WHERE li.payslips_id = p.id)                                           AS loan_payment
-
-                   FROM payslips p
-                            JOIN employees e ON p.employees_id = e.id
-                            JOIN work_records wr ON p.work_records_id = wr.id)
-SELECT bd.payslip_id,
-       bd.employee_id,
-       bd.first_name,
-       bd.last_name,
-       bd.married,
-       bd.number_of_children,
-       bd.daily_salary,
-       bd.period,
-       bd.issuedate,
-       bd.days_worked,
-       bd.over_time_hours,
-       bd.under_time_hours,
-       bd.advance,
-       bd.base_salary,
-       bd.child_allowance,
-       bd.marriage_allowance,
-       bd.housing_allowance,
-       bd.food_allowance,
-       bd.transport_allowance,
-       bd.overtime,
-       bd.loan_payment,
-
-       -- محاسبه حقوق ناخالص
-       bd.base_salary + bd.child_allowance + bd.marriage_allowance + bd.housing_allowance +
-       bd.food_allowance + bd.transport_allowance + bd.overtime AS gross_salary
-
-
-FROM base_data bd;
-
-
-CREATE view SalaryReport as
-WITH base_data AS (select Pay.id                                                                     Payslips_id,
-                          Pay.users_id,
-                          u.user_name                                                                users_user_name,
-                          u.password                                                                 users_password,
-
-                          Pay.employees_id,
-                          e.first_Name                                                               employees_first_Name,
-                          e.last_Name                                                                employees_last_Name,
-                          e.national_Id                                                              employees_national_Id,
-                          e.education                                                                employees_education,
-                          e.married                                                                  employees_married,
-                          e.number_Of_Children                                                       employees_number_Of_Children,
-                          e.gender                                                                   employees_gender,
-                          e.birth_Date                                                               employees_birth_Date,
-                          e.insurance_Number                                                         employees_insurance_Number,
-                          e.bank_Account_Number                                                      employees_bank_Account_Number,
-                          e.job_Title                                                                employees_job_Title,
-                          e.position                                                                 employees_position,
-                          e.hire_Date                                                                employees_hire_Date,
-                          e.termination_Date                                                         employees_termination_Date,
-                          e.daily_Salary                                                             employees_daily_Salary,
-
-                          Pay.work_Records_id,
-                          wr.days_Worked                                                             work_records_days_Worked,
-                          wr.over_time_Hours                                                         work_records_over_time_Hours,
-                          wr.under_Time_Hours                                                        work_records_under_Time_Hours,
-                          wr.advance                                                                 work_recordsc_advance,
-
-                          wr.days_worked * e.daily_salary                                         AS base_salary, -- یکماه کارکرد
-                          wr.over_time_Hours * (e.daily_Salary / 8 * 1.4)                         AS over_time,   --اضافه کار
-                          NVL(e.number_of_children, 0) * (5000000 / 30) * wr.days_worked          AS child_allowance,
-                          CASE WHEN e.married = 1 THEN (8000000 / 30) * wr.days_worked ELSE 0 END AS marriage_allowance,
-                          (9000000 / 30) * wr.days_worked                                         AS housing_allowance,
-                          (60000000 / 30) * wr.days_worked                                        AS food_allowance,
-                          (30000000 / 30) * wr.days_worked                                        AS transport_allowance,
-
-                          wr.days_worked * e.daily_salary +
-                          wr.over_time_Hours * (e.daily_Salary / 8 * 1.4) +
-                          NVL(e.number_of_children, 0) * (5000000 / 30) * wr.days_worked +
-                          CASE WHEN e.married = 1 THEN (8000000 / 30) * wr.days_worked ELSE 0 END +
-                          (9000000 / 30) * wr.days_worked+
-                          (60000000 / 30) * wr.days_worked+
-                          (30000000 / 30) * wr.days_worked                                        As gross_salary,
-
-
-
-
-                          -- مجموع اقساط وام ثبت‌شده
-                          (SELECT NVL(SUM(li.amount_paid), 0)
-                           FROM loan_items li
-                           WHERE li.payslips_id = Pay.id)                                         AS loan_payment,
-
-                          wr.under_Time_Hours * (e.daily_Salary / 8)                              AS Under_Time,
-
-
-                          Pay.issueDate      AS issueDate,
-                          Pay.period            as period
-
-                   from Payslips Pay
-                            join users u on Pay.users_id = u.id
-                            join employees e on Pay.employees_id = e.id
-                            join work_Records wr on Pay.work_Records_id = wr.id)
-select
-    bd.Payslips_id,
-
-    bd.users_user_name,
-    bd.users_password,
-
-    bd.employees_first_Name,
-    bd.employees_last_Name,
-    bd.employees_national_Id,
-    bd.employees_education,
-    bd.employees_married,
-    bd.employees_number_Of_Children,
-    bd.employees_gender,
-    bd.employees_birth_Date,
-    bd.employees_insurance_Number,
-    bd.employees_bank_Account_Number,
-    bd.employees_job_Title,
-    bd.employees_position,
-    bd.employees_hire_Date,
-    bd.employees_termination_Date,
-    bd.employees_daily_Salary,
-
-    bd.work_records_days_Worked,
-    bd.work_records_over_time_Hours,
-    bd.work_records_under_Time_Hours,
-    bd.work_recordsc_advance,  --مساعده
-
-    bd.base_salary, -- یکماه کارکرد
-    bd.over_time,   --اضافه کار
-    bd.child_allowance,
-    bd.marriage_allowance,
-    bd.housing_allowance,
-    bd.food_allowance,
-    bd.transport_allowance,
-    bd.gross_salary,        --جمع حقوق و مزایا
-
-    -- سهم کارمند برای بیمه اجتماعی
+        Pay.issueDate,
+        Pay.period
+    FROM Payslips Pay
+             JOIN users u ON Pay.users_id = u.id
+             JOIN employees e ON Pay.employees_id = e.id
+             JOIN work_Records wr ON Pay.work_Records_id = wr.id
+)
+SELECT
+    bd.*,
+    /* کسرهای کارمند و کارفرما (برای گزارش فقط employee_ins نیاز هست) */
     ROUND(bd.gross_salary * 0.07, 2) AS employee_ins,
-
-    -- سهم کارفرما برای بیمه اجتماعی ( 23%)
     ROUND(bd.gross_salary * 0.23, 2) AS employer_ins,
 
-    -- محاسبه مالیات
+    /* مالیات ماهیانه پلکانی */
     ROUND(
             CASE
-                WHEN gross_salary <= 240000000 THEN 0
-                WHEN gross_salary <= 300000000 THEN (gross_salary - 240000000) * 0.10
-                WHEN gross_salary <= 380000000 THEN (300000000 - 240000000) * 0.10
-                    + (gross_salary - 300000000) * 0.15
-                WHEN gross_salary <= 500000000 THEN (300000000 - 240000000) * 0.10
-                    + (380000000 - 300000000) * 0.15
-                    + (gross_salary - 380000000) * 0.20
-                WHEN gross_salary <= 667000000 THEN (300000000 - 240000000) * 0.10
-                    + (380000000 - 300000000) * 0.15
-                    + (500000000 - 380000000) * 0.20
-                    + (gross_salary - 500000000) * 0.25
-                ELSE (300000000 - 240000000) * 0.10
-                    + (380000000 - 300000000) * 0.15
-                    + (500000000 - 380000000) * 0.20
-                    + (667000000 - 500000000) * 0.25
-                    + (gross_salary - 667000000) * 0.30
-                END
-        , 0) AS monthly_tax,
+                WHEN bd.gross_salary <= 240000000 THEN 0
+                WHEN bd.gross_salary <= 300000000 THEN (bd.gross_salary - 240000000) * 0.10
+                WHEN bd.gross_salary <= 380000000 THEN (300000000 - 240000000)*0.10
+                    + (bd.gross_salary - 300000000)*0.15
+                WHEN bd.gross_salary <= 500000000 THEN (300000000 - 240000000)*0.10
+                    + (380000000 - 300000000)*0.15
+                    + (bd.gross_salary - 380000000)*0.20
+                WHEN bd.gross_salary <= 667000000 THEN (300000000 - 240000000)*0.10
+                    + (380000000 - 300000000)*0.15
+                    + (500000000 - 380000000)*0.20
+                    + (bd.gross_salary - 500000000)*0.25
+                ELSE (300000000 - 240000000)*0.10
+                    + (380000000 - 300000000)*0.15
+                    + (500000000 - 380000000)*0.20
+                    + (667000000 - 500000000)*0.25
+                    + (bd.gross_salary - 667000000)*0.30
+                END, 0
+    ) AS monthly_tax,
 
+    /* مجموع کسرها */
+    ROUND(
+            bd.gross_salary * 0.07
+                + bd.gross_salary * 0.23
+                + (
+                CASE
+                    WHEN bd.gross_salary <= 240000000 THEN 0
+                    WHEN bd.gross_salary <= 300000000 THEN (bd.gross_salary - 240000000)*0.10
+                    WHEN bd.gross_salary <= 380000000 THEN (300000000 - 240000000)*0.10
+                        + (bd.gross_salary - 300000000)*0.15
+                    WHEN bd.gross_salary <= 500000000 THEN (300000000 - 240000000)*0.10
+                        + (380000000 - 300000000)*0.15
+                        + (bd.gross_salary - 380000000)*0.20
+                    WHEN bd.gross_salary <= 667000000 THEN (300000000 - 240000000)*0.10
+                        + (380000000 - 300000000)*0.15
+                        + (500000000 - 380000000)*0.20
+                        + (bd.gross_salary - 500000000)*0.25
+                    ELSE (300000000 - 240000000)*0.10
+                        + (380000000 - 300000000)*0.15
+                        + (500000000 - 380000000)*0.20
+                        + (667000000 - 500000000)*0.25
+                        + (bd.gross_salary - 667000000)*0.30
+                    END
+                )
+                + bd.loan_payment
+                + bd.under_time_payment
+        , 0) AS total_deductions,
 
-    bd.issueDate,
-    bd.period
-from base_data bd;
+    /* حقوق خالص */
+    ROUND(
+            bd.gross_salary
+                - (
+                bd.gross_salary * 0.07
+                    + bd.gross_salary * 0.23
+                    + CASE
+                          WHEN bd.gross_salary <= 240000000 THEN 0
+                          WHEN bd.gross_salary <= 300000000 THEN (bd.gross_salary - 240000000)*0.10
+                          WHEN bd.gross_salary <= 380000000 THEN (300000000 - 240000000)*0.10
+                              + (bd.gross_salary - 300000000)*0.15
+                          WHEN bd.gross_salary <= 500000000 THEN (300000000 - 240000000)*0.10
+                              + (380000000 - 300000000)*0.15
+                              + (bd.gross_salary - 380000000)*0.20
+                          WHEN bd.gross_salary <= 667000000 THEN (300000000 - 240000000)*0.10
+                              + (380000000 - 300000000)*0.15
+                              + (500000000 - 380000000)*0.20
+                              + (bd.gross_salary - 500000000)*0.25
+                          ELSE (300000000 - 240000000)*0.10
+                              + (380000000 - 300000000)*0.15
+                              + (500000000 - 380000000)*0.20
+                              + (667000000 - 500000000)*0.25
+                              + (bd.gross_salary - 667000000)*0.30
+                    END
+                    + bd.loan_payment
+                    + bd.under_time_payment
+                )
+        , 0) AS net_salary
 
+FROM base_data bd;
