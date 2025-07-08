@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 public class Payslip implements Serializable {
     private int id;
-
+private  User user;
     private Employee employee;
     private WorkRecord workRecord;
     private SalaryComponents salaryComponents;
