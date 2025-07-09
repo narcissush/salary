@@ -23,7 +23,7 @@ public class Deductions implements Serializable {
         double tax = 0;
 
         double[] limits = {240_000_000, 300_000_000,380_000_000,500_000_000,667_000_000};
-        double[] rates = {0.10, 0.15, 0.20,025, 0.30};
+        double[] rates = {0.10, 0.15, 0.20, 0.25, 0.30};
 
         double remaining = taxable;
         for (int i = 0; i < rates.length; i++) {

@@ -18,9 +18,9 @@ public class Loan implements Serializable {
     private double loanAmount;           // مبلغ کل وام
     private double loanInterest;         // درصد بهره سالیانه
     private int totalInstallments;       // تعداد کل اقساط
-    private LocalDate startDate;         // تاریخ شروع بازپرداخت
+    private LocalDate loanstartDate;         // تاریخ شروع بازپرداخت
 
-    private List<LoanItem> installments; // لیست اقساط این وام
+    List<LoanItem> LoanItems; // لیست اقساط این وام
 
     // محاسبه مبلغ قسط ماهیانه
     public double getMonthlyInstallment() {
@@ -34,11 +34,11 @@ public class Loan implements Serializable {
 
     // محاسبه کل پرداختی
     public double getTotalPaid() {
-        if (installments == null) {
+        if (LoanItems == null) {
             return 0;
         } else {
             double total = 0;
-            for (LoanItem item : installments) {
+            for (LoanItem item : LoanItems) {
                 total += item.getAmountPaid();
             }
             return total;
@@ -47,7 +47,7 @@ public class Loan implements Serializable {
 
     // باقیمانده وام
     public double getRemainingAmount() {
-        int paidInstallments = (installments == null) ? 0 : installments.size();
+        int paidInstallments = (LoanItems == null) ? 0 : LoanItems.size();
         int remainingInstallments = totalInstallments - paidInstallments;
         return remainingInstallments * getMonthlyInstallment();
     }

@@ -19,9 +19,11 @@ public class SalaryComponents implements Serializable {
         return payslip.getWorkRecord().getDaysWorked()* payslip.getEmployee().getDailySalary();
     }
 
-    public double getChildAllowancePerChild(){
-       return payslip.getEmployee().getNumberOfChildren() * (CHILD_ALLOWANCE/30 * payslip.getWorkRecord().getDaysWorked()) ;
+    public double getTotalChildAllowance() {
+        return payslip.getEmployee().getNumberOfChildren() *
+                (CHILD_ALLOWANCE / 30 * payslip.getWorkRecord().getDaysWorked());
     }
+
     public double getMarriageAllowance(){
         if (payslip.getEmployee().isMarried()){
             return (MARAGE_ALLOWANCE/30* payslip.getWorkRecord().getDaysWorked()) ;
@@ -36,9 +38,6 @@ public class SalaryComponents implements Serializable {
         return  (FOOD_ALLOWANCE/30 * payslip.getWorkRecord().getDaysWorked()) ;
     }
 
-    public double getTransportAllowance(){
-        return (TRANSPORT_ALLOWANCE/30 * payslip.getWorkRecord().getDaysWorked()) ;
-    }
 
     public double getOverTime(){
         return payslip.getEmployee().getDailySalary()/8* 1.4 * payslip.getWorkRecord().getOvertimeHours();
@@ -46,11 +45,10 @@ public class SalaryComponents implements Serializable {
 
     public double getTotalSalaryComponents(){
         return  getMonthlySalary() +
-                getChildAllowancePerChild() +
+                getTotalChildAllowance() +
                 getMarriageAllowance()+
                 getHousingAllowance()+
                 getFoodAllowance()+
-                getTransportAllowance()+
                 getOverTime();
 
     }

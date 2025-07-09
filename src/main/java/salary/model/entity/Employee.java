@@ -8,6 +8,7 @@ import salary.model.entity.enums.Position;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,4 +23,6 @@ public class Employee extends Person implements Serializable {
     private LocalDate hireDate;
     private LocalDate terminationDate;
     private double dailySalary;
+    List<Loan> loans;
+
 }
