@@ -18,7 +18,7 @@ public class Loan implements Serializable {
     private double loanAmount;           // مبلغ کل وام
     private double loanInterest;         // درصد بهره سالیانه
     private int totalInstallments;       // تعداد کل اقساط
-    private LocalDate loanstartDate;         // تاریخ شروع بازپرداخت
+    private LocalDate loanStartDate;         // تاریخ شروع بازپرداخت
 
     List<LoanItem> LoanItems; // لیست اقساط این وام
 

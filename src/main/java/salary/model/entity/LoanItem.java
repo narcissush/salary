@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class LoanItem implements Serializable {
     private int id;
     private Loan loan;               // وامی که این قسط به آن مربوط است
-    private LocalDate paymentDate;   // تاریخ پرداخت
-    private double amountPaid;       // مبلغ پرداختی
     private Payslip payslip;         // اگر با فیش حقوقی پرداخت شده
+    private double amountPaid;       // مبلغ پرداختی
+    private LocalDate paymentDate;   // تاریخ پرداخت
 }

@@ -43,7 +43,6 @@ CREATE TABLE allowances (
                             food_allowance NUMBER,
                             marriage_allowance NUMBER,
                             child_allowance NUMBER,
-                            transport_allowance NUMBER,
                             active NUMBER(1)
 );
 create sequence allowances_seq start with 1 increment by 1;

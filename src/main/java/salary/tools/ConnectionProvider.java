@@ -4,6 +4,8 @@ import lombok.Getter;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ConnectionProvider {
@@ -21,5 +23,11 @@ public class ConnectionProvider {
         dataSource.setMinIdle(5);
         dataSource.setMaxIdle(20);
         return dataSource.getConnection();
+    }
+    public int getNextId(Connection connection,  String sequenceName) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("select " + sequenceName + ".nextval from dual");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt("nextval");
     }
 }
