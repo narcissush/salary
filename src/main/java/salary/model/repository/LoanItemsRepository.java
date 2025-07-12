@@ -16,7 +16,7 @@ public class LoanItemsRepository implements Repository<LoanItem> {
     private Connection connection;
     private PreparedStatement preparedStatement;
 
-    public LoanItemsRepository() throws SQLException {
+    public LoanItemsRepository() throws Exception {
         connection = ConnectionProvider.getConnectionProvider().getconnection();
     }
     @Override
