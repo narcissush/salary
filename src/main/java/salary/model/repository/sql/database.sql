@@ -54,7 +54,9 @@ CREATE TABLE work_records
     days_Worked      number,
     over_time_Hours  number,
     under_Time_Hours number,
-    advance          numeric(12, 2)
+    advance          numeric(12, 2),
+    start_mission Timestamp,
+        end_mission Timestamp
 );
 create sequence work_records_seq start with 1 increment by 1;
 
@@ -65,7 +67,8 @@ create TABLE Payslips
     employees_id    number REFERENCES employees (id),
     work_Records_id number REFERENCES work_records (id),
     issueDate       date,
-    period          nvarchar2(10)
+    month          nvarchar2(10),
+    year nvarchar2(4)
 );
 create sequence Payslips_seq start with 1 increment by 1;
 
@@ -122,6 +125,11 @@ WITH base_data AS (
         (NVL(al.housing_allowance, 0) / 30) * wr.days_worked AS housing_allowance,
         (NVL(al.food_allowance, 0) / 30) * wr.days_worked AS food_allowance,
 
+        -- محاسبه حق ماموریت (تعداد روز بین دو تاریخ * حقوق روزانه)
+        ROUND(
+                (TRUNC(wr.end_mission) - TRUNC(wr.start_mission)) * NVL(e.daily_salary, 0)
+            , 0) AS mission_allowance,
+
         (
             wr.days_worked * NVL(e.daily_salary, 0)
                 + wr.over_time_Hours * (NVL(e.daily_Salary, 0) / 8 * 1.4)
@@ -129,6 +137,7 @@ WITH base_data AS (
                 + CASE WHEN NVL(e.married, 0) = 1 THEN (NVL(al.marriage_allowance, 0) / 30) * wr.days_worked ELSE 0 END
                 + (NVL(al.housing_allowance, 0) / 30) * wr.days_worked
                 + (NVL(al.food_allowance, 0) / 30) * wr.days_worked
+                + ROUND((TRUNC(wr.end_mission) - TRUNC(wr.start_mission)) * NVL(e.daily_salary, 0), 0)
             ) AS gross_salary,
 
         (SELECT NVL(SUM(li.amount_paid), 0)
@@ -138,7 +147,8 @@ WITH base_data AS (
         wr.under_Time_Hours * (NVL(e.daily_Salary, 0) / 8) AS under_time_payment,
 
         Pay.issueDate,
-        Pay.period
+        Pay.month,
+        Pay.year
     FROM Payslips Pay
              JOIN users u ON Pay.users_id = u.id
              JOIN employees e ON Pay.employees_id = e.id
@@ -194,8 +204,7 @@ SELECT bd.*,
 
        -- حقوق خالص
        ROUND(
-               bd.gross_salary -
-               (
+               bd.gross_salary - (
                    bd.gross_salary * 0.07 + bd.gross_salary * 0.23
                        + CASE
                              WHEN bd.gross_salary <= 240000000 THEN 0
@@ -214,6 +223,7 @@ SELECT bd.*,
            , 0) AS total_salary
 
 FROM base_data bd;
+
 
 
 

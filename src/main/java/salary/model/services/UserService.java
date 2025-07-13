@@ -42,13 +42,15 @@ public class UserService implements Service<User> {
     public List<User> findAll() throws Exception {
         try (UserRepository userRepository = new UserRepository()) {
             return userRepository.findAll();
-        }    }
+        }
+    }
 
     @Override
     public User findById(int id) throws Exception {
         try (UserRepository userRepository = new UserRepository()) {
             return userRepository.findById(id);
-        }    }
+        }
+    }
 
     @Override
     public void close() throws Exception {

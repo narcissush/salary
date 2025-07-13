@@ -19,7 +19,8 @@ public class Payslip implements Serializable {
     private SalaryComponents salaryComponents;
     private Deductions deductions;
     private LocalDate issueDate;
-    private String period;
+    private String month;
+    private String year;
 
 
     public double totalSalary(){
