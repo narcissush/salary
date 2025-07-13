@@ -91,6 +91,20 @@ public class UserRepository implements Repository<User> {
         return user;
     }
 
+    public User findByUserAndPassword(String username,String password) throws Exception {
+        User user = null;
+        connection = ConnectionProvider.getConnectionProvider().getconnection();
+        preparedStatement = connection.prepareStatement("select * from userS where user_name=? and password=?");
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(1, password);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            user = EntityMapper.userMapper(resultSet);
+        }
+        return user;
+    }
+
     @Override
     public void close() throws Exception {
 

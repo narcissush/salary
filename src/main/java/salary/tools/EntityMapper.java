@@ -7,6 +7,7 @@ import salary.model.entity.enums.Position;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class EntityMapper {
     public static Employee employeeMapper(ResultSet resultSet) throws SQLException {
@@ -90,7 +91,8 @@ public class EntityMapper {
                 .salaryComponents(salaryComponents)
                 .deductions(deductions)
                 .issueDate(resultSet.getDate("issue_Date") == null ? null : resultSet.getDate("issue_Date").toLocalDate())
-                .period(resultSet.getString("period"))
+                .month(resultSet.getString("month"))
+                .year(resultSet.getString("year"))
                 .build();
 
     }
@@ -104,12 +106,28 @@ public class EntityMapper {
                 .build();
 
     }
+
     public static Deductions deductionsMapper(ResultSet resultSet) throws SQLException {
         Payslip payslip = new Payslip();
         return Deductions
                 .builder()
                 .id(resultSet.getInt("id"))
                 .payslip(payslip)
+                .build();
+
+    }
+
+    public static WorkRecord workRecordMapper(ResultSet resultSet) throws SQLException {
+        Payslip payslip = new Payslip();
+        return WorkRecord.builder()
+                .id(resultSet.getInt("id"))
+                .payslip(payslip)
+                .daysWorked(resultSet.getInt("days_worked"))
+                .overtimeHours(resultSet.getInt("over_time_Hours"))
+                .underTimeHours(resultSet.getInt("under_time_Hours")) // corrected column name
+                .advance(resultSet.getDouble("advance"))
+                .startMission(resultSet.getTimestamp("start_Mission").toLocalDateTime())
+                .endMission(resultSet.getTimestamp("end_Mission").toLocalDateTime())
                 .build();
 
     }

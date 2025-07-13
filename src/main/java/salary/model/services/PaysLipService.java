@@ -7,17 +7,15 @@ import salary.model.repository.PayslipRepository;
 import java.util.Collections;
 import java.util.List;
 
-public class PaysLipService implements Service<Payslip>{
+public class PaysLipService {
 
-    @Override
-    public void save(Payslip payslip) throws Exception {
+    public static void save(Payslip payslip) throws Exception {
         try (PayslipRepository payslipRepository = new PayslipRepository()) {
             payslipRepository.save(payslip);
         }
     }
 
-    @Override
-    public void edit(Payslip payslip) throws Exception {
+    public static void edit(Payslip payslip) throws Exception {
         try (PayslipRepository payslipRepository = new PayslipRepository()) {
             if (payslipRepository.findById(payslip.getId()) != null) {
                 payslipRepository.edit(payslip);
@@ -27,8 +25,7 @@ public class PaysLipService implements Service<Payslip>{
         }
     }
 
-    @Override
-    public void delete(int id) throws Exception {
+    public static void delete(int id) throws Exception {
         try (PayslipRepository payslipRepository = new PayslipRepository()) {
             if (payslipRepository.findById(id) != null) {
                 payslipRepository.delete(id);
@@ -38,20 +35,14 @@ public class PaysLipService implements Service<Payslip>{
         }
     }
 
-    @Override
-    public List<Payslip> findAll() throws Exception {
+    public static List<Payslip> findAll() throws Exception {
         try (PayslipRepository payslipRepository = new PayslipRepository()) {
             return payslipRepository.findAll();
         }    }
 
-    @Override
-    public Payslip findById(int id) throws Exception {
+    public static Payslip findById(int id) throws Exception {
         try (PayslipRepository payslipRepository = new PayslipRepository()) {
             return payslipRepository.findById(id);
         }    }
 
-    @Override
-    public void close() throws Exception {
-
-    }
 }

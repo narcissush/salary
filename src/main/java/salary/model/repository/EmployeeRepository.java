@@ -84,7 +84,8 @@ public class EmployeeRepository implements Repository<Employee> {
         while (resultSet.next()) {
             employeeList.add(EntityMapper.employeeMapper(resultSet));
         }
-        return employeeList;    }
+        return employeeList;
+    }
 
     @Override
     public Employee findById(int id) throws Exception {

@@ -5,18 +5,16 @@ import salary.model.repository.LoanItemsRepository;
 
 import java.util.List;
 
-public class LoanItemsService implements Service<LoanItem> {
+public class LoanItemsService{
 
 
-    @Override
-    public void save(LoanItem loanItem) throws Exception {
+    public static void save(LoanItem loanItem) throws Exception {
         try (LoanItemsRepository loanItemsRepository = new LoanItemsRepository()) {
             loanItemsRepository.save(loanItem);
         }
     }
 
-    @Override
-    public void edit(LoanItem loanItem) throws Exception {
+    public static void edit(LoanItem loanItem) throws Exception {
         try (LoanItemsRepository loanItemsRepository = new LoanItemsRepository()) {
             if (loanItemsRepository.findById(loanItem.getId()) != null) {
                 loanItemsRepository.edit(loanItem);
@@ -26,8 +24,7 @@ public class LoanItemsService implements Service<LoanItem> {
         }
     }
 
-    @Override
-    public void delete(int id) throws Exception {
+    public static void delete(int id) throws Exception {
         try (LoanItemsRepository loanItemsRepository = new LoanItemsRepository()) {
             if (loanItemsRepository.findById(id) != null) {
                 loanItemsRepository.delete(id);
@@ -37,22 +34,17 @@ public class LoanItemsService implements Service<LoanItem> {
         }
     }
 
-    @Override
-    public List<LoanItem> findAll() throws Exception {
+    public static List<LoanItem> findAll() throws Exception {
         try (LoanItemsRepository loanItemsRepository = new LoanItemsRepository()) {
             return loanItemsRepository.findAll();
         }
     }
 
-    @Override
-    public LoanItem findById(int id) throws Exception {
+    public static LoanItem findById(int id) throws Exception {
         try (LoanItemsRepository loanItemsRepository = new LoanItemsRepository()) {
             return loanItemsRepository.findById(id);
         }
     }
 
-    @Override
-    public void close() throws Exception {
 
-    }
 }

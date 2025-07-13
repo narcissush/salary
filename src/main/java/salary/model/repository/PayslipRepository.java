@@ -20,14 +20,16 @@ public class PayslipRepository implements Repository<Payslip> {
     public void save(Payslip payslip) throws Exception {
         payslip.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "payslip_seq"));
         preparedStatement = connection.prepareStatement(
-                "insert into Payslips values (?, ?, ?, ?, ?, ?)"
+                "insert into Payslips values (?, ?, ?, ?, ?, ?,?)"
         );
         preparedStatement.setInt(1, payslip.getId());
         preparedStatement.setInt(2, payslip.getUser().getId());
         preparedStatement.setInt(3, payslip.getEmployee().getId());
         preparedStatement.setInt(4, payslip.getWorkRecord().getId());
         preparedStatement.setDate(5, (payslip.getIssueDate() != null) ? Date.valueOf(payslip.getIssueDate()) : null);
-        preparedStatement.setString(6, payslip.getPeriod());
+        preparedStatement.setString(6, payslip.getMonth());
+        preparedStatement.setString(7, payslip.getYear());
+
         preparedStatement.execute();
     }
 
@@ -35,13 +37,14 @@ public class PayslipRepository implements Repository<Payslip> {
     public void edit(Payslip payslip) throws Exception {
         payslip.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "payslip_seq"));
         preparedStatement = connection.prepareStatement(
-                "update Payslips set (user_id=?,employee_id=?,work_record_id=?,issue_date=?,period=? where id=?)"
+                "update Payslips set (user_id=?,employee_id=?,work_record_id=?,issue_date=?,month=?,year=? where id=?)"
         );
         preparedStatement.setInt(1, payslip.getUser().getId());
         preparedStatement.setInt(2, payslip.getEmployee().getId());
         preparedStatement.setInt(3, payslip.getWorkRecord().getId());
         preparedStatement.setDate(6, (payslip.getIssueDate() != null) ? Date.valueOf(payslip.getIssueDate()) : null);
-        preparedStatement.setString(7, payslip.getPeriod());
+        preparedStatement.setString(6, payslip.getMonth());
+        preparedStatement.setString(7, payslip.getYear());
         preparedStatement.setInt(8, payslip.getId());
         preparedStatement.execute();
 

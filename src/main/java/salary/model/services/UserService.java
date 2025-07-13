@@ -1,23 +1,19 @@
 package salary.model.services;
 
 import salary.model.entity.User;
-import salary.model.repository.EmployeeRepository;
 import salary.model.repository.UserRepository;
 
-import java.util.Collections;
 import java.util.List;
 
-public class UserService implements Service<User> {
+public class UserService {
 
-    @Override
-    public void save(User user) throws Exception {
+    public static void save(User user) throws Exception {
         try (UserRepository userRepository = new UserRepository()) {
             userRepository.save(user);
         }
     }
 
-    @Override
-    public void edit(User user) throws Exception {
+    public static void edit(User user) throws Exception {
         try (UserRepository userRepository = new UserRepository()) {
             if (userRepository.findById(user.getId()) != null) {
                 userRepository.edit(user);
@@ -27,8 +23,7 @@ public class UserService implements Service<User> {
         }
     }
 
-    @Override
-    public void delete(int id) throws Exception {
+    public static void delete(int id) throws Exception {
         try (UserRepository userRepository = new UserRepository()) {
             if (userRepository.findById(id) != null) {
                 userRepository.delete(id);
@@ -38,22 +33,21 @@ public class UserService implements Service<User> {
         }
     }
 
-    @Override
-    public List<User> findAll() throws Exception {
+    public static List<User> findAll() throws Exception {
         try (UserRepository userRepository = new UserRepository()) {
             return userRepository.findAll();
         }
     }
 
-    @Override
-    public User findById(int id) throws Exception {
+    public static User findById(int id) throws Exception {
         try (UserRepository userRepository = new UserRepository()) {
             return userRepository.findById(id);
         }
     }
 
-    @Override
-    public void close() throws Exception {
-
+    public static User findByUserAndPassword(String username,String password) throws Exception {
+        try (UserRepository userRepository = new UserRepository()) {
+            return userRepository.findByUserAndPassword(username,password);
+        }
     }
 }

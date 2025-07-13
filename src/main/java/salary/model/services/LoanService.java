@@ -6,17 +6,15 @@ import salary.model.repository.LoanRepository;
 import java.util.Collections;
 import java.util.List;
 
-public class LoanService implements Service<Loan> {
+public class LoanService  {
 
-    @Override
-    public void save(Loan loan) throws Exception {
+     static void save(Loan loan) throws Exception {
         try (LoanRepository loanRepository = new LoanRepository()) {
             loanRepository.save(loan);
         }
     }
 
-    @Override
-    public void edit(Loan loan) throws Exception {
+    public static void edit(Loan loan) throws Exception {
         try (LoanRepository loanRepository = new LoanRepository()) {
             if (loanRepository.findById(loan.getId()) != null) {
                 loanRepository.edit(loan);
@@ -26,8 +24,7 @@ public class LoanService implements Service<Loan> {
         }
     }
 
-    @Override
-    public void delete(int id) throws Exception {
+    public static void delete(int id) throws Exception {
         try (LoanRepository loanRepository = new LoanRepository()) {
             if (loanRepository.findById(id) != null) {
                 loanRepository.delete(id);
@@ -37,21 +34,15 @@ public class LoanService implements Service<Loan> {
         }
     }
 
-    @Override
-    public List<Loan> findAll() throws Exception {
+    public static List<Loan> findAll() throws Exception {
         try (LoanRepository loanRepository = new LoanRepository()) {
             return loanRepository.findAll();
         }
     }
 
-    @Override
-    public Loan findById(int id) throws Exception {
+    public static Loan findById(int id) throws Exception {
         try (LoanRepository loanRepository = new LoanRepository()) {
             return loanRepository.findById(id);
         }     }
 
-    @Override
-    public void close() throws Exception {
-
-    }
 }

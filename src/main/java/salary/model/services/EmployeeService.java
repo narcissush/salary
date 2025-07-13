@@ -6,17 +6,15 @@ import salary.model.repository.EmployeeRepository;
 import java.util.Collections;
 import java.util.List;
 
-public class EmployeeService implements Service<Employee> {
+public class EmployeeService  {
 
-    @Override
-    public void save(Employee employee) throws Exception {
+    public static void save(Employee employee) throws Exception {
         try (EmployeeRepository employeeRepository = new EmployeeRepository()) {
             employeeRepository.save(employee);
         }
     }
 
-    @Override
-    public void edit(Employee employee) throws Exception {
+    public static void edit(Employee employee) throws Exception {
         try (EmployeeRepository employeeRepository = new EmployeeRepository()) {
             if (employeeRepository.findById(employee.getId()) != null) {
                 employeeRepository.edit(employee);
@@ -26,8 +24,7 @@ public class EmployeeService implements Service<Employee> {
         }
     }
 
-    @Override
-    public void delete(int id) throws Exception {
+    public static void delete(int id) throws Exception {
         try (EmployeeRepository employeeRepository = new EmployeeRepository()) {
             if (employeeRepository.findById(id) != null) {
                 employeeRepository.delete(id);
@@ -37,22 +34,16 @@ public class EmployeeService implements Service<Employee> {
         }
     }
 
-    @Override
-    public List<Employee> findAll() throws Exception {
+    public static List<Employee> findAll() throws Exception {
         try (EmployeeRepository employeeRepository = new EmployeeRepository()) {
             return employeeRepository.findAll();
         }
     }
 
-    @Override
-    public Employee findById(int id) throws Exception {
+    public static Employee findById(int id) throws Exception {
         try (EmployeeRepository employeeRepository = new EmployeeRepository()) {
             return employeeRepository.findById(id);
         }
     }
 
-    @Override
-    public void close() throws Exception {
-
-    }
 }
