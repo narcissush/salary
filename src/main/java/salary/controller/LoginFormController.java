@@ -13,7 +13,7 @@ import salary.model.services.UserService;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+public class LoginFormController implements Initializable {
     @FXML
     private TextField usernameTxt,passwordTxt;
     @FXML

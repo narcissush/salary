@@ -1,9 +1,7 @@
 package salary.tools;
 
 import salary.model.entity.*;
-import salary.model.entity.enums.Gender;
-import salary.model.entity.enums.JobTitle;
-import salary.model.entity.enums.Position;
+import salary.model.entity.enums.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,13 +15,13 @@ public class EntityMapper {
                 .firstName(resultSet.getString("first_name"))
                 .lastName(resultSet.getString("last_name"))
                 .nationalId(resultSet.getString("national_id"))
-                .education(resultSet.getString("education"))
-                .married(resultSet.getBoolean("married"))
+                .education(Education.valueOf(resultSet.getString("Education")))
+                .married(Married.valueOf(resultSet.getString("married")))
                 .numberOfChildren(resultSet.getInt("number_of_children"))
-                .gender(Gender.valueOf(resultSet.getString("GENDER")))
                 .birthDate(resultSet.getDate("BIRTH_DATE") == null ? null : resultSet.getDate("BIRTH_DATE").toLocalDate())
                 .insuranceNumber(resultSet.getString("Insurance_number"))
                 .bankAccountNumber(resultSet.getString("bank_Account_Number"))
+                .department(Department.valueOf(resultSet.getString("department")))
                 .jobTitle(JobTitle.valueOf(resultSet.getString("Job_Title")))
                 .position(Position.valueOf(resultSet.getString("Position")))
                 .hireDate(resultSet.getDate("Hire_Date") == null ? null : resultSet.getDate("Hire_Date").toLocalDate())
@@ -39,8 +37,8 @@ public class EntityMapper {
                 .firstName(resultSet.getString("first_name"))
                 .lastName(resultSet.getString("last_name"))
                 .nationalId(resultSet.getString("national_id"))
-                .education(resultSet.getString("education"))
-                .married(resultSet.getBoolean("married"))
+                .education(Education.valueOf(resultSet.getString("Education")))
+                .married(Married.valueOf(resultSet.getString("married")))
                 .numberOfChildren(resultSet.getInt("number_of_children"))
                 .gender(Gender.valueOf(resultSet.getString("GENDER")))
                 .birthDate(resultSet.getDate("BIRTH_DATE") == null ? null : resultSet.getDate("BIRTH_DATE").toLocalDate())

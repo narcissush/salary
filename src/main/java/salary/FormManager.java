@@ -4,27 +4,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import salary.controller.LoginController;
+import salary.controller.LoginFormController;
 import salary.controller.MainFormController;
 
 public class FormManager {
-    public static LoginController loginController;
+    public static LoginFormController loginFormController;
     public static MainFormController mainFormController;
-
-
     private Stage loginStage;
     private Stage mainFormStage;
 
-    public LoginController showLoginController() throws Exception {
+    public LoginFormController showLoginController() throws Exception {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/LoginForm.fxml"));
         Parent root = (Parent)loader.load();
-        loginController = (LoginController) loader.getController();
+        loginFormController = (LoginFormController) loader.getController();
         Scene scene = new Scene(root);
         this.loginStage = new Stage();
         this.loginStage.setScene(scene);
         this.loginStage.setTitle("ورود");
         this.loginStage.show();
-        return loginController;
+        return loginFormController;
     }
 
     public MainFormController showMainFormController() throws Exception {

@@ -41,7 +41,8 @@ public class Deductions implements Serializable {
     }
 
     public double getUnderTimeDeduction() {
-        return payslip.getEmployee().getDailySalary() / 8 * payslip.getWorkRecord().getUnderTimeHours();
+        EmploymentContract employmentContract=new EmploymentContract();
+        return employmentContract.getDailySalary() / 8 * payslip.getWorkRecord().getUnderTimeHours();
     }
 
     public double getAdvance() {
@@ -56,12 +57,13 @@ public class Deductions implements Serializable {
         return totalLoan;
     }
 
+
+
     public double getTotalDeductions() {
         return  getTax() +
                 getInsurance() +
                 getUnderTimeDeduction() +
                 getAdvance() +
                 getLoanRepayment();
-
     }
 }

@@ -3,10 +3,13 @@ package salary.model.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import salary.model.Mission;
+import salary.model.entity.enums.Married;
 
 import java.io.Serializable;
+import java.util.List;
 
-import static salary.model.entity.EmployeeAllowances.*;
+import static salary.model.entity.EmploymentContract.*;
 
 @Data
 @NoArgsConstructor
@@ -14,9 +17,13 @@ import static salary.model.entity.EmployeeAllowances.*;
 public class SalaryComponents implements Serializable {
     private int id;
     private Payslip payslip;
+    List<Mission> missionList;
+
+
+    EmploymentContract employmentContract=new EmploymentContract();
 
     public double getMonthlySalary(){
-        return payslip.getWorkRecord().getDaysWorked()* payslip.getEmployee().getDailySalary();
+        return payslip.getWorkRecord().getDaysWorked() * employmentContract.getDailySalary();
     }
 
     public double getTotalChildAllowance() {
@@ -25,7 +32,7 @@ public class SalaryComponents implements Serializable {
     }
 
     public double getMarriageAllowance(){
-        if (payslip.getEmployee().isMarried()){
+        if (payslip.getEmployee().getMarried()== Married.متاهل){
             return (MARAGE_ALLOWANCE/30* payslip.getWorkRecord().getDaysWorked()) ;
         }else return 0.0;
     }
@@ -40,7 +47,17 @@ public class SalaryComponents implements Serializable {
 
 
     public double getOverTime(){
-        return payslip.getEmployee().getDailySalary()/8* 1.4 * payslip.getWorkRecord().getOvertimeHours();
+        return employmentContract.getDailySalary()/8* 1.4 * payslip.getWorkRecord().getOvertimeHours();
+    }
+
+    public double getMissionAllowance() {
+        double totalMission = 0;
+        for (Mission mission : missionList) {
+            if (mission.getPayslip() != null && mission.getPayslip().getId() == this.payslip.getId()) {
+                totalMission += mission.calculatePayment(employmentContract.getDailySalary());
+            }
+        }
+        return totalMission;
     }
 
     public double getTotalSalaryComponents(){
@@ -49,7 +66,8 @@ public class SalaryComponents implements Serializable {
                 getMarriageAllowance()+
                 getHousingAllowance()+
                 getFoodAllowance()+
-                getOverTime();
+                getOverTime()+
+                getMissionAllowance();
 
     }
 

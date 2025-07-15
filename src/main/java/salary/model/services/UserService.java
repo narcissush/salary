@@ -2,8 +2,11 @@ package salary.model.services;
 
 import salary.model.entity.User;
 import salary.model.repository.UserRepository;
+import salary.controller.exceptions.UserNotFoundException;
+
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserService {
 
@@ -47,7 +50,8 @@ public class UserService {
 
     public static User findByUserAndPassword(String username,String password) throws Exception {
         try (UserRepository userRepository = new UserRepository()) {
-            return userRepository.findByUserAndPassword(username,password);
+            Optional<User> loginUser = Optional.ofNullable(userRepository.findByUserAndPassword(username, password));
+            return loginUser.orElseThrow(UserNotFoundException::new);
         }
     }
 }
