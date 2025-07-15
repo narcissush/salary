@@ -5,7 +5,6 @@ import salary.model.entity.enums.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 public class EntityMapper {
     public static Employee employeeMapper(ResultSet resultSet) throws SQLException {
@@ -18,15 +17,10 @@ public class EntityMapper {
                 .education(Education.valueOf(resultSet.getString("Education")))
                 .married(Married.valueOf(resultSet.getString("married")))
                 .numberOfChildren(resultSet.getInt("number_of_children"))
+                .gender(Gender.valueOf(resultSet.getString("gender")))
                 .birthDate(resultSet.getDate("BIRTH_DATE") == null ? null : resultSet.getDate("BIRTH_DATE").toLocalDate())
                 .insuranceNumber(resultSet.getString("Insurance_number"))
                 .bankAccountNumber(resultSet.getString("bank_Account_Number"))
-                .department(Department.valueOf(resultSet.getString("department")))
-                .jobTitle(JobTitle.valueOf(resultSet.getString("Job_Title")))
-                .position(Position.valueOf(resultSet.getString("Position")))
-                .hireDate(resultSet.getDate("Hire_Date") == null ? null : resultSet.getDate("Hire_Date").toLocalDate())
-                .terminationDate(resultSet.getDate("Termination_Date") == null ? null : resultSet.getDate("Termination_DATE").toLocalDate())
-                .dailySalary(resultSet.getDouble("daily_salary"))
                 .build();
     }
 
@@ -53,18 +47,20 @@ public class EntityMapper {
                 .builder()
                 .id(resultSet.getInt("id"))
                 .employee(employee)
-                .loanType(resultSet.getString("loan_Type"))
+                .loanType(LoanType.valueOf(resultSet.getString("loan_type")))
                 .loanAmount(resultSet.getDouble("loan_Amount"))
                 .loanInterest(resultSet.getDouble("loan_Interest"))
                 .totalInstallments(resultSet.getInt("total_Installments"))
-                .loanStartDate(resultSet.getDate("loanstart_Date") == null ? null : resultSet.getDate("loanstart_Date").toLocalDate())
+                .loanStartDate(resultSet.getDate("loan_start_Date") == null ? null : resultSet.getDate("loan_start_Date").toLocalDate())
+                .loanFinishDate(resultSet.getDate("loan_finish_Date") == null ? null : resultSet.getDate("loan_finish_Date").toLocalDate())
+
                 .build();
     }
 
-    public static LoanItem loanItemMapper(ResultSet resultSet) throws SQLException {
+    public static LoanInstallment loanItemMapper(ResultSet resultSet) throws SQLException {
         Loan loan = new Loan();
         Payslip payslip = new Payslip();
-        return LoanItem
+        return LoanInstallment
                 .builder()
                 .id(resultSet.getInt("id"))
                 .loan(loan)
@@ -77,7 +73,7 @@ public class EntityMapper {
     public static Payslip payslipMapper(ResultSet resultSet) throws SQLException {
         User user = new User();
         Employee employee = new Employee();
-        WorkRecord workRecord = new WorkRecord();
+        WorkRecordMonthly workRecordMonthly = new WorkRecordMonthly();
         SalaryComponents salaryComponents = new SalaryComponents();
         Deductions deductions = new Deductions();
         return Payslip
@@ -85,7 +81,7 @@ public class EntityMapper {
                 .id(resultSet.getInt("id"))
                 .user(user)
                 .employee(employee)
-                .workRecord(workRecord)
+                .workRecordMonthly(workRecordMonthly)
                 .salaryComponents(salaryComponents)
                 .deductions(deductions)
                 .issueDate(resultSet.getDate("issue_Date") == null ? null : resultSet.getDate("issue_Date").toLocalDate())
@@ -115,20 +111,46 @@ public class EntityMapper {
 
     }
 
-    public static WorkRecord workRecordMapper(ResultSet resultSet) throws SQLException {
+    public static WorkRecordMonthly workRecordMapper(ResultSet resultSet) throws SQLException {
         Payslip payslip = new Payslip();
-        return WorkRecord.builder()
+        return WorkRecordMonthly.builder()
                 .id(resultSet.getInt("id"))
                 .payslip(payslip)
                 .daysWorked(resultSet.getInt("days_worked"))
-                .overtimeHours(resultSet.getInt("over_time_Hours"))
-                .underTimeHours(resultSet.getInt("under_time_Hours")) // corrected column name
+                .overtimeHours(resultSet.getString("over_time_Hours"))
+                .underTimeHours(resultSet.getString("under_time_Hours")) // corrected column name
                 .advance(resultSet.getDouble("advance"))
-                .startMission(resultSet.getTimestamp("start_Mission").toLocalDateTime())
-                .endMission(resultSet.getTimestamp("end_Mission").toLocalDateTime())
+
                 .build();
 
     }
+
+    public static EmploymentContract  EmploymentContractMapper (ResultSet resultSet) throws SQLException {
+            Employee employee = new Employee();
+            return
+
+                    EmploymentContract.builder()
+                            .id(resultSet.getInt("id"))
+                            .employee(employee)
+                            .issuancePersonnelOrderDate(Year.valueOf(resultSet.getString("issuance_Personnel_OrderDate")))
+                            .startContractDate(resultSet.getDate("start_Contract_Date") == null ? null : resultSet.getDate("start_Contract_Date").toLocalDate())
+                            .endContractDate(resultSet.getDate("end_Contract_Date") == null ? null : resultSet.getDate("end_Contract_Date").toLocalDate())
+                            .contractType(ContractType.valueOf(resultSet.getString("Contract_Type")))
+                            .department(Department.valueOf(resultSet.getString("Department")))
+                            .jobTitle(JobTitle.valueOf(resultSet.getString("job_Title")))
+                            .position(Position.valueOf(resultSet.getString("position")))
+                            .hireDate(resultSet.getDate("hire_Date") == null ? null : resultSet.getDate("hire_Date").toLocalDate())
+                            .terminationDate(resultSet.getDate("termination_Date") == null ? null : resultSet.getDate("termination_Date").toLocalDate())
+                            .dailySalary(resultSet.getDouble("daily_Salary"))
+                            .bazarKar(resultSet.getDouble("bazar_Kar"))
+                            .fogholadeShoghl(resultSet.getDouble("fogholade_Shoghl"))
+                            .housingAllowance(resultSet.getDouble("HOUSING_ALLOWANCE"))
+                            .marriageAllowance(resultSet.getDouble("MARAGE_ALLOWANCE"))
+                            .childAllowance(resultSet.getDouble("CHILD_ALLOWANCE"))
+                            .foodAllowance(resultSet.getDouble("FOOD_ALLOWANCE"))
+                            .build();
+    }
+
 
 
 }

@@ -15,14 +15,14 @@ import java.io.Serializable;
 public class Deductions implements Serializable {
     private int id;
     private Payslip payslip;
-    List<LoanItem> loanList;
+    List<LoanInstallment> loanList;
 
     public double getTax() {
         double exemption = 240_000_000;
         double taxable = Math.max(0, payslip.getSalaryComponents().getTotalSalaryComponents() - exemption);
         double tax = 0;
 
-        double[] limits = {240_000_000, 300_000_000,380_000_000,500_000_000,667_000_000};
+        double[] limits = {240_000_000, 300_000_000, 380_000_000, 500_000_000, 667_000_000};
         double[] rates = {0.10, 0.15, 0.20, 0.25, 0.30};
 
         double remaining = taxable;
@@ -40,29 +40,41 @@ public class Deductions implements Serializable {
         return payslip.getSalaryComponents().getTotalSalaryComponents() * 0.07;
     }
 
-    public double getUnderTimeDeduction() {
-        EmploymentContract employmentContract=new EmploymentContract();
-        return employmentContract.getDailySalary() / 8 * payslip.getWorkRecord().getUnderTimeHours();
+    public double getUnderTime() {
+
+        EmploymentContract employmentContract = new EmploymentContract();
+        String input = payslip.getWorkRecordMonthly().getUnderTimeHours();
+        String[] parts = input.split(":");
+
+        int hours = Integer.parseInt(parts[0]);
+        int minutes = Integer.parseInt(parts[1]);
+
+        double underTimeRate = employmentContract.getDailySalary() / 8.0;
+
+        double underTimePay = hours * underTimeRate
+                + (minutes / 60.0) * underTimeRate;
+
+        return underTimePay;
+
     }
 
     public double getAdvance() {
-        return payslip.getWorkRecord().getAdvance();
+        return payslip.getWorkRecordMonthly().getAdvance();
     }
 
     public double getLoanRepayment() {
         double totalLoan = 0;
-        for (LoanItem loanItem : loanList) {
-            totalLoan += loanItem.getAmountPaid();
+        for (LoanInstallment loanInstallment : loanList) {
+            totalLoan += loanInstallment.getAmountPaid();
         }
         return totalLoan;
     }
 
 
-
     public double getTotalDeductions() {
-        return  getTax() +
+        return getTax() +
                 getInsurance() +
-                getUnderTimeDeduction() +
+                getUnderTime() +
                 getAdvance() +
                 getLoanRepayment();
     }

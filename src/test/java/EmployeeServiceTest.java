@@ -7,7 +7,7 @@ import java.time.LocalDate;
 public class EmployeeServiceTest {
     public static void main(String[] args) throws Exception {
         Employee employee = Employee.builder()
-                .id(10)
+                .id(3)
                 .firstName("narges")
                 .lastName("hajizadeh")
                 .nationalId("0080386822")
@@ -16,15 +16,8 @@ public class EmployeeServiceTest {
                 .numberOfChildren(2)
                 .gender(Gender.زن)
                 .birthDate(LocalDate.of(1986,04,21))
-                .insuranceNumber("123456")
+                .insuranceNumber("0")
                 .bankAccountNumber("456789")
-                .department(Department.امور_اداري)
-                .jobTitle(JobTitle.مهندس_نرم_افزار)
-                .position(Position.رئیس)
-                .hireDate(LocalDate.of(2020,05,05))
-                .terminationDate(null)
-                .dailySalary(1800000)
-
                 .build();
         //EmployeeService.save(employee);
         EmployeeService.edit(employee);

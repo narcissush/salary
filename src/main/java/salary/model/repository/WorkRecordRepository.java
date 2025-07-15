@@ -1,17 +1,14 @@
 package salary.model.repository;
 
-import salary.model.entity.Employee;
-import salary.model.entity.Loan;
-import salary.model.entity.WorkRecord;
+import salary.model.entity.WorkRecordMonthly;
 import salary.tools.ConnectionProvider;
 import salary.tools.EntityMapper;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class WorkRecordRepository implements Repository<WorkRecord>{
+public class WorkRecordRepository implements Repository<WorkRecordMonthly>{
     private Connection connection;
     private PreparedStatement preparedStatement;
 
@@ -20,33 +17,31 @@ public class WorkRecordRepository implements Repository<WorkRecord>{
     }
 
     @Override
-    public void save(WorkRecord workRecord) throws Exception {
-        workRecord.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "work_Record_seq"));
+    public void save(WorkRecordMonthly workRecordMonthly) throws Exception {
+        workRecordMonthly.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "work_Record_seq"));
         preparedStatement = connection.prepareStatement(
-                "insert into  work_Records (?, ?, ?, ?, ?, ?,?)"
+                "insert into  work_Records (?, ?, ?, ?, ?)"
         );
-        preparedStatement.setInt(1, workRecord.getId());
-        preparedStatement.setInt(2, workRecord.getDaysWorked());
-        preparedStatement.setInt(3, workRecord.getOvertimeHours());
-        preparedStatement.setInt(4, workRecord.getUnderTimeHours());
-        preparedStatement.setDouble(5, workRecord.getAdvance());
-        preparedStatement.setTimestamp(6,workRecord.getStartMission() != null ? Timestamp.valueOf(workRecord.getStartMission()) :  null);
-        preparedStatement.setTimestamp(7, (workRecord.getEndMission() != null) ? Timestamp.valueOf(workRecord.getEndMission()) : null);
+        preparedStatement.setInt(1, workRecordMonthly.getId());
+        preparedStatement.setInt(2, workRecordMonthly.getDaysWorked());
+        preparedStatement.setString(3, workRecordMonthly.getOvertimeHours());
+        preparedStatement.setString(4, workRecordMonthly.getUnderTimeHours());
+        preparedStatement.setDouble(5, workRecordMonthly.getAdvance());
+
         preparedStatement.execute();
     }
 
     @Override
-    public void edit(WorkRecord workRecord) throws Exception {
+    public void edit(WorkRecordMonthly workRecordMonthly) throws Exception {
         preparedStatement = connection.prepareStatement(
-                "update work_Records set (days_worked=?,over_Time_Hours=?,under_Time_Hour=?,Advance=?,Start_mission=?,End_mission=? where id=?)"
+                "update work_Records set (days_worked=?,over_Time_Hours=?,under_Time_Hour=?,Advance=? where id=?)"
         );
-        preparedStatement.setInt(1, workRecord.getDaysWorked());
-        preparedStatement.setInt(2, workRecord.getOvertimeHours());
-        preparedStatement.setInt(3, workRecord.getUnderTimeHours());
-        preparedStatement.setDouble(4, workRecord.getAdvance());
-        preparedStatement.setTimestamp(5,workRecord.getStartMission() != null ? Timestamp.valueOf(workRecord.getStartMission()) :  null);
-        preparedStatement.setTimestamp(6, (workRecord.getEndMission() != null) ? Timestamp.valueOf(workRecord.getEndMission()) : null);
-        preparedStatement.setInt(7, workRecord.getId());
+        preparedStatement.setInt(1, workRecordMonthly.getDaysWorked());
+        preparedStatement.setString(2, workRecordMonthly.getOvertimeHours());
+        preparedStatement.setString(3, workRecordMonthly.getUnderTimeHours());
+        preparedStatement.setDouble(4, workRecordMonthly.getAdvance());
+
+        preparedStatement.setInt(5, workRecordMonthly.getId());
 
         preparedStatement.execute();
     }
@@ -60,28 +55,28 @@ public class WorkRecordRepository implements Repository<WorkRecord>{
     }
 
     @Override
-    public List<WorkRecord> findAll() throws Exception {
-        List<WorkRecord> workRecordList = new ArrayList<>();
+    public List<WorkRecordMonthly> findAll() throws Exception {
+        List<WorkRecordMonthly> workRecordMonthlyList = new ArrayList<>();
         connection = ConnectionProvider.getConnectionProvider().getconnection();
         preparedStatement = connection.prepareStatement("select * from Work_Records");
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
-            workRecordList.add(EntityMapper.workRecordMapper(resultSet));
+            workRecordMonthlyList.add(EntityMapper.workRecordMapper(resultSet));
         }
-        return workRecordList;
+        return workRecordMonthlyList;
     }
 
     @Override
-    public WorkRecord findById(int id) throws Exception {
-        WorkRecord workRecord = null;
+    public WorkRecordMonthly findById(int id) throws Exception {
+        WorkRecordMonthly workRecordMonthly = null;
         connection = ConnectionProvider.getConnectionProvider().getconnection();
         preparedStatement = connection.prepareStatement("select * from Work_Records where id=?");
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            workRecord = EntityMapper.workRecordMapper(resultSet);
+            workRecordMonthly = EntityMapper.workRecordMapper(resultSet);
         }
-        return workRecord;
+        return workRecordMonthly;
     }
 
     @Override

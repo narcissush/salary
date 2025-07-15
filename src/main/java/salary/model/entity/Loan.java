@@ -2,6 +2,7 @@ package salary.model.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import salary.model.entity.enums.LoanType;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,13 +15,15 @@ import java.util.List;
 public class Loan implements Serializable {
     private int id;
     private Employee employee;
-    private String loanType;
+    private LoanType loanType;
     private double loanAmount;           // مبلغ کل وام
     private double loanInterest;         // درصد بهره سالیانه
     private int totalInstallments;       // تعداد کل اقساط
     private LocalDate loanStartDate;         // تاریخ شروع بازپرداخت
+    private LocalDate loanFinishDate;         // تاریخ شروع بازپرداخت
 
-    List<LoanItem> LoanItems; // لیست اقساط این وام
+
+    List<LoanInstallment> loanInstallments; // لیست اقساط این وام
 
     // محاسبه مبلغ قسط ماهیانه
     public double getMonthlyInstallment() {
@@ -34,11 +37,11 @@ public class Loan implements Serializable {
 
     // محاسبه کل پرداختی
     public double getTotalPaid() {
-        if (LoanItems == null) {
+        if (loanInstallments == null) {
             return 0;
         } else {
             double total = 0;
-            for (LoanItem item : LoanItems) {
+            for (LoanInstallment item : loanInstallments) {
                 total += item.getAmountPaid();
             }
             return total;
@@ -47,7 +50,7 @@ public class Loan implements Serializable {
 
     // باقیمانده وام
     public double getRemainingAmount() {
-        int paidInstallments = (LoanItems == null) ? 0 : LoanItems.size();
+        int paidInstallments = (loanInstallments == null) ? 0 : loanInstallments.size();
         int remainingInstallments = totalInstallments - paidInstallments;
         return remainingInstallments * getMonthlyInstallment();
     }

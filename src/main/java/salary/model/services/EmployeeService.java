@@ -1,12 +1,13 @@
 package salary.model.services;
 
 import salary.model.entity.Employee;
+import salary.model.entity.EmploymentContract;
 import salary.model.repository.EmployeeRepository;
 
 import java.util.Collections;
 import java.util.List;
 
-public class EmployeeService  {
+public class EmployeeService{
 
     public static void save(Employee employee) throws Exception {
         try (EmployeeRepository employeeRepository = new EmployeeRepository()) {

@@ -23,31 +23,44 @@ public class SalaryComponents implements Serializable {
     EmploymentContract employmentContract=new EmploymentContract();
 
     public double getMonthlySalary(){
-        return payslip.getWorkRecord().getDaysWorked() * employmentContract.getDailySalary();
+        return payslip.getWorkRecordMonthly().getDaysWorked() * employmentContract.getDailySalary();
     }
 
     public double getTotalChildAllowance() {
         return payslip.getEmployee().getNumberOfChildren() *
-                (CHILD_ALLOWANCE / 30 * payslip.getWorkRecord().getDaysWorked());
+                (employmentContract.getChildAllowance() / 30 * payslip.getWorkRecordMonthly().getDaysWorked());
     }
 
     public double getMarriageAllowance(){
         if (payslip.getEmployee().getMarried()== Married.متاهل){
-            return (MARAGE_ALLOWANCE/30* payslip.getWorkRecord().getDaysWorked()) ;
+            return (employmentContract.getMarriageAllowance()/30* payslip.getWorkRecordMonthly().getDaysWorked()) ;
         }else return 0.0;
     }
 
     public double getHousingAllowance(){
-        return (HOUSING_ALLOWANCE/30 * payslip.getWorkRecord().getDaysWorked()) ;
+        return (employmentContract.getHousingAllowance()/30 * payslip.getWorkRecordMonthly().getDaysWorked()) ;
     }
 
     public double getFoodAllowance(){
-        return  (FOOD_ALLOWANCE/30 * payslip.getWorkRecord().getDaysWorked()) ;
+        return  (employmentContract.getFoodAllowance()/30 * payslip.getWorkRecordMonthly().getDaysWorked()) ;
     }
 
 
     public double getOverTime(){
-        return employmentContract.getDailySalary()/8* 1.4 * payslip.getWorkRecord().getOvertimeHours();
+
+        String input = payslip.getWorkRecordMonthly().getOvertimeHours();
+        String[] parts = input.split(":");
+
+        int hours = Integer.parseInt(parts[0]);
+        int minutes = Integer.parseInt(parts[1]);
+
+        double baseRate = employmentContract.getDailySalary() / 8.0;
+        double overtimeRate = baseRate * 1.4;
+
+        double overtimePay = hours * overtimeRate
+                + (minutes / 60.0) * overtimeRate;
+
+        return overtimePay;
     }
 
     public double getMissionAllowance() {
@@ -68,11 +81,5 @@ public class SalaryComponents implements Serializable {
                 getFoodAllowance()+
                 getOverTime()+
                 getMissionAllowance();
-
     }
-
-
-
-
-
 }

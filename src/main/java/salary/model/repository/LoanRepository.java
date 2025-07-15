@@ -21,35 +21,36 @@ public class LoanRepository implements Repository<Loan> {
     }
     @Override
     public void save(Loan loan) throws Exception {
-        loan.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "loan_seq"));
+        loan.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "loans_seq"));
         preparedStatement = connection.prepareStatement(
-                "insert into LOANS values (?, ?, ?, ?, ?, ?,?)"
+                "insert into LOANS values (?, ?, ?, ?, ?,?,?,?)"
         );
         preparedStatement.setInt(1, loan.getId());
         preparedStatement.setInt(2, loan.getEmployee().getId());
-        preparedStatement.setString(3, loan.getLoanType());
+        preparedStatement.setString(3, loan.getLoanType().name());
         preparedStatement.setDouble(4, loan.getLoanAmount());
         preparedStatement.setDouble(5, loan.getLoanInterest());
         preparedStatement.setInt(6, loan.getTotalInstallments());
-        preparedStatement.setDate(7, (loan.getLoanStartDate() != null) ? Date.valueOf(loan.getLoanStartDate()) : null);
+        preparedStatement.setDate(7,(loan.getLoanStartDate() != null) ? Date.valueOf(loan.getLoanStartDate()) : null);
+        preparedStatement.setDate(8,(loan.getLoanFinishDate() != null) ? Date.valueOf(loan.getLoanFinishDate()) : null);
+
         preparedStatement.execute();
 
     }
 
     @Override
     public void edit(Loan loan) throws Exception {
-        loan.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "loan_seq"));
         preparedStatement = connection.prepareStatement(
-                "update  LOANS set (Employee_id=?,loan_type=?,loan_amount=?,loan_interest=?,total_installments=?,loan_Start_Date=? where id=?)"
+                "update  LOANS set Employee_id=?,loan_type=?,loan_amount=?,loan_interest=?,total_installments=?,loan_start_date=?,loan_finish_date=? where id=?"
         );
         preparedStatement.setInt(1, loan.getEmployee().getId());
-        preparedStatement.setString(2, loan.getLoanType());
+        preparedStatement.setString(2, loan.getLoanType().name());
         preparedStatement.setDouble(3, loan.getLoanAmount());
         preparedStatement.setDouble(4, loan.getLoanInterest());
         preparedStatement.setInt(5, loan.getTotalInstallments());
-        preparedStatement.setDate(6, (loan.getLoanStartDate() != null) ? Date.valueOf(loan.getLoanStartDate()) : null);
-        preparedStatement.setInt(7, loan.getId());
-
+        preparedStatement.setDate(6,(loan.getLoanStartDate() != null) ? Date.valueOf(loan.getLoanStartDate()) : null);
+        preparedStatement.setDate(7,(loan.getLoanFinishDate() != null) ? Date.valueOf(loan.getLoanFinishDate()) : null);
+        preparedStatement.setInt(8, loan.getId());
         preparedStatement.execute();
 
     }

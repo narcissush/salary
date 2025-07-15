@@ -13,7 +13,7 @@ import java.io.Serializable;
 @SuperBuilder
 
 
-public class LoanItem implements Serializable {
+public class LoanInstallment implements Serializable {
     private int id;
     private Loan loan;               // وامی که این قسط به آن مربوط است
     private Payslip payslip;         // اگر با فیش حقوقی پرداخت شده

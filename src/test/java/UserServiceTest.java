@@ -9,10 +9,10 @@ import java.time.LocalDate;
 public class UserServiceTest {
     public static void main(String[] args) throws Exception {
         User user = User.builder()
-                .id(4)
+                .id(1)
                 .firstName("donya")
                 .lastName("hajizadeh")
-                .nationalId("0080386822")
+                .nationalId("0")
                 .education(Education.كارشناسي)
                 .married(Married.متاهل)
                 .numberOfChildren(2)
@@ -26,6 +26,6 @@ public class UserServiceTest {
 
         //System.out.println(UserService.findAll());
 
-        System.out.println(user);
+        //System.out.println(user);
     }
 }

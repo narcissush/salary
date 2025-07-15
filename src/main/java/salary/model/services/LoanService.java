@@ -8,7 +8,7 @@ import java.util.List;
 
 public class LoanService  {
 
-     static void save(Loan loan) throws Exception {
+     public static void save(Loan loan) throws Exception {
         try (LoanRepository loanRepository = new LoanRepository()) {
             loanRepository.save(loan);
         }

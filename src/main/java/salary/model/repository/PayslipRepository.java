@@ -25,7 +25,7 @@ public class PayslipRepository implements Repository<Payslip> {
         preparedStatement.setInt(1, payslip.getId());
         preparedStatement.setInt(2, payslip.getUser().getId());
         preparedStatement.setInt(3, payslip.getEmployee().getId());
-        preparedStatement.setInt(4, payslip.getWorkRecord().getId());
+        preparedStatement.setInt(4, payslip.getWorkRecordMonthly().getId());
         preparedStatement.setDate(5, (payslip.getIssueDate() != null) ? Date.valueOf(payslip.getIssueDate()) : null);
         preparedStatement.setString(6, payslip.getMonth());
         preparedStatement.setString(7, payslip.getYear());
@@ -41,7 +41,7 @@ public class PayslipRepository implements Repository<Payslip> {
         );
         preparedStatement.setInt(1, payslip.getUser().getId());
         preparedStatement.setInt(2, payslip.getEmployee().getId());
-        preparedStatement.setInt(3, payslip.getWorkRecord().getId());
+        preparedStatement.setInt(3, payslip.getWorkRecordMonthly().getId());
         preparedStatement.setDate(6, (payslip.getIssueDate() != null) ? Date.valueOf(payslip.getIssueDate()) : null);
         preparedStatement.setString(6, payslip.getMonth());
         preparedStatement.setString(7, payslip.getYear());
