@@ -1,10 +1,8 @@
-package salary.model;
+package salary.model.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import salary.model.entity.EmploymentContract;
-import salary.model.entity.Payslip;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -16,11 +14,12 @@ import java.time.LocalTime;
 
 public class Mission {
     private int id;
-    private Payslip payslip;
+    private Employee employee;
     private LocalDateTime startMission;
     private LocalDateTime endMission;
 
     public double calculatePayment(double dailySalary) {
+
         double baseHourlyRate = dailySalary / 8;
         double missionPercent = 0.6;
         double overtimeMultiplier = 1.4;

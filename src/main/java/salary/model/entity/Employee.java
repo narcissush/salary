@@ -20,7 +20,6 @@ public class Employee extends Person implements Serializable {
     private int id;
     private String insuranceNumber;
     private String bankAccountNumber;
-    private List<Loan> loans = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -28,7 +27,6 @@ public class Employee extends Person implements Serializable {
                 "id=" + id +
                 ", insuranceNumber='" + insuranceNumber + '\'' +
                 ", bankAccountNumber='" + bankAccountNumber + '\'' +
-                ", loans=" + loans +
                 "} " + super.toString();
     }
 

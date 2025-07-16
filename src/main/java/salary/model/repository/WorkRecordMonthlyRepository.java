@@ -20,29 +20,34 @@ public class WorkRecordMonthlyRepository implements Repository<WorkRecordMonthly
     public void save(WorkRecordMonthly workRecordMonthly) throws Exception {
         workRecordMonthly.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "work_Record_monthly_seq"));
         preparedStatement = connection.prepareStatement(
-                "insert into  work_Record_monthly (?, ?, ?, ?, ?,?)"
+                "insert into  work_Record_monthly values  (?, ?, ?, ?, ?,?,?, ?,?)"
         );
         preparedStatement.setInt(1, workRecordMonthly.getId());
-        preparedStatement.setInt(2, workRecordMonthly.getDaysWorked());
-        preparedStatement.setString(3, workRecordMonthly.getOvertimeHours());
-        preparedStatement.setString(4, workRecordMonthly.getUnderTimeHours());
-        preparedStatement.setString(5, workRecordMonthly.getLeave());
-        preparedStatement.setDouble(6, workRecordMonthly.getAdvance());
-
+        preparedStatement.setInt(2,workRecordMonthly.getEmployee().getId());
+        preparedStatement.setString(3, workRecordMonthly.getMonth().name());
+        preparedStatement.setString(4, workRecordMonthly.getYear().name());
+        preparedStatement.setInt(5, workRecordMonthly.getDaysWorked());
+        preparedStatement.setString(6, workRecordMonthly.getOvertimeHours());
+        preparedStatement.setString(7, workRecordMonthly.getUnderTimeHours());
+        preparedStatement.setString(8, workRecordMonthly.getLeave());
+        preparedStatement.setDouble(9, workRecordMonthly.getAdvance());
         preparedStatement.execute();
     }
 
     @Override
     public void edit(WorkRecordMonthly workRecordMonthly) throws Exception {
         preparedStatement = connection.prepareStatement(
-                "update work_Record_monthly set (days_worked=?,over_Time_Hours=?,under_Time_Hour=?,Leave=?,Advance=? where id=?)"
+                "update work_Record_monthly set (employee_id=?,month=?,year=?,days_worked=?,over_Time_Hours=?,under_Time_Hour=?,Leave=?,Advance=? where id=?)"
         );
-        preparedStatement.setInt(1, workRecordMonthly.getDaysWorked());
-        preparedStatement.setString(2, workRecordMonthly.getOvertimeHours());
-        preparedStatement.setString(3, workRecordMonthly.getUnderTimeHours());
-        preparedStatement.setString(4, workRecordMonthly.getLeave());
-        preparedStatement.setDouble(5, workRecordMonthly.getAdvance());
-        preparedStatement.setInt(6, workRecordMonthly.getId());
+        preparedStatement.setInt(1,workRecordMonthly.getEmployee().getId());
+        preparedStatement.setString(2, workRecordMonthly.getMonth().name());
+        preparedStatement.setString(3, workRecordMonthly.getYear().name());
+        preparedStatement.setInt(4, workRecordMonthly.getDaysWorked());
+        preparedStatement.setString(5, workRecordMonthly.getOvertimeHours());
+        preparedStatement.setString(6, workRecordMonthly.getUnderTimeHours());
+        preparedStatement.setString(7, workRecordMonthly.getLeave());
+        preparedStatement.setDouble(8, workRecordMonthly.getAdvance());
+        preparedStatement.setInt(9, workRecordMonthly.getId());
 
         preparedStatement.execute();
     }

@@ -78,7 +78,7 @@ public class EmploymentContractRepositiry  implements Repository<EmploymentContr
     @Override
     public void delete(int id) throws Exception {
         preparedStatement = connection.prepareStatement(
-                "delete from Employment_Contract where id=?");
+                "delete from Employment_Contracts where id=?");
         preparedStatement.setInt(1, id);
         preparedStatement.execute();
     }
@@ -87,7 +87,7 @@ public class EmploymentContractRepositiry  implements Repository<EmploymentContr
     public List findAll() throws Exception {
         List<EmploymentContract> employmentContractList = new ArrayList<>();
         connection = ConnectionProvider.getConnectionProvider().getconnection();
-        preparedStatement = connection.prepareStatement("select * from Employment_Contract");
+        preparedStatement = connection.prepareStatement("select * from Employment_Contracts");
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             employmentContractList.add(EntityMapper.EmploymentContractMapper(resultSet));
@@ -98,7 +98,7 @@ public class EmploymentContractRepositiry  implements Repository<EmploymentContr
     public EmploymentContract findById(int id) throws Exception {
         EmploymentContract employmentContract = null;
         connection = ConnectionProvider.getConnectionProvider().getconnection();
-        preparedStatement = connection.prepareStatement("select * from Employment_Contract where id=?");
+        preparedStatement = connection.prepareStatement("select * from Employment_Contracts where id=?");
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {

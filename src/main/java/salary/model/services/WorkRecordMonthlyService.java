@@ -11,7 +11,7 @@ public class WorkRecordMonthlyService {
 
     public static void save(WorkRecordMonthly workRecordMonthly) throws Exception {
         try (WorkRecordMonthlyRepository workRecordMonthlyRepository = new WorkRecordMonthlyRepository()) {
-            WorkRecordMonthlyService.save(workRecordMonthly);
+            workRecordMonthlyRepository.save(workRecordMonthly);
         }
     }
 

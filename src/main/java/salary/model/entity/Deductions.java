@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import salary.controller.AppState;
 
 import java.io.Serializable;
 
@@ -13,13 +14,12 @@ import java.io.Serializable;
 @SuperBuilder
 
 public class Deductions implements Serializable {
-    private int id;
-    private Payslip payslip;
-    List<LoanInstallment> loanList;
+        List<LoanInstallment> loanList;
+        SalaryComponents salaryComponents=new SalaryComponents();
 
     public double getTax() {
         double exemption = 240_000_000;
-        double taxable = Math.max(0, payslip.getSalaryComponents().getTotalSalaryComponents() - exemption);
+        double taxable = Math.max(0, salaryComponents.getTotalSalaryComponents() - exemption);
         double tax = 0;
 
         double[] limits = {240_000_000, 300_000_000, 380_000_000, 500_000_000, 667_000_000};
@@ -37,13 +37,13 @@ public class Deductions implements Serializable {
     }
 
     public double getInsurance() {
-        return payslip.getSalaryComponents().getTotalSalaryComponents() * 0.07;
+        return salaryComponents.getTotalSalaryComponents() * 0.07;
     }
 
     public double getUnderTime() {
 
         EmploymentContract employmentContract = new EmploymentContract();
-        String input = payslip.getWorkRecordMonthly().getUnderTimeHours();
+        String input = AppState.workRecordMonthly.getUnderTimeHours();
         String[] parts = input.split(":");
 
         int hours = Integer.parseInt(parts[0]);
@@ -59,7 +59,7 @@ public class Deductions implements Serializable {
     }
 
     public double getAdvance() {
-        return payslip.getWorkRecordMonthly().getAdvance();
+        return AppState.workRecordMonthly.getAdvance();
     }
 
     public double getLoanRepayment() {

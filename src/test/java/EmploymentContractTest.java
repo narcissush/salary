@@ -1,3 +1,4 @@
+import salary.controller.AppState;
 import salary.model.entity.Employee;
 import salary.model.entity.EmploymentContract;
 import salary.model.entity.enums.*;
@@ -8,12 +9,12 @@ import java.time.LocalDate;
 
 public class EmploymentContractTest {
     public static void main(String[] args) throws Exception {
-        Employee employee = new Employee();
-        employee = EmployeeService.findById(2);
+
+
         EmploymentContract employmentContract =
                 EmploymentContract.builder()
                         .id(1)
-                        .employee(employee)
+                        .employee(AppState.employee)
                         .issuancePersonnelOrderDate(Year.Y1404)
                         .startContractDate(LocalDate.of(2025, 1, 1))
                         .endContractDate(LocalDate.of(2025, 12, 31))
@@ -32,6 +33,9 @@ public class EmploymentContractTest {
                         .foodAllowance(22_000_000)
                         .build();
         EmploymentContractService.save(employmentContract);
-        System.out.println(employmentContract);
+        AppState.employmentContract=EmploymentContractService.findById(employmentContract.getId());
+        System.out.println(AppState.employmentContract);
+        //System.out.println(EmploymentContractService.findAll());
+        //System.out.println(employmentContract);
     }
 }

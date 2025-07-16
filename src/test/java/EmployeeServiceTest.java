@@ -1,3 +1,4 @@
+import salary.controller.AppState;
 import salary.model.entity.Employee;
 import salary.model.entity.enums.*;
 import salary.model.services.EmployeeService;
@@ -21,8 +22,7 @@ public class EmployeeServiceTest {
                 .build();
         EmployeeService.save(employee);
         //EmployeeService.edit(employee);
-
-
-        System.out.println(employee);
+        AppState.employee=EmployeeService.findById(employee.getId());
+        System.out.println(AppState.employee);
     }
 }

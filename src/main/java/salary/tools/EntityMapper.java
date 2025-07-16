@@ -1,7 +1,9 @@
 package salary.tools;
 
+import salary.controller.AppState;
 import salary.model.entity.*;
 import salary.model.entity.enums.*;
+import salary.model.services.EmployeeService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,11 +44,10 @@ public class EntityMapper {
     }
 
     public static Loan loanMapper(ResultSet resultSet) throws SQLException {
-        Employee employee = new Employee();
         return Loan
                 .builder()
                 .id(resultSet.getInt("id"))
-                .employee(employee)
+                .employee(AppState.employee)
                 .loanType(LoanType.valueOf(resultSet.getString("loan_type")))
                 .loanAmount(resultSet.getDouble("loan_Amount"))
                 .loanInterest(resultSet.getDouble("loan_Interest"))
@@ -58,82 +59,52 @@ public class EntityMapper {
     }
 
     public static LoanInstallment loanItemMapper(ResultSet resultSet) throws SQLException {
-        Loan loan = new Loan();
-        Payslip payslip = new Payslip();
+
         return LoanInstallment
                 .builder()
                 .id(resultSet.getInt("id"))
-                .loan(loan)
+                //.loan(loan)
                 .paymentDate(resultSet.getDate("payment_Date") == null ? null : resultSet.getDate("payment_Date").toLocalDate())
                 .amountPaid(resultSet.getDouble("amount_Paid"))
-                .payslip(payslip)
+                .payslip(AppState.payslip)
                 .build();
     }
 
     public static Payslip payslipMapper(ResultSet resultSet) throws SQLException {
-        User user = new User();
-        Employee employee = new Employee();
-        WorkRecordMonthly workRecordMonthly = new WorkRecordMonthly();
-        SalaryComponents salaryComponents = new SalaryComponents();
-        Deductions deductions = new Deductions();
+
         return Payslip
                 .builder()
                 .id(resultSet.getInt("id"))
-                .user(user)
-                .employee(employee)
-                .workRecordMonthly(workRecordMonthly)
-                .salaryComponents(salaryComponents)
-                .deductions(deductions)
+                .user(AppState.user)
+                .employee(AppState.employee)
+                .workRecordMonthly(AppState.workRecordMonthly)
                 .issueDate(resultSet.getDate("issue_Date") == null ? null : resultSet.getDate("issue_Date").toLocalDate())
-                .month(Month.valueOf(resultSet.getString("month")))
-                .year(Year.valueOf(resultSet.getString("year")))
-                .build();
 
+                .build();
     }
 
-    public static SalaryComponents salaryComponentsMapper(ResultSet resultSet) throws SQLException {
-        Payslip payslip = new Payslip();
-        return SalaryComponents
-                .builder()
-                .id(resultSet.getInt("id"))
-                .payslip(payslip)
-                .build();
-
-    }
-
-    public static Deductions deductionsMapper(ResultSet resultSet) throws SQLException {
-        Payslip payslip = new Payslip();
-        return Deductions
-                .builder()
-                .id(resultSet.getInt("id"))
-                .payslip(payslip)
-                .build();
-
-    }
 
     public static WorkRecordMonthly workRecordMonthlyMapper(ResultSet resultSet) throws SQLException {
-        Payslip payslip = new Payslip();
+
         return WorkRecordMonthly.builder()
                 .id(resultSet.getInt("id"))
-                .payslip(payslip)
+                .month(Month.valueOf(resultSet.getString("month")))
+                .year(Year.valueOf(resultSet.getString("year")))
+                .employee(AppState.employee)
                 .daysWorked(resultSet.getInt("days_worked"))
                 .overtimeHours(resultSet.getString("over_time_Hours"))
                 .underTimeHours(resultSet.getString("under_time_Hours"))
                 .leave(resultSet.getString("leave")) // corrected column name
                 .advance(resultSet.getDouble("advance"))
-
                 .build();
-
     }
 
     public static EmploymentContract  EmploymentContractMapper (ResultSet resultSet) throws SQLException {
-            Employee employee = new Employee();
-            return
 
-                    EmploymentContract.builder()
+        return               EmploymentContract.builder()
                             .id(resultSet.getInt("id"))
-                            .employee(employee)
-                            .issuancePersonnelOrderDate(Year.valueOf(resultSet.getString("issuance_Personnel_OrderDate")))
+                            .employee(AppState.employee)
+                            .issuancePersonnelOrderDate(Year.valueOf(resultSet.getString("issuance_Personnel_Order_Date")))
                             .startContractDate(resultSet.getDate("start_Contract_Date") == null ? null : resultSet.getDate("start_Contract_Date").toLocalDate())
                             .endContractDate(resultSet.getDate("end_Contract_Date") == null ? null : resultSet.getDate("end_Contract_Date").toLocalDate())
                             .contractType(ContractType.valueOf(resultSet.getString("Contract_Type")))
@@ -146,7 +117,7 @@ public class EntityMapper {
                             .bazarKar(resultSet.getDouble("bazar_Kar"))
                             .fogholadeShoghl(resultSet.getDouble("fogholade_Shoghl"))
                             .housingAllowance(resultSet.getDouble("HOUSING_ALLOWANCE"))
-                            .marriageAllowance(resultSet.getDouble("MARAGE_ALLOWANCE"))
+                            .marriageAllowance(resultSet.getDouble("MARRIAGE_ALLOWANCE"))
                             .childAllowance(resultSet.getDouble("CHILD_ALLOWANCE"))
                             .foodAllowance(resultSet.getDouble("FOOD_ALLOWANCE"))
                             .build();

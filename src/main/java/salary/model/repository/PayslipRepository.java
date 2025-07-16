@@ -20,15 +20,13 @@ public class PayslipRepository implements Repository<Payslip> {
     public void save(Payslip payslip) throws Exception {
         payslip.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "payslip_seq"));
         preparedStatement = connection.prepareStatement(
-                "insert into Payslips values (?, ?, ?, ?, ?, ?,?)"
+                "insert into Payslips values (?, ?, ?, ?, ?)"
         );
         preparedStatement.setInt(1, payslip.getId());
         preparedStatement.setInt(2, payslip.getUser().getId());
         preparedStatement.setInt(3, payslip.getEmployee().getId());
         preparedStatement.setInt(4, payslip.getWorkRecordMonthly().getId());
         preparedStatement.setDate(5, (payslip.getIssueDate() != null) ? Date.valueOf(payslip.getIssueDate()) : null);
-        preparedStatement.setString(6, payslip.getMonth().name());
-        preparedStatement.setString(7, payslip.getYear().name());
 
         preparedStatement.execute();
     }
@@ -42,10 +40,8 @@ public class PayslipRepository implements Repository<Payslip> {
         preparedStatement.setInt(1, payslip.getUser().getId());
         preparedStatement.setInt(2, payslip.getEmployee().getId());
         preparedStatement.setInt(3, payslip.getWorkRecordMonthly().getId());
-        preparedStatement.setDate(6, (payslip.getIssueDate() != null) ? Date.valueOf(payslip.getIssueDate()) : null);
-        preparedStatement.setString(6, payslip.getMonth().name());
-        preparedStatement.setString(7, payslip.getYear().name());
-        preparedStatement.setInt(8, payslip.getId());
+        preparedStatement.setDate(4, (payslip.getIssueDate() != null) ? Date.valueOf(payslip.getIssueDate()) : null);
+        preparedStatement.setInt(5, payslip.getId());
         preparedStatement.execute();
 
     }
