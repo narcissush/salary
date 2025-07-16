@@ -85,8 +85,8 @@ public class EntityMapper {
                 .salaryComponents(salaryComponents)
                 .deductions(deductions)
                 .issueDate(resultSet.getDate("issue_Date") == null ? null : resultSet.getDate("issue_Date").toLocalDate())
-                .month(resultSet.getString("month"))
-                .year(resultSet.getString("year"))
+                .month(Month.valueOf(resultSet.getString("month")))
+                .year(Year.valueOf(resultSet.getString("year")))
                 .build();
 
     }
@@ -111,14 +111,15 @@ public class EntityMapper {
 
     }
 
-    public static WorkRecordMonthly workRecordMapper(ResultSet resultSet) throws SQLException {
+    public static WorkRecordMonthly workRecordMonthlyMapper(ResultSet resultSet) throws SQLException {
         Payslip payslip = new Payslip();
         return WorkRecordMonthly.builder()
                 .id(resultSet.getInt("id"))
                 .payslip(payslip)
                 .daysWorked(resultSet.getInt("days_worked"))
                 .overtimeHours(resultSet.getString("over_time_Hours"))
-                .underTimeHours(resultSet.getString("under_time_Hours")) // corrected column name
+                .underTimeHours(resultSet.getString("under_time_Hours"))
+                .leave(resultSet.getString("leave")) // corrected column name
                 .advance(resultSet.getDouble("advance"))
 
                 .build();

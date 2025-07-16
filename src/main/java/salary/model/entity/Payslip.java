@@ -3,6 +3,8 @@ package salary.model.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import salary.model.entity.enums.Month;
+import salary.model.entity.enums.Year;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,8 +21,8 @@ public class Payslip implements Serializable {
     private SalaryComponents salaryComponents;
     private Deductions deductions;
     private LocalDate issueDate;
-    private String month;
-    private String year;
+    private Month month;
+    private Year year;
 
 
     public double totalSalary(){

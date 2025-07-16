@@ -117,7 +117,7 @@ WITH base_data AS (
              JOIN users u ON p.users_id = u.id
              JOIN employees e ON p.employees_id = e.id
              JOIN employmentcontract c ON c.employee_id = e.id
-             JOIN work_records wr ON p.work_records_id = wr.id
+             JOIN "Work_Record-Monthly" wr ON p.Work_Record_Monthly = wr.id
              LEFT JOIN MISSIONS m ON m.payslips = p.id
 )
 SELECT

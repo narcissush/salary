@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class EmploymentContractTest {
     public static void main(String[] args) throws Exception {
         Employee employee = new Employee();
-        employee = EmployeeService.findById(3);
+        employee = EmployeeService.findById(2);
         EmploymentContract employmentContract =
                 EmploymentContract.builder()
                         .id(1)
@@ -23,9 +23,9 @@ public class EmploymentContractTest {
                         .position(Position.رئیس)
                         .hireDate(LocalDate.of(2025, 1, 1))
                         .terminationDate(null)
-                        .dailySalary(8_500_000)
-                        .bazarKar(90_000_000)
-                        .fogholadeShoghl(100_000_000)
+                        .dailySalary(5_500_000)
+                        .bazarKar(70_000_000)
+                        .fogholadeShoghl(80_000_000)
                         .housingAllowance(9_000_000)
                         .marriageAllowance(5_000_000)
                         .childAllowance(9_316_038)

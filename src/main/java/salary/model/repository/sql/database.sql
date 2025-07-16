@@ -57,7 +57,7 @@ CREATE TABLE Employment_Contracts
 create sequence Employment_Contracts_seq start with 1 increment by 1;
 
 
-CREATE TABLE work_records
+CREATE TABLE Work_Record_Monthly
 (
     id               number primary key,
     days_Worked      number,
@@ -66,7 +66,20 @@ CREATE TABLE work_records
     leave               number,
     advance          numeric(12, 2)
 );
-create sequence work_records_seq start with 1 increment by 1;
+create sequence Work_Record_Monthly_seq start with 1 increment by 1;
+
+
+create TABLE Payslips
+(
+    id              number primary key,
+    users_id        number references users (id),
+    employees_id    number REFERENCES employees (id),
+    work_Records_id number REFERENCES Work_Record_Monthly (id),
+    issueDate       date,
+    month           nvarchar2(10),
+    year            nvarchar2(4)
+);
+create sequence Payslips_seq start with 1 increment by 1;
 
 CREATE TABLE Missions
 (
@@ -76,19 +89,6 @@ CREATE TABLE Missions
     end_mission      Timestamp
 );
 create sequence Missions_seq start with 1 increment by 1;
-
-
-create TABLE Payslips
-(
-    id              number primary key,
-    users_id        number references users (id),
-    employees_id    number REFERENCES employees (id),
-    work_Records_id number REFERENCES work_records (id),
-    issueDate       date,
-    month           nvarchar2(10),
-    year            nvarchar2(4)
-);
-create sequence Payslips_seq start with 1 increment by 1;
 
 
 CREATE TABLE loans

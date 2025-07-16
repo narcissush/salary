@@ -1,15 +1,11 @@
-import salary.model.entity.Employee;
 import salary.model.entity.Loan;
 import salary.model.entity.LoanInstallment;
 import salary.model.entity.Payslip;
-import salary.model.entity.enums.LoanType;
 import salary.model.services.LoanInstallmentService;
 import salary.model.services.LoanService;
-import salary.model.services.PaysLipService;
 
 import java.time.LocalDate;
 
-import static salary.controller.AppState.employee;
 
 public class LoanInstallmentsServiceTest {
     public static void main(String[] args)  throws Exception {

@@ -8,19 +8,19 @@ public class EmployeeServiceTest {
     public static void main(String[] args) throws Exception {
         Employee employee = Employee.builder()
                 .id(3)
-                .firstName("narges")
-                .lastName("hajizadeh")
-                .nationalId("0080386822")
+                .firstName("mohsen")
+                .lastName("roshanaei")
+                .nationalId("0322410762")
                 .education(Education.كارشناسي)
                 .married(Married.متاهل)
                 .numberOfChildren(2)
-                .gender(Gender.زن)
-                .birthDate(LocalDate.of(1986,04,21))
-                .insuranceNumber("0")
-                .bankAccountNumber("456789")
+                .gender(Gender.مرد)
+                .birthDate(LocalDate.of(1984,04,23))
+                .insuranceNumber("1489635")
+                .bankAccountNumber("1111111")
                 .build();
-        //EmployeeService.save(employee);
-        EmployeeService.edit(employee);
+        EmployeeService.save(employee);
+        //EmployeeService.edit(employee);
 
 
         System.out.println(employee);

@@ -21,11 +21,11 @@ public class UserServiceTest {
                 .username("1")
                 .password("1")
                 .build();
-        //UserService.save(user);
-        UserService.edit(user);
+        UserService.save(user);
+        //UserService.edit(user);
 
         //System.out.println(UserService.findAll());
 
-        //System.out.println(user);
+        System.out.println(user);
     }
 }
