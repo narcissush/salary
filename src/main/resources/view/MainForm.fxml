@@ -1,37 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.MainFormController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.MainFormController">
    <children>
-      <MenuBar>
+      <MenuBar minHeight="35.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu fx:id="reportMenu" mnemonicParsing="false" text="گزارشات">
             <items>
               <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+            <Menu fx:id="importMenu" mnemonicParsing="false" text="ورود اطلاعات">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Delete" />
+               </items>
+            </Menu>
+          <Menu fx:id="userMenu" mnemonicParsing="false" text="کاربر">
             <items>
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu fx:id="aboutUsMenu" mnemonicParsing="false" text="درباره ما">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
           </Menu>
         </menus>
+         <VBox.margin>
+            <Insets top="3.0" />
+         </VBox.margin>
       </MenuBar>
-      <SplitPane prefHeight="780.0" prefWidth="1000.0">
-          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
-              <fx:include source="EmployeeList.fxml"/>
+      <SplitPane dividerPositions="0.5" prefHeight="780.0" prefWidth="1200.0">
+          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+            <children>
+               <SplitPane dividerPositions="0.06682027649769585" orientation="VERTICAL" prefHeight="870.0" prefWidth="307.0">
+                 <items>
+                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <children>
+                           <HBox prefHeight="54.0" prefWidth="305.0">
+                              <children>
+                                 <Label text="جستجو">
+                                    <HBox.margin>
+                                       <Insets left="10.0" top="15.0" />
+                                    </HBox.margin>
+                                 </Label>
+                                 <TextField fx:id="searchIdTxt" prefHeight="35.0" prefWidth="100.0" promptText="کد پرسنلی">
+                                    <HBox.margin>
+                                       <Insets left="10.0" top="10.0" />
+                                    </HBox.margin>
+                                 </TextField>
+                                 <TextField fx:id="searchNameFamilyTxt" prefHeight="35.0" prefWidth="120.0" promptText="نام/نام خانوادگی">
+                                    <HBox.margin>
+                                       <Insets left="10.0" top="10.0" />
+                                    </HBox.margin>
+                                 </TextField>
+                              </children>
+                           </HBox>
+                        </children>
+                     </AnchorPane>
+                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="160.0">
+                        <children>
+                           <TableView prefHeight="715.0" prefWidth="305.0">
+                             <columns>
+                               <TableColumn prefWidth="75.0" text="کد پرسنلی" />
+                               <TableColumn prefWidth="229.0" text="نام و نام خانوادگی" />
+                             </columns>
+                           </TableView>
+                        </children>
+                     </AnchorPane>
+                 </items>
+               </SplitPane>
+            </children>
           </AnchorPane>
+         <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <children>
+               <TabPane prefHeight="780.0" prefWidth="883.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="117.0">
+                 <tabs>
+                   <Tab fx:id="employee" text="پرسنلی">
+                       <content>
+                           <fx:include source="EmploreeTab.fxml" />
+                       </content>
+                   </Tab>
+                   <Tab text="حکم">
+                       <content>
+                           <fx:include source="EmploymentContractTab.fxml" />
+                       </content>
+                   </Tab>
+                     <Tab text="وام">
+
+                     </Tab>
+                     <Tab text="حقوق">
+                       <content>
+                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                       </content>
+                     </Tab>
+                     <Tab text="تسویه">
+                       <content>
+                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                       </content>
+                     </Tab>
+                 </tabs>
+               </TabPane>
+            </children>
+         </AnchorPane>
 
       </SplitPane>
 
