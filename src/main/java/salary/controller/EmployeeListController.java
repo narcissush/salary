@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import salary.FormManager;
-import salary.controller.MainFormController;
 
 import salary.model.entity.Employee;
 import salary.model.services.EmployeeService;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static salary.FormManager.employeeTabController;
+import static salary.FormManager.mainFormController;
 
 public class EmployeeListController implements Initializable {
     @FXML
@@ -32,13 +31,15 @@ public class EmployeeListController implements Initializable {
     private TableColumn<Employee, String> employeeNameFamilyCol;
 
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try {
 
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources)  {
+        FormManager formManager = new FormManager();
+
+        try {
             fillEmployeeTable(EmployeeService.findAll());
-            AppState.employee = EmployeeService.findById(1);
-            if (AppState.employee != null) employeeTabController.setEmployee(AppState.employee);
+            formManager.showEmployeeTabController().setEmployee();
 
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
@@ -46,21 +47,27 @@ public class EmployeeListController implements Initializable {
         }
 
         EventHandler<Event> tableChangeEvent = (mouseEvent -> {
-           AppState.employee = employeeTable.getSelectionModel().getSelectedItem();
-            employeeTabController.setEmployee(AppState.employee);
+            try {
+                Employee employee = employeeTable.getSelectionModel().getSelectedItem();
+                AppState.employee = employee;
+                mainFormController.EmployeeSelected(employee);
+
+            }catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+                alert.show();
+            }
         });
         employeeTable.setOnMouseReleased(tableChangeEvent);
         employeeTable.setOnKeyReleased(tableChangeEvent);
 
+
         searchIdTxt.textProperty().addListener((observable, oldValue, newValue) -> {
+            List<Employee> list = new ArrayList<>();
              try {
                  if (!searchIdTxt.getText().isEmpty()) {
-                     Employee employee = EmployeeService.findById(Integer.parseInt(searchIdTxt.getText()));
-                     List<Employee> list = new ArrayList<>();
-                     list.add(employee);
+                     list.add(EmployeeService.findById(Integer.parseInt(searchIdTxt.getText())));
                      fillEmployeeTable(list);
-                 }
-                 else {
+                 } else {
                      fillEmployeeTable(EmployeeService.findAll());
                  }
             }catch (Exception e) {

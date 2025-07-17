@@ -51,7 +51,7 @@
                  <tabs>
                    <Tab fx:id="employeeTab" text="پرسنلی">
                        <content>
-                           <fx:include source="EmployeeTab.fxml" />
+                           <fx:include fx:id="employeeTabInclude" source="EmployeeTab.fxml" />
                        </content>
                    </Tab>
                    <Tab fx:id="employeeContractTab" text="حکم">
