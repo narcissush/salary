@@ -1,5 +1,6 @@
 package salary.model.repository;
 
+import salary.controller.AppState;
 import salary.model.entity.User;
 import salary.tools.ConnectionProvider;
 import salary.tools.EntityMapper;
@@ -91,17 +92,16 @@ public class UserRepository implements Repository<User> {
     }
 
     public User findByUserAndPassword(String username,String password) throws Exception {
-        User user = null;
         connection = ConnectionProvider.getConnectionProvider().getconnection();
-        preparedStatement = connection.prepareStatement("select * from userS where user_name=? and password=?");
+        preparedStatement = connection.prepareStatement("select * from USERS where user_name=? and password=?");
         preparedStatement.setString(1, username);
-        preparedStatement.setString(1, password);
+        preparedStatement.setString(2, password);
 
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            user = EntityMapper.userMapper(resultSet);
+            AppState.user = EntityMapper.userMapper(resultSet);
         }
-        return user;
+        return AppState.user;
     }
 
     @Override

@@ -9,8 +9,8 @@ public class EmployeeServiceTest {
     public static void main(String[] args) throws Exception {
         Employee employee = Employee.builder()
                 .id(3)
-                .firstName("mohsen")
-                .lastName("roshanaei")
+                .firstName("محس")
+                .lastName("روشنایی")
                 .nationalId("0322410762")
                 .education(Education.كارشناسي)
                 .married(Married.متاهل)

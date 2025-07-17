@@ -29,5 +29,8 @@ public class Employee extends Person implements Serializable {
                 ", bankAccountNumber='" + bankAccountNumber + '\'' +
                 "} " + super.toString();
     }
+    public String getFullName() {
+        return super.getFullName();
+    }
 
 }
