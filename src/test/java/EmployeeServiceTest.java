@@ -1,3 +1,4 @@
+import lombok.Data;
 import salary.controller.AppState;
 import salary.model.entity.Employee;
 import salary.model.entity.enums.*;
@@ -8,20 +9,26 @@ import java.time.LocalDate;
 public class EmployeeServiceTest {
     public static void main(String[] args) throws Exception {
         Employee employee = Employee.builder()
-                .id(3)
-                .firstName("محس")
-                .lastName("روشنایی")
-                .nationalId("0322410762")
+
+                .id(6)
+                .firstName("نرگس")
+                .lastName("حاجی زاده")
+                .nationalId("0080386822")
+                .fatherName("علی")
+                .certificateNumber("17016")
+                .birthDate(LocalDate.of(1986,04,21))
+                .birthPlace(City.تهران)
+                .gender(Gender.زن)
                 .education(Education.كارشناسي)
-                .married(Married.متاهل)
-                .numberOfChildren(2)
-                .gender(Gender.مرد)
-                .birthDate(LocalDate.of(1984,04,23))
-                .insuranceNumber("1489635")
-                .bankAccountNumber("1111111")
+                .major(Major.نرم_افزار_کامپیوتر)
+                .marriage(Marriage.متاهل)
+                .numberOfChildren(1)
+                .phoneNumber("09128179120")
+                .insuranceNumber("111111")
+                .bankAccountNumber("222222")
                 .build();
-        EmployeeService.save(employee);
-        //EmployeeService.edit(employee);
+        //EmployeeService.save(employee);
+        EmployeeService.edit(employee);
         AppState.employee=EmployeeService.findById(employee.getId());
         System.out.println(AppState.employee);
     }

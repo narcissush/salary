@@ -1,5 +1,5 @@
 package salary.model.entity.enums;
 
-public enum Married {
+public enum Marriage {
     مجرد,متاهل
 }

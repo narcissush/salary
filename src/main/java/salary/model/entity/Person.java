@@ -3,9 +3,7 @@ package salary.model.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import salary.model.entity.enums.Education;
-import salary.model.entity.enums.Gender;
-import salary.model.entity.enums.Married;
+import salary.model.entity.enums.*;
 import salary.tools.DataConvert;
 
 import java.io.Serializable;
@@ -20,11 +18,16 @@ public abstract class Person implements Serializable {
     private String firstName;
     private String lastName;
     private String nationalId;
-    private Education education;
-    private Married married;
-    private int numberOfChildren;
-    private Gender gender;
+    private String fatherName;
+    private String certificateNumber;
     private LocalDate birthDate;
+    private City birthPlace;
+    private Gender gender;
+    private Education education;
+    private Major major;
+    private Marriage marriage;
+    private int numberOfChildren;
+    private String phoneNumber;
 
 
     public String getFullName(){

@@ -23,18 +23,29 @@ public class UserRepository implements Repository<User> {
         user.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "users_seq"));
 
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO users (id, first_name, last_name, national_id, education, married, number_of_children, gender, birth_date, user_name, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                "INSERT INTO users (" +
+                        "id, first_Name, last_Name, national_Id, father_name, " +
+                        "certificate_Number, birth_Date, birth_Place, gender, " +
+                        "education, major, marriage, number_Of_Children, " +
+                        "Phone_number, user_name, pass_word" +
+                        ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        );
         preparedStatement.setInt(1, user.getId());
         preparedStatement.setString(2, user.getFirstName());
         preparedStatement.setString(3, user.getLastName());
         preparedStatement.setString(4, user.getNationalId());
-        preparedStatement.setString(5, user.getEducation().name());
-        preparedStatement.setString(6, user.getMarried().name());
-        preparedStatement.setInt(7, user.getNumberOfChildren());
-        preparedStatement.setString(8, user.getGender().name());
-        preparedStatement.setDate(9, (user.getBirthDate() != null) ? Date.valueOf(user.getBirthDate()) : null);
-        preparedStatement.setString(10, user.getUsername());
-        preparedStatement.setString(11, user.getPassword());
+        preparedStatement.setString(5, user.getFatherName());
+        preparedStatement.setString(6, user.getCertificateNumber());
+        preparedStatement.setDate(7, (user.getBirthDate() != null) ? Date.valueOf(user.getBirthDate()) : null);
+        preparedStatement.setString(8, user.getBirthPlace().name());
+        preparedStatement.setString(9, user.getGender().name());
+        preparedStatement.setString(10, user.getEducation().name());
+        preparedStatement.setString(11, user.getMajor().name());
+        preparedStatement.setString(12, user.getMarriage().name());
+        preparedStatement.setInt(13, user.getNumberOfChildren());
+        preparedStatement.setString(14, user.getPhoneNumber());
+        preparedStatement.setString(15, user.getUsername());
+        preparedStatement.setString(16, user.getPassword());
 
         preparedStatement.execute();
     }
@@ -42,19 +53,28 @@ public class UserRepository implements Repository<User> {
     @Override
     public void edit(User user) throws Exception {
         preparedStatement = connection.prepareStatement(
-                "update users set first_Name=?,last_Name=?,national_Id=?,education=?,married=?,number_Of_Children=?,gender=?,birth_Date=?,user_name=?,password=? where id=?"
-        );
+                "UPDATE Users SET " +
+                        "first_Name = ?, last_Name = ?, national_Id = ?, father_name = ?, " +
+                        "certificate_Number = ?, birth_Date = ?, birth_Place = ?, gender = ?, " +
+                        "education = ?, major = ?, marriage = ?, number_Of_Children = ?, " +
+                        "Phone_number = ?, user_name = ?, pass_word = ? " +
+                        "WHERE id = ?");
         preparedStatement.setString(1, user.getFirstName());
         preparedStatement.setString(2, user.getLastName());
         preparedStatement.setString(3, user.getNationalId());
-        preparedStatement.setString(4, user.getEducation().name());
-        preparedStatement.setString(5, user.getMarried().name());
-        preparedStatement.setInt(6, user.getNumberOfChildren());
-        preparedStatement.setString(7, user.getGender().name());
-        preparedStatement.setDate(8, (user.getBirthDate() != null) ? Date.valueOf(user.getBirthDate()) : null);
-        preparedStatement.setString(9, user.getUsername());
-        preparedStatement.setString(10, user.getPassword());
-        preparedStatement.setInt(11, user.getId());
+        preparedStatement.setString(4, user.getFatherName());
+        preparedStatement.setString(5, user.getCertificateNumber());
+        preparedStatement.setDate(6, (user.getBirthDate() != null) ? Date.valueOf(user.getBirthDate()) : null);
+        preparedStatement.setString(7, user.getBirthPlace().name());
+        preparedStatement.setString(8, user.getGender().name());
+        preparedStatement.setString(9, user.getEducation().name());
+        preparedStatement.setString(10, user.getMajor().name());
+        preparedStatement.setString(11, user.getMarriage().name());
+        preparedStatement.setInt(12, user.getNumberOfChildren());
+        preparedStatement.setString(13, user.getPhoneNumber());
+        preparedStatement.setString(14, user.getUsername());
+        preparedStatement.setString(15, user.getPassword());
+        preparedStatement.setInt(16, user.getId());
         preparedStatement.execute();
     }
 
@@ -70,7 +90,7 @@ public class UserRepository implements Repository<User> {
     public List<User> findAll() throws Exception {
         List<User> userList = new ArrayList<>();
         connection = ConnectionProvider.getConnectionProvider().getconnection();
-        preparedStatement = connection.prepareStatement("select * from users order by last_name");
+        preparedStatement = connection.prepareStatement("select * from users order by id");
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             userList.add(EntityMapper.userMapper(resultSet));

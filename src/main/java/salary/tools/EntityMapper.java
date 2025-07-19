@@ -3,7 +3,6 @@ package salary.tools;
 import salary.controller.AppState;
 import salary.model.entity.*;
 import salary.model.entity.enums.*;
-import salary.model.services.EmployeeService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,15 +12,20 @@ public class EntityMapper {
         return Employee
                 .builder()
                 .id(resultSet.getInt("id"))
-                .firstName(resultSet.getString("first_name"))
-                .lastName(resultSet.getString("last_name"))
-                .nationalId(resultSet.getString("national_id"))
-                .education(Education.valueOf(resultSet.getString("Education")))
-                .married(Married.valueOf(resultSet.getString("married")))
-                .numberOfChildren(resultSet.getInt("number_of_children"))
+                .firstName(resultSet.getString("first_Name"))
+                .lastName(resultSet.getString("last_Name"))
+                .nationalId(resultSet.getString("national_Id"))
+                .fatherName(resultSet.getString("father_name"))
+                .certificateNumber(resultSet.getString("certificate_Number"))
+                .birthDate(resultSet.getDate("birth_Date").toLocalDate())
+                .birthPlace(City.valueOf(resultSet.getString("birth_Place")))
                 .gender(Gender.valueOf(resultSet.getString("gender")))
-                .birthDate(resultSet.getDate("BIRTH_DATE") == null ? null : resultSet.getDate("BIRTH_DATE").toLocalDate())
-                .insuranceNumber(resultSet.getString("Insurance_number"))
+                .education(Education.valueOf(resultSet.getString("education")))
+                .major(Major.valueOf(resultSet.getString("major")))
+                .marriage(Marriage.valueOf(resultSet.getString("marriage")))
+                .numberOfChildren(resultSet.getInt("number_Of_Children"))
+                .phoneNumber(resultSet.getString("Phone_number"))
+                .insuranceNumber(resultSet.getString("insurance_Number"))
                 .bankAccountNumber(resultSet.getString("bank_Account_Number"))
                 .build();
     }
@@ -30,16 +34,21 @@ public class EntityMapper {
         return User
                 .builder()
                 .id(resultSet.getInt("id"))
-                .firstName(resultSet.getString("first_name"))
-                .lastName(resultSet.getString("last_name"))
-                .nationalId(resultSet.getString("national_id"))
-                .education(Education.valueOf(resultSet.getString("Education")))
-                .married(Married.valueOf(resultSet.getString("married")))
-                .numberOfChildren(resultSet.getInt("number_of_children"))
-                .gender(Gender.valueOf(resultSet.getString("GENDER")))
-                .birthDate(resultSet.getDate("BIRTH_DATE") == null ? null : resultSet.getDate("BIRTH_DATE").toLocalDate())
+                .firstName(resultSet.getString("first_Name"))
+                .lastName(resultSet.getString("last_Name"))
+                .nationalId(resultSet.getString("national_Id"))
+                .fatherName(resultSet.getString("father_name"))
+                .certificateNumber(resultSet.getString("certificate_Number"))
+                .birthDate(resultSet.getDate("birth_Date").toLocalDate())
+                .birthPlace(City.valueOf(resultSet.getString("birth_place")))
+                .gender(Gender.valueOf(resultSet.getString("gender")))
+                .education(Education.valueOf(resultSet.getString("education")))
+                .major(Major.valueOf(resultSet.getString("major")))
+                .marriage(Marriage.valueOf(resultSet.getString("marriage")))
+                .numberOfChildren(resultSet.getInt("number_Of_Children"))
+                .phoneNumber(resultSet.getString("Phone_number"))
                 .username(resultSet.getString("user_name"))
-                .password(resultSet.getString("password"))
+                .password(resultSet.getString("pass_word"))
                 .build();
     }
 

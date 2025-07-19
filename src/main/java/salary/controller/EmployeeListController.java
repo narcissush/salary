@@ -35,22 +35,14 @@ public class EmployeeListController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources)  {
-        FormManager formManager = new FormManager();
+        RefillEmployeeTable();
 
-        try {
-            fillEmployeeTable(EmployeeService.findAll());
-            formManager.showEmployeeTabController().setEmployee();
-
-        }catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-            alert.show();
-        }
 
         EventHandler<Event> tableChangeEvent = (mouseEvent -> {
             try {
                 Employee employee = employeeTable.getSelectionModel().getSelectedItem();
                 AppState.employee = employee;
-                mainFormController.EmployeeSelected(employee);
+                mainFormController.EmployeeSelected();
 
             }catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
@@ -75,17 +67,26 @@ public class EmployeeListController implements Initializable {
                 alert.show();
             }
         });
-
     }
 
-
-
-    private void fillEmployeeTable(List<Employee> employeeList) {
+    public void fillEmployeeTable(List<Employee> employeeList) {
         employeeIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-
         employeeNameFamilyCol.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getFullName())
         );
         employeeTable.setItems(FXCollections.observableArrayList(employeeList));
     }
+
+    public void RefillEmployeeTable() {
+        try {
+            FormManager formManager = new FormManager();
+            fillEmployeeTable(EmployeeService.findAll());
+            formManager.showEmployeeTabController().setEmployeeInForm();
+
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+            alert.show();
+        }
+    }
+
 }

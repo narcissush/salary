@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:controller="salary.controller.EmployeeTabController" minHeight="0.0" minWidth="0.0" nodeOrientation="RIGHT_TO_LEFT" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="0.0" minWidth="0.0" nodeOrientation="RIGHT_TO_LEFT" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.EmployeeTabController">
    <children>
       <VBox prefHeight="739.0" prefWidth="883.0">
          <children>
@@ -102,17 +102,17 @@
                               <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="نام پدر : " GridPane.rowIndex="2" />
                               <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="تاریخ تولد : " GridPane.rowIndex="3" />
                               <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="جنسیت : " GridPane.rowIndex="6" />
-                              <TextField fx:id="firstNameTxt" maxWidth="250.0" prefHeight="40.0" prefWidth="237.0" GridPane.columnIndex="1" />
-                              <TextField fx:id="lastNameTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField fx:id="fatherNameTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <ComboBox fx:id="genderCmb" prefHeight="40.0" prefWidth="253.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <DatePicker fx:id="birthDatePicker" prefHeight="40.0" prefWidth="251.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="130.0" text="کد ملی : " GridPane.rowIndex="4" />
                               <Label alignment="CENTER_RIGHT" prefWidth="130.0" text="شماره شناسنامه : " GridPane.rowIndex="5" />
                               <Label alignment="CENTER_RIGHT" prefWidth="130.0" text="محل تولد : " GridPane.rowIndex="7" />
+                              <TextField fx:id="firstNameTxt" maxWidth="250.0" prefHeight="40.0" prefWidth="237.0" GridPane.columnIndex="1" />
+                              <TextField fx:id="lastNameTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="fatherNameTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <DatePicker fx:id="birthDatePicker" prefHeight="40.0" prefWidth="251.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <TextField fx:id="nationalIdTxt" layoutX="133.0" layoutY="30.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <TextField fx:id="certificateNumberTxt" layoutX="455.0" layoutY="30.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <TextField fx:id="birthPlaceTxt" layoutX="455.0" layoutY="86.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <ComboBox fx:id="genderCmb" prefHeight="40.0" prefWidth="253.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <ComboBox fx:id="birthPlaceCmb" layoutX="147.0" layoutY="303.0" prefHeight="40.0" prefWidth="253.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                            </children>
                         </GridPane>
                         <VBox prefHeight="375.0" prefWidth="290.0">
@@ -165,17 +165,17 @@
                         <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="رشته تحصیلی : " GridPane.rowIndex="2" />
                         <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="شماره تماس : " GridPane.rowIndex="3" />
                         <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="شماره بیمه :" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <TextField fx:id="employeeIdTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" />
-                        <ComboBox fx:id="marriageCmb" prefHeight="40.0" prefWidth="248.0" GridPane.columnIndex="3" />
                         <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="130.0" text="وضعیت تاهل : " GridPane.columnIndex="2" />
                         <Label alignment="CENTER_RIGHT" prefWidth="130.0" text="تعداد فرزندان : " GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <Label alignment="CENTER_RIGHT" prefWidth="130.0" text="شماره حساب : " GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <TextField fx:id="numberOfChildTxt" layoutX="455.0" layoutY="30.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <TextField fx:id="bankAccountNumberTxt" layoutX="455.0" layoutY="86.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <TextField fx:id="insuranceNumberTxt" layoutX="571.0" layoutY="70.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <TextField fx:id="TelTxt" layoutX="156.0" layoutY="115.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="employeeIdTxt" disable="true" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" />
                         <ComboBox fx:id="educationCmb" maxWidth="250.0" prefHeight="40.0" prefWidth="284.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="fieldCmb" layoutX="156.0" layoutY="70.0" maxWidth="250.0" prefHeight="40.0" prefWidth="284.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="majorCmb" layoutX="156.0" layoutY="70.0" maxWidth="250.0" prefHeight="40.0" prefWidth="284.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="phoneNumberTxt" layoutX="156.0" layoutY="115.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="marriageCmb" prefHeight="40.0" prefWidth="248.0" GridPane.columnIndex="3" />
+                        <TextField fx:id="numberOfChildTxt" layoutX="455.0" layoutY="30.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <TextField fx:id="insuranceNumberTxt" layoutX="571.0" layoutY="70.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <TextField fx:id="bankAccountNumberTxt" layoutX="455.0" layoutY="86.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </content>

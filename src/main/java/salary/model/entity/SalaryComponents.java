@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import salary.controller.AppState;
-import salary.model.entity.enums.Married;
+import salary.model.entity.enums.Marriage;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,7 +26,7 @@ public class SalaryComponents implements Serializable {
     }
 
     public double getMarriageAllowance(){
-        if (AppState.employee.getMarried()== Married.متاهل){
+        if (AppState.employee.getMarriage()== Marriage.متاهل){
             return (AppState.employmentContract.getMarriageAllowance()/30* AppState.workRecordMonthly.getDaysWorked()) ;
         }else return 0.0;
     }

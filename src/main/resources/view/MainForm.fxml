@@ -40,9 +40,9 @@
          </VBox.margin>
       </MenuBar>
       <SplitPane dividerPositions="0.5" prefHeight="780.0" prefWidth="1200.0">
-          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+          <AnchorPane fx:id="employeeList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
               <children>
-                  <fx:include source="EmployeeList.fxml" />
+                  <fx:include fx:id="employeeListInclude" source="EmployeeList.fxml" />
               </children>
           </AnchorPane>
          <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -56,16 +56,19 @@
                    </Tab>
                    <Tab fx:id="employeeContractTab" text="حکم">
                        <content>
-                           <fx:include source="EmploymentContractTab.fxml" />
+                           <fx:include fx:id="employeeContractTabInclude" source="EmploymentContractTab.fxml" />
                        </content>
                    </Tab>
                      <Tab fx:id="employeeLoanTab" text="وام">
+                         <content>
+                             <fx:include fx:id="employeeLoanTabInclude" source="EmploymentContractTab.fxml" />
+                         </content>
 
                      </Tab>
                      <Tab fx:id="employeeSalaryTab" text="حقوق">
-                       <content>
-                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                       </content>
+                         <content>
+                             <fx:include fx:id="employeeSalaryTabInclude" source="EmploymentContractTab.fxml" />
+                         </content>
                      </Tab>
                      <Tab text="تسویه">
                        <content>

@@ -1,16 +1,21 @@
 CREATE TABLE users
 (
-    id                 number primary key,
-    first_Name         nvarchar2(30),
-    last_Name          nvarchar2(30),
-    national_Id        nvarchar2(10),
-    education          nvarchar2(30),
-    married            nvarchar2(5),
-    number_Of_Children number,
-    gender             nvarchar2(5),
-    birth_Date         date,
+    id                  number primary key,
+    first_Name          nvarchar2(30),
+    last_Name           nvarchar2(30),
+    father_name          nvarchar2(20),
+    national_Id         nvarchar2(10),
+    certificate_Number  nvarchar2(10),
+    birth_Date          date,
+    birth_Place         nvarchar2(20),
+    gender              nvarchar2(5),
+    education           nvarchar2(30),
+    major               nvarchar2(20),
+    marriage            nvarchar2(5),
+    number_Of_Children  number,
+    Phone_number        nvarchar2(20),
     user_name          nvarchar2(20),
-    password           nvarchar2(20)
+    pass_word           nvarchar2(20)
 );
 create sequence users_seq start with 1 increment by 1;
 
@@ -22,11 +27,16 @@ CREATE TABLE employees
     first_Name          nvarchar2(30),
     last_Name           nvarchar2(30),
     national_Id         nvarchar2(10),
-    education           nvarchar2(30),
-    married             nvarchar2(5),
-    number_Of_Children  number,
-    gender              nvarchar2(5),
+    father_name          nvarchar2(20),
+    certificate_Number  nvarchar2(10),
     birth_Date          date,
+    birth_Place         nvarchar2(20),
+    gender              nvarchar2(5),
+    education           nvarchar2(30),
+    major               nvarchar2(20),
+    marriage            nvarchar2(5),
+    number_Of_Children  number,
+    Phone_number        nvarchar2(20),
     insurance_Number    nvarchar2(15),
     bank_Account_Number nvarchar2(15)
 );
@@ -34,24 +44,24 @@ create sequence employees_seq start with 1 increment by 1;
 
 CREATE TABLE Employment_Contracts
 (
-    id                  NUMBER PRIMARY KEY,
-    employee_id         NUMBER REFERENCES employees (id),
+    id                            NUMBER PRIMARY KEY,
+    employee_id                   NUMBER REFERENCES employees (id),
     issuance_personnel_order_date nvarchar2(10),
-    start_contract_date DATE,
-    end_contract_date   DATE,
-    contract_type       VARCHAR2(50),
-    department          VARCHAR2(50),
-    job_title           VARCHAR2(50),
-    position            VARCHAR2(50),
-    hire_date           DATE,
-    termination_date    DATE,
-    daily_salary        NUMBER(15, 2),
-    bazar_kar           NUMBER(15, 2),
-    fogholade_shoghl    NUMBER(15, 2),
-    housing_allowance   NUMBER(15, 2),
-    marriage_allowance  NUMBER(15, 2),
-    child_allowance     NUMBER(15, 2),
-    food_allowance      NUMBER(15, 2)
+    start_contract_date           DATE,
+    end_contract_date             DATE,
+    contract_type                 VARCHAR2(50),
+    department                    VARCHAR2(50),
+    job_title                     VARCHAR2(50),
+    position                      VARCHAR2(50),
+    hire_date                     DATE,
+    termination_date              DATE,
+    daily_salary                  NUMBER(15, 2),
+    bazar_kar                     NUMBER(15, 2),
+    fogholade_shoghl              NUMBER(15, 2),
+    housing_allowance             NUMBER(15, 2),
+    marriage_allowance            NUMBER(15, 2),
+    child_allowance               NUMBER(15, 2),
+    food_allowance                NUMBER(15, 2)
 
 );
 create sequence Employment_Contracts_seq start with 1 increment by 1;
@@ -60,13 +70,13 @@ create sequence Employment_Contracts_seq start with 1 increment by 1;
 CREATE TABLE Work_Record_Monthly
 (
     id               number primary key,
-    employees_id    number REFERENCES employees (id),
-    month           nvarchar2(10),
-    year            nvarchar2(5),
+    employees_id     number REFERENCES employees (id),
+    month            nvarchar2(10),
+    year             nvarchar2(5),
     days_Worked      number,
     over_time_Hours  nvarchar2(10),
     under_Time_Hours nvarchar2(10),
-    leave               nvarchar2(10),
+    leave            nvarchar2(10),
     advance          numeric(12, 2)
 );
 create sequence Work_Record_Monthly_seq start with 1 increment by 1;
@@ -84,10 +94,10 @@ create sequence Payslips_seq start with 1 increment by 1;
 
 CREATE TABLE Missions
 (
-    id               number primary key,
-    employee_id         NUMBER REFERENCES employees (id),
-    start_mission    Timestamp,
-    end_mission      Timestamp
+    id            number primary key,
+    employee_id   NUMBER REFERENCES employees (id),
+    start_mission Timestamp,
+    end_mission   Timestamp
 );
 create sequence Missions_seq start with 1 increment by 1;
 
@@ -99,9 +109,9 @@ CREATE TABLE loans
     loan_type          NVARCHAR2(20),
     loan_amount        NUMBER, --مبلغ وام
     loan_interest      NUMBER, --بهره وام
-    total_installments NUMBER ,--تعداد افساط
-    Loan_Start_Date     Date,
-    Loan_Finish_date    Date
+    total_installments NUMBER,--تعداد افساط
+    Loan_Start_Date    Date,
+    Loan_Finish_date   Date
 
 );
 create sequence loans_seq start with 1 increment by 1;

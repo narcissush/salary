@@ -1,10 +1,8 @@
 package salary.model.services;
 
 import salary.model.entity.Employee;
-import salary.model.entity.EmploymentContract;
 import salary.model.repository.EmployeeRepository;
 
-import java.util.Collections;
 import java.util.List;
 
 public class EmployeeService{
@@ -44,6 +42,12 @@ public class EmployeeService{
     public static Employee findById(int id) throws Exception {
         try (EmployeeRepository employeeRepository = new EmployeeRepository()) {
             return employeeRepository.findById(id);
+        }
+    }
+
+    public static Employee findByNationalId(String nationalId) throws Exception {
+        try (EmployeeRepository employeeRepository = new EmployeeRepository()) {
+            return employeeRepository.findByNationalId(nationalId);
         }
     }
 
