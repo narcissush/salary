@@ -20,13 +20,13 @@ public class EmploymentContractRepositiry  implements Repository<EmploymentContr
     public void save(EmploymentContract employmentContract) throws Exception {
         employmentContract.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "Employment_Contracts_seq"));
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO Employment_Contracts  (id, employee_id,issuance_Personnel_Order_Date, start_contract_date, end_contract_date,contract_type, department, job_title,position,hire_date, termination_date, daily_salary,bazar_kar, fogholade_shoghl,housing_allowance, marriage_allowance, child_allowance,food_allowance) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)"
+                "INSERT INTO Employment_Contracts  (id, employee_id,issuance_Date, start_contract_date, end_contract_date,contract_type, department, job_title,position,hire_date, termination_date, daily_salary,bazar_kar, fogholade_shoghl,housing_allowance, marriage_allowance, child_allowance,food_allowance) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)"
         );
 
 
         preparedStatement.setInt(1, employmentContract.getId());
         preparedStatement.setInt(2, employmentContract.getEmployee().getId());
-        preparedStatement.setString(3,employmentContract.getIssuancePersonnelOrderDate().name());
+        preparedStatement.setDate(3,(employmentContract.getIssuanceDate() != null) ? Date.valueOf(employmentContract.getIssuanceDate()) : null);
         preparedStatement.setDate(4,(employmentContract.getStartContractDate() != null) ? Date.valueOf(employmentContract.getStartContractDate()) : null);
         preparedStatement.setDate(5,(employmentContract.getEndContractDate() != null) ? Date.valueOf(employmentContract.getEndContractDate()) : null);
         preparedStatement.setString(6,employmentContract.getContractType().name());
@@ -49,10 +49,10 @@ public class EmploymentContractRepositiry  implements Repository<EmploymentContr
     @Override
     public void edit(EmploymentContract employmentContract) throws Exception {
         preparedStatement = connection.prepareStatement(
-                "update Employment_Contracts set   employee_id=?,issuance_Personnel_Order_Date=?, start_contract_date=?, end_contract_date=?,contract_type=?, department=?, job_title=?,position=?,hire_date=?, termination_date=?, daily_salary=?,bazar_kar=?, fogholade_shoghl=?,housing_allowance=?, marriage_allowance=?, child_allowance=?,food_allowance=? where id=?)"
+                "update Employment_Contracts set   employee_id=?,issuance_Date=?, start_contract_date=?, end_contract_date=?,contract_type=?, department=?, job_title=?,position=?,hire_date=?, termination_date=?, daily_salary=?,bazar_kar=?, fogholade_shoghl=?,housing_allowance=?, marriage_allowance=?, child_allowance=?,food_allowance=? where id=?)"
         );
         preparedStatement.setInt(1, employmentContract.getEmployee().getId());
-        preparedStatement.setString(2,employmentContract.getIssuancePersonnelOrderDate().name());
+        preparedStatement.setDate(2,(employmentContract.getIssuanceDate() != null) ? Date.valueOf(employmentContract.getIssuanceDate()) : null);
         preparedStatement.setDate(3,(employmentContract.getStartContractDate() != null) ? Date.valueOf(employmentContract.getStartContractDate()) : null);
         preparedStatement.setDate(4,(employmentContract.getEndContractDate() != null) ? Date.valueOf(employmentContract.getEndContractDate()) : null);
         preparedStatement.setString(5,employmentContract.getContractType().name());

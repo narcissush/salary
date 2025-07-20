@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import salary.FormManager;
 import salary.model.entity.Employee;
 
 import static salary.FormManager.mainFormController;

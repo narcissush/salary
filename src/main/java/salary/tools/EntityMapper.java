@@ -108,30 +108,28 @@ public class EntityMapper {
                 .build();
     }
 
-    public static EmploymentContract  EmploymentContractMapper (ResultSet resultSet) throws SQLException {
-
-        return               EmploymentContract.builder()
-                            .id(resultSet.getInt("id"))
-                            .employee(AppState.employee)
-                            .issuancePersonnelOrderDate(Year.valueOf(resultSet.getString("issuance_Personnel_Order_Date")))
-                            .startContractDate(resultSet.getDate("start_Contract_Date") == null ? null : resultSet.getDate("start_Contract_Date").toLocalDate())
-                            .endContractDate(resultSet.getDate("end_Contract_Date") == null ? null : resultSet.getDate("end_Contract_Date").toLocalDate())
-                            .contractType(ContractType.valueOf(resultSet.getString("Contract_Type")))
-                            .department(Department.valueOf(resultSet.getString("Department")))
-                            .jobTitle(JobTitle.valueOf(resultSet.getString("job_Title")))
-                            .position(Position.valueOf(resultSet.getString("position")))
-                            .hireDate(resultSet.getDate("hire_Date") == null ? null : resultSet.getDate("hire_Date").toLocalDate())
-                            .terminationDate(resultSet.getDate("termination_Date") == null ? null : resultSet.getDate("termination_Date").toLocalDate())
-                            .dailySalary(resultSet.getDouble("daily_Salary"))
-                            .bazarKar(resultSet.getDouble("bazar_Kar"))
-                            .fogholadeShoghl(resultSet.getDouble("fogholade_Shoghl"))
-                            .housingAllowance(resultSet.getDouble("HOUSING_ALLOWANCE"))
-                            .marriageAllowance(resultSet.getDouble("MARRIAGE_ALLOWANCE"))
-                            .childAllowance(resultSet.getDouble("CHILD_ALLOWANCE"))
-                            .foodAllowance(resultSet.getDouble("FOOD_ALLOWANCE"))
-                            .build();
+    public static EmploymentContract EmploymentContractMapper(ResultSet resultSet) throws SQLException {
+        return EmploymentContract.builder()
+                .id(resultSet.getInt("id"))
+                .employee(AppState.employee)
+                .issuanceDate(resultSet.getDate("issuance_Date") == null ? null : resultSet.getDate("issuance_Date").toLocalDate())
+                .startContractDate(resultSet.getDate("start_Contract_Date") == null ? null : resultSet.getDate("start_Contract_Date").toLocalDate())
+                .endContractDate(resultSet.getDate("end_Contract_Date") == null ? null : resultSet.getDate("end_Contract_Date").toLocalDate())
+                .contractType(ContractType.valueOf(resultSet.getString("Contract_Type")))
+                .department(Department.valueOf(resultSet.getString("Department")))
+                .jobTitle(JobTitle.valueOf(resultSet.getString("job_Title")))
+                .position(Position.valueOf(resultSet.getString("position")))
+                .hireDate(resultSet.getDate("hire_Date") == null ? null : resultSet.getDate("hire_Date").toLocalDate())
+                .terminationDate(resultSet.getDate("termination_Date") == null ? null : resultSet.getDate("termination_Date").toLocalDate())
+                .dailySalary(resultSet.getDouble("daily_Salary"))
+                .bazarKar(resultSet.getDouble("bazar_Kar"))
+                .fogholadeShoghl(resultSet.getDouble("fogholade_Shoghl"))
+                .housingAllowance(resultSet.getDouble("HOUSING_ALLOWANCE"))
+                .marriageAllowance(resultSet.getDouble("MARRIAGE_ALLOWANCE"))
+                .childAllowance(resultSet.getDouble("CHILD_ALLOWANCE"))
+                .foodAllowance(resultSet.getDouble("FOOD_ALLOWANCE"))
+                .build();
     }
-
 
 
 }

@@ -16,7 +16,7 @@ public class EmploymentContract implements Serializable {
 
     private int id;
     private Employee employee;
-    private Year issuancePersonnelOrderDate;
+    private LocalDate issuanceDate;
     private LocalDate startContractDate;
     private LocalDate endContractDate;
     private ContractType contractType;

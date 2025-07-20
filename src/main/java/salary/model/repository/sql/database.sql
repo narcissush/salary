@@ -46,7 +46,7 @@ CREATE TABLE Employment_Contracts
 (
     id                            NUMBER PRIMARY KEY,
     employee_id                   NUMBER REFERENCES employees (id),
-    issuance_personnel_order_date nvarchar2(10),
+    issuance_date nvarchar2(10),
     start_contract_date           DATE,
     end_contract_date             DATE,
     contract_type                 VARCHAR2(50),
