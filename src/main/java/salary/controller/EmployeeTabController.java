@@ -1,5 +1,6 @@
 package salary.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -14,6 +15,7 @@ import salary.model.services.EmployeeService;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EmployeeTabController implements Initializable {
@@ -36,8 +38,6 @@ public class EmployeeTabController implements Initializable {
     @FXML
     private Button NewEmployeeBtn, saveEmployeeBtn, editEmployeeBtn, deleteEmployeeBtn;
 
-    @FXML
-    private EmployeeListController employeeListIncludeController;
 
 
     @Override
@@ -80,9 +80,11 @@ public class EmployeeTabController implements Initializable {
                                 .bankAccountNumber(bankAccountNumberTxt.getText())
                                 .build();
                 EmployeeService.save(employee);
-                new Alert(Alert.AlertType.INFORMATION, "پرسنل جدید اضافه شد!", ButtonType.OK).show();
+                Alert info = new Alert(Alert.AlertType.INFORMATION,
+                        "اطلاعات جدید اضافه گردید!", ButtonType.OK);
+                info.showAndWait();
                 employeeIdTxt.setText(String.valueOf(EmployeeService.findByNationalId(nationalIdTxt.getText()).getId()));
-                mainFormController.RefillEmployeeList();
+                mainFormController.fillEmployeeTable(EmployeeService.findAll());
                 saveEmployeeBtn.setDisable(true);
 
             } catch (Exception e) {
@@ -91,51 +93,65 @@ public class EmployeeTabController implements Initializable {
             }
         });
 
+
+
         editEmployeeBtn.setOnAction(event -> {
             try {
-                Employee employee =
-                        Employee.builder()
-                                .id(Integer.parseInt(employeeIdTxt.getText()))
-                                .firstName(firstNameTxt.getText())
-                                .lastName(lastNameTxt.getText())
-                                .nationalId(nationalIdTxt.getText())
-                                .fatherName(fatherNameTxt.getText())
-                                .certificateNumber(certificateNumberTxt.getText())
-                                .birthDate(birthDatePicker.getValue())
-                                .birthPlace(birthPlaceCmb.getSelectionModel().getSelectedItem())
-                                .gender(genderCmb.getSelectionModel().getSelectedItem())
-                                .education(educationCmb.getSelectionModel().getSelectedItem())
-                                .major(majorCmb.getSelectionModel().getSelectedItem())
-                                .marriage(marriageCmb.getSelectionModel().getSelectedItem())
-                                .numberOfChildren(Integer.parseInt(numberOfChildTxt.getText()))
-                                .phoneNumber(phoneNumberTxt.getText())
-                                .insuranceNumber(insuranceNumberTxt.getText())
-                                .bankAccountNumber(bankAccountNumberTxt.getText())
-                                .build();
-                EmployeeService.edit(employee);
-                new Alert(Alert.AlertType.INFORMATION, "اطلاعات پرسنل ویرایش گردید!", ButtonType.OK).show();
+                Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
+                        "آیا از ویرایش اطلاعات پرسنل اطمینان دارید؟", ButtonType.YES, ButtonType.NO);
+                Optional<ButtonType> result = confirm.showAndWait();
+
+                if (result.isPresent() && result.get() == ButtonType.YES) {
+                    Employee employee = Employee.builder()
+                            .id(Integer.parseInt(employeeIdTxt.getText()))
+                            .firstName(firstNameTxt.getText())
+                            .lastName(lastNameTxt.getText())
+                            .nationalId(nationalIdTxt.getText())
+                            .fatherName(fatherNameTxt.getText())
+                            .certificateNumber(certificateNumberTxt.getText())
+                            .birthDate(birthDatePicker.getValue())
+                            .birthPlace(birthPlaceCmb.getSelectionModel().getSelectedItem())
+                            .gender(genderCmb.getSelectionModel().getSelectedItem())
+                            .education(educationCmb.getSelectionModel().getSelectedItem())
+                            .major(majorCmb.getSelectionModel().getSelectedItem())
+                            .marriage(marriageCmb.getSelectionModel().getSelectedItem())
+                            .numberOfChildren(Integer.parseInt(numberOfChildTxt.getText()))
+                            .phoneNumber(phoneNumberTxt.getText())
+                            .insuranceNumber(insuranceNumberTxt.getText())
+                            .bankAccountNumber(bankAccountNumberTxt.getText())
+                            .build();
+
+                    EmployeeService.edit(employee);
+                    Alert info = new Alert(Alert.AlertType.INFORMATION,
+                            "اطلاعات پرسنل ویرایش گردید!", ButtonType.OK);
+                    info.showAndWait();
+                    mainFormController.fillEmployeeTable(EmployeeService.findAll());
+                }
 
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-                alert.show();
+                new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
             }
-            mainFormController.RefillEmployeeList();
-
         });
+
+
 
         deleteEmployeeBtn.setOnAction(event -> {
             try {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "آیا از حذف پرسنل اطمینان دارید؟!", ButtonType.YES, ButtonType.NO);
-                if (alert.showAndWait().get() == ButtonType.YES) {
+                Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
+                        "آیا از حذف پرسنل اطمینان دارید؟!", ButtonType.YES, ButtonType.NO);
+                Optional<ButtonType> result = confirm.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.YES) {
                     EmployeeService.delete(Integer.parseInt(employeeIdTxt.getText()));
-                    new Alert(Alert.AlertType.INFORMATION, "پرسنل حذف شد!", ButtonType.OK).show();
-                 }
-            } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-                alert.show();
-            }
-            mainFormController.RefillEmployeeList();
 
+                    Alert info = new Alert(Alert.AlertType.INFORMATION,
+                            "اطلاعات پرسنل حذف گردید!", ButtonType.OK);
+                    info.showAndWait();
+                    resetForm();
+                    mainFormController.fillEmployeeTable(EmployeeService.findAll());
+                }
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
+            }
         });
     }
 
