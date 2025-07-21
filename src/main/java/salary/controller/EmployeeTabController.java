@@ -1,6 +1,5 @@
 package salary.controller;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -177,23 +176,23 @@ public class EmployeeTabController implements Initializable {
 
     public void setEmployeeInForm() {
         try {
-            firstNameTxt.setText(AppState.employee.getFirstName());
-            lastNameTxt.setText(AppState.employee.getLastName());
-            nationalIdTxt.setText(AppState.employee.getNationalId());
-            fatherNameTxt.setText(AppState.employee.getFatherName());
-            certificateNumberTxt.setText(AppState.employee.getCertificateNumber());
-            birthPlaceCmb.getSelectionModel().select(AppState.employee.getBirthPlace());
-            birthDatePicker.setValue(AppState.employee.getBirthDate());
+            firstNameTxt.setText(AppState.employeeSelected.getFirstName());
+            lastNameTxt.setText(AppState.employeeSelected.getLastName());
+            nationalIdTxt.setText(AppState.employeeSelected.getNationalId());
+            fatherNameTxt.setText(AppState.employeeSelected.getFatherName());
+            certificateNumberTxt.setText(AppState.employeeSelected.getCertificateNumber());
+            birthPlaceCmb.getSelectionModel().select(AppState.employeeSelected.getBirthPlace());
+            birthDatePicker.setValue(AppState.employeeSelected.getBirthDate());
             genderCmb.getSelectionModel().getSelectedItem();
-            genderCmb.getSelectionModel().select(AppState.employee.getGender());
-            employeeIdTxt.setText(String.valueOf(AppState.employee.getId()));
-            educationCmb.getSelectionModel().select(AppState.employee.getEducation());
-            majorCmb.getSelectionModel().select(AppState.employee.getMajor());
-            phoneNumberTxt.setText(AppState.employee.getPhoneNumber());
-            marriageCmb.getSelectionModel().select(AppState.employee.getMarriage());
-            numberOfChildTxt.setText(String.valueOf(AppState.employee.getNumberOfChildren()));
-            insuranceNumberTxt.setText(String.valueOf(AppState.employee.getInsuranceNumber()));
-            bankAccountNumberTxt.setText(String.valueOf(AppState.employee.getBankAccountNumber()));
+            genderCmb.getSelectionModel().select(AppState.employeeSelected.getGender());
+            employeeIdTxt.setText(String.valueOf(AppState.employeeSelected.getId()));
+            educationCmb.getSelectionModel().select(AppState.employeeSelected.getEducation());
+            majorCmb.getSelectionModel().select(AppState.employeeSelected.getMajor());
+            phoneNumberTxt.setText(AppState.employeeSelected.getPhoneNumber());
+            marriageCmb.getSelectionModel().select(AppState.employeeSelected.getMarriage());
+            numberOfChildTxt.setText(String.valueOf(AppState.employeeSelected.getNumberOfChildren()));
+            insuranceNumberTxt.setText(String.valueOf(AppState.employeeSelected.getInsuranceNumber()));
+            bankAccountNumberTxt.setText(String.valueOf(AppState.employeeSelected.getBankAccountNumber()));
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

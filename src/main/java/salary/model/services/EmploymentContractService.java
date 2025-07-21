@@ -45,5 +45,10 @@ public class EmploymentContractService  {
         }
     }
 
+    public static EmploymentContract findByEmployeeId(int employeeId) throws Exception {
+        try (EmploymentContractRepositiry employmentContractRepositiry = new EmploymentContractRepositiry()) {
+            return employmentContractRepositiry.findByEmployeeId(employeeId);
+        }
+    }
 
 }

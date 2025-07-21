@@ -1,4 +1,3 @@
-import lombok.Data;
 import salary.controller.AppState;
 import salary.model.entity.Employee;
 import salary.model.entity.enums.*;
@@ -29,7 +28,7 @@ public class EmployeeServiceTest {
                 .build();
         //EmployeeService.save(employee);
         EmployeeService.edit(employee);
-        AppState.employee=EmployeeService.findById(employee.getId());
-        System.out.println(AppState.employee);
+        AppState.employeeSelected =EmployeeService.findById(employee.getId());
+        System.out.println(AppState.employeeSelected);
     }
 }

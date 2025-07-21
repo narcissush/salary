@@ -1,5 +1,4 @@
 import salary.controller.AppState;
-import salary.model.entity.Employee;
 import salary.model.entity.EmploymentContract;
 import salary.model.entity.enums.*;
 import salary.model.services.EmployeeService;
@@ -14,16 +13,14 @@ public class EmploymentContractTest {
         EmploymentContract employmentContract =
                 EmploymentContract.builder()
                         .id(1)
-                        .employee(AppState.employee)
-                        .issuancePersonnelOrderDate(Year.Y1404)
-                        .startContractDate(LocalDate.of(2025, 1, 1))
-                        .endContractDate(LocalDate.of(2025, 12, 31))
-                        .contractType(ContractType.شش_ماهه)
+                        .employee(EmployeeService.findById(6))
+                        .issuanceDate(null)
+                        .hireDate(null)
+                        .terminationDate(null)
+                        .contractType(ContractType.رسمی)
                         .department(Department.امور_اداري)
                         .jobTitle(JobTitle.مهندس_نرم_افزار)
                         .position(Position.رئیس)
-                        .hireDate(LocalDate.of(2025, 1, 1))
-                        .terminationDate(null)
                         .dailySalary(5_500_000)
                         .bazarKar(70_000_000)
                         .fogholadeShoghl(80_000_000)
@@ -33,8 +30,10 @@ public class EmploymentContractTest {
                         .foodAllowance(22_000_000)
                         .build();
         EmploymentContractService.save(employmentContract);
-        AppState.employmentContract=EmploymentContractService.findById(employmentContract.getId());
-        System.out.println(AppState.employmentContract);
+
+        AppState.employmentContractSelected= EmploymentContractService.findByEmployeeId(6);
+
+        System.out.println(AppState.employmentContractSelected);
         //System.out.println(EmploymentContractService.findAll());
         //System.out.println(employmentContract);
     }

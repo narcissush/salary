@@ -17,38 +17,38 @@ public class SalaryComponents implements Serializable {
     List<Mission> missionList;
 
     public double getMonthlySalary(){
-        return AppState.workRecordMonthly.getDaysWorked() * AppState.employmentContract.getDailySalary();
+        return AppState.workRecordMonthlySelected.getDaysWorked() * AppState.employmentContractSelected.getDailySalary();
     }
 
     public double getTotalChildAllowance() {
-        return AppState.employee.getNumberOfChildren() *
-                (AppState.employmentContract.getChildAllowance() / 30 * AppState.employmentContract.getDailySalary());
+        return AppState.employeeSelected.getNumberOfChildren() *
+                (AppState.employmentContractSelected.getChildAllowance() / 30 * AppState.employmentContractSelected.getDailySalary());
     }
 
     public double getMarriageAllowance(){
-        if (AppState.employee.getMarriage()== Marriage.متاهل){
-            return (AppState.employmentContract.getMarriageAllowance()/30* AppState.workRecordMonthly.getDaysWorked()) ;
+        if (AppState.employeeSelected.getMarriage()== Marriage.متاهل){
+            return (AppState.employmentContractSelected.getMarriageAllowance()/30* AppState.workRecordMonthlySelected.getDaysWorked()) ;
         }else return 0.0;
     }
 
     public double getHousingAllowance(){
-        return (AppState.employmentContract.getHousingAllowance()/30 * AppState.workRecordMonthly.getDaysWorked()) ;
+        return (AppState.employmentContractSelected.getHousingAllowance()/30 * AppState.workRecordMonthlySelected.getDaysWorked()) ;
     }
 
     public double getFoodAllowance(){
-        return  (AppState.employmentContract.getFoodAllowance()/30 * AppState.workRecordMonthly.getDaysWorked()) ;
+        return  (AppState.employmentContractSelected.getFoodAllowance()/30 * AppState.workRecordMonthlySelected.getDaysWorked()) ;
     }
 
 
     public double getOverTime(){
 
-        String input = AppState.workRecordMonthly.getOvertimeHours();
+        String input = AppState.workRecordMonthlySelected.getOvertimeHours();
         String[] parts = input.split(":");
 
         int hours = Integer.parseInt(parts[0]);
         int minutes = Integer.parseInt(parts[1]);
 
-        double baseRate = AppState.employmentContract.getDailySalary() / 8.0;
+        double baseRate = AppState.employmentContractSelected.getDailySalary() / 8.0;
         double overtimeRate = baseRate * 1.4;
 
         double overtimePay = hours * overtimeRate

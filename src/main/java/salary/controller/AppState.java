@@ -3,11 +3,12 @@ package salary.controller;
 import salary.model.entity.*;
 
 public class AppState {
-    public static User user;
-    public static Employee employee;
-    public static EmploymentContract employmentContract;
-    public static Payslip payslip;
-    public static WorkRecordMonthly workRecordMonthly;
+    public static User userSelected;
+    public static Allowance allowanceSelected;
+    public static Employee employeeSelected;
+    public static EmploymentContract employmentContractSelected;
+    public static Payslip payslipSelected;
+    public static WorkRecordMonthly workRecordMonthlySelected;
 
 
 }

@@ -43,7 +43,7 @@ public class Deductions implements Serializable {
     public double getUnderTime() {
 
         EmploymentContract employmentContract = new EmploymentContract();
-        String input = AppState.workRecordMonthly.getUnderTimeHours();
+        String input = AppState.workRecordMonthlySelected.getUnderTimeHours();
         String[] parts = input.split(":");
 
         int hours = Integer.parseInt(parts[0]);
@@ -59,7 +59,7 @@ public class Deductions implements Serializable {
     }
 
     public double getAdvance() {
-        return AppState.workRecordMonthly.getAdvance();
+        return AppState.workRecordMonthlySelected.getAdvance();
     }
 
     public double getLoanRepayment() {

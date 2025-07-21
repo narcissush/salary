@@ -1,0 +1,22 @@
+package salary.model.services;
+
+import salary.model.entity.Allowance;
+import salary.model.entity.Loan;
+import salary.model.entity.enums.Year;
+import salary.model.repository.AllowanceRepository;
+import salary.model.repository.LoanRepository;
+
+public class AllowanceService {
+    public static void save(Allowance allowance) throws Exception {
+        try (AllowanceRepository allowanceRepository = new AllowanceRepository()) {
+            allowanceRepository.save(allowance);
+        }
+    }
+
+    public static Allowance findByYear(Year year) throws Exception {
+        try (AllowanceRepository allowanceRepository = new AllowanceRepository()) {
+            return allowanceRepository.findByYear(year);
+        }
+    }
+
+}

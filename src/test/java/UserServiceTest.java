@@ -27,11 +27,11 @@ public class UserServiceTest {
                 .build();
         //UserService.save(user);
         UserService.edit(user);
-        AppState.user = UserService.findById(user.getId());
+        AppState.userSelected = UserService.findById(user.getId());
 
         //System.out.println(UserService.findByUserAndPassword("1","1"));
 //        System.out.println(AppState.user);
 
-        System.out.println(AppState.user);
+        System.out.println(AppState.userSelected);
     }
 }

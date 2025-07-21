@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
@@ -17,13 +18,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane  minHeight="0.0" minWidth="0.0" nodeOrientation="RIGHT_TO_LEFT" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.EmployeeLoanController">
+<AnchorPane minHeight="0.0" minWidth="0.0" nodeOrientation="RIGHT_TO_LEFT" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.EmploymentContractTabController">
    <children>
       <VBox prefHeight="739.0" prefWidth="883.0">
          <children>
             <HBox prefHeight="63.0" prefWidth="683.0">
                <children>
-                  <Button fx:id="NewEmployeeBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="صدور جدید">
+                  <Button fx:id="newContractBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="صدور حکم">
 
                      <graphic>
                            <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
@@ -37,7 +38,7 @@
                      </HBox.margin>
 
                   </Button>
-                  <Button fx:id="saveEmployeeBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="ذخیره">
+                  <Button fx:id="saveContractBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="ذخیره">
                      <HBox.margin>
                         <Insets right="5.0" top="5.0" />
                      </HBox.margin>
@@ -49,7 +50,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="editEmployeeBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="ویرایش">
+                  <Button fx:id="editContractBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="ویرایش">
                      <HBox.margin>
                         <Insets right="5.0" top="5.0" />
                      </HBox.margin>
@@ -61,7 +62,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="deleteEmployeeBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="قطع همکاری">
+                  <Button fx:id="deleteContractBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="قطع همکاری">
                      <HBox.margin>
                         <Insets right="5.0" top="5.0" />
                      </HBox.margin>
@@ -78,9 +79,9 @@
                   <Insets bottom="5.0" />
                </padding>
             </HBox>
-            <TitledPane animated="false" collapsible="false" maxHeight="500.0" minHeight="200.0" prefHeight="500.0" prefWidth="883.0" text="حکم پرسنلی: ">
+            <TitledPane animated="false" collapsible="false" maxHeight="512.0" minHeight="200.0" prefHeight="489.0" prefWidth="883.0" text="حکم پرسنلی: ">
                <content>
-                  <GridPane prefHeight="437.0" prefWidth="881.0">
+                  <GridPane prefHeight="459.0" prefWidth="881.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="133.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="382.0" minWidth="10.0" prefWidth="281.0" />
@@ -93,48 +94,95 @@
                         <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="108.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="عنوان: " GridPane.rowIndex="2" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="سمت : " GridPane.rowIndex="3" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="واحد : " GridPane.rowIndex="4" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="دستمزد روزانه : " GridPane.columnIndex="2" />
-                        <Label alignment="CENTER_RIGHT" prefWidth="130.0" text="نوع قرارداد :" GridPane.rowIndex="1" />
-                        <DatePicker maxWidth="250.0" prefHeight="40.0" prefWidth="254.0" GridPane.columnIndex="1" />
-                        <ComboBox layoutX="156.0" layoutY="115.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <ComboBox maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <ComboBox layoutX="156.0" layoutY="25.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ComboBox layoutX="156.0" layoutY="70.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField layoutX="571.0" layoutY="70.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" />
-                        <TextField layoutX="585.0" layoutY="24.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <TextField maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <TextField maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <TextField maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <TextField maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                        <TextField maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                        <TextField maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="21.0" prefWidth="250.0" text="جمع کل :" textFill="#ff0808" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="عنوان: " GridPane.rowIndex="4" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="سمت : " GridPane.rowIndex="5" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="واحد : " GridPane.rowIndex="6" />
+                        <Label alignment="CENTER_RIGHT" prefWidth="130.0" text="نوع قرارداد :" GridPane.rowIndex="3" />
+                        <TextField fx:id="contractIdTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" />
+                        <DatePicker fx:id="hireDatePicker" layoutX="155.0" layoutY="110.0" maxWidth="250.0" prefHeight="40.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <DatePicker fx:id="issuanceDatePicker" maxWidth="250.0" prefHeight="40.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="contractTypeCmb" layoutX="156.0" layoutY="115.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="jobTitleCmb" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="positionCmb" layoutX="156.0" layoutY="25.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="departmentCmb" layoutX="156.0" layoutY="70.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="dailySalaryTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3">
                            <font>
-                              <Font name="System Bold" size="16.0" />
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="monthlySalaryTxt" disable="true" layoutX="571.0" layoutY="70.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></TextField>
+                        <TextField fx:id="housingAllowanceTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></TextField>
+                        <TextField fx:id="foodAllowanceTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></TextField>
+                        <TextField fx:id="marriageAllowanceTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></TextField>
+                        <TextField fx:id="childAllowanceTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></TextField>
+                        <TextField fx:id="bazarKarTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></TextField>
+                        <TextField fx:id="fogholadeShoghlTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></TextField>
+                        <Label alignment="CENTER_RIGHT" layoutX="22.0" layoutY="34.0" prefHeight="21.0" prefWidth="130.0" text="تاریخ صدور حکم:" GridPane.rowIndex="2" />
+                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="34.0" prefHeight="0.0" prefWidth="130.0" text="دستمزد ماهیانه:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="78.0" prefHeight="0.0" prefWidth="130.0" text="حق مسکن :" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="121.0" prefHeight="0.0" prefWidth="130.0" text="حق خواربار:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="164.0" prefHeight="0.0" prefWidth="130.0" text="حق تاهل:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="207.0" prefHeight="0.0" prefWidth="130.0" text="حق اولاد:" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="بازار کار: " GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="فوق العاده شغل: " GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="جمع کل :" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="130.0" text="شماره حکم: " />
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="133.0" text="دستمزد روزانه : " GridPane.columnIndex="2" />
+                        <Label alignment="TOP_CENTER" prefHeight="17.0" prefWidth="248.0" text="مزایا" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER_RIGHT" layoutX="22.0" layoutY="34.0" prefHeight="21.0" prefWidth="130.0" text="تاریخ صدور حکم:" />
-                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="34.0" prefHeight="0.0" prefWidth="130.0" text="دستمزد ماهیانه:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="78.0" prefHeight="0.0" prefWidth="130.0" text="حق مسکن :" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="121.0" prefHeight="0.0" prefWidth="130.0" text="حق خواربار:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="164.0" prefHeight="0.0" prefWidth="130.0" text="حق تاهل:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="207.0" prefHeight="0.0" prefWidth="130.0" text="حق اولاد:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="بازار کار: " GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="فوق العاده شغل: " GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="جمع کل :" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                        <TextField fx:id="totalSalartTxt" disable="true" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="9">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </TextField>
+                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="تاریخ استخدام:" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </content>
+            </TitledPane>
+            <TitledPane animated="false" collapsible="false" text="شرح حکم :">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea layoutX="-2.0" prefHeight="174.0" prefWidth="883.0">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextArea>
+                     </children>
+                  </AnchorPane>
+              </content>
             </TitledPane>
          </children>
       </VBox>

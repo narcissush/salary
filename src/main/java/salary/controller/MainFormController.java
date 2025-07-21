@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import salary.model.entity.Employee;
 import salary.model.services.EmployeeService;
+import salary.model.services.EmploymentContractService;
 
 
 import java.net.URL;
@@ -29,11 +30,13 @@ public class MainFormController implements Initializable {
     private TableColumn<Employee, String> employeeNameFamilyCol;
     @FXML
     private EmployeeTabController employeeTabController;
+    @FXML
+    private EmploymentContractTabController employmentContractTabController;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            employeeTable.refresh();
             fillEmployeeTable(EmployeeService.findAll());
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
@@ -42,14 +45,18 @@ public class MainFormController implements Initializable {
 
         EventHandler<Event> tableChangeEvent = (mouseEvent -> {
             try {
-                Employee employeeSelected = employeeTable.getSelectionModel().getSelectedItem();
-                if (employeeSelected != null) {
-                    AppState.employee = employeeSelected;
+                AppState.employeeSelected = employeeTable.getSelectionModel().getSelectedItem();
+                if (AppState.employeeSelected != null) {
                     employeeTabController.setEmployeeInForm();
                 }
+                if (EmploymentContractService.findByEmployeeId(AppState.employeeSelected.getId())!=null) {
+                    AppState.employmentContractSelected= EmploymentContractService.findByEmployeeId(AppState.employeeSelected.getId());
+                    employmentContractTabController.setEmployeeContractInForm();
+                }
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-                alert.show();
+//                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+//                alert.show();
+                e.printStackTrace();
             }
         });
         employeeTable.setOnMouseReleased(tableChangeEvent);

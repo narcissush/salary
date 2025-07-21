@@ -1,5 +1,5 @@
 package salary.model.entity.enums;
 
 public enum ContractType {
-    رسمی,سه_ماهه,شش_ماهه,یکساله
+    رسمی,قراردادی_سه_ماهه,قراردادی_شش_ماهه,قراردادی_یکساله
 }

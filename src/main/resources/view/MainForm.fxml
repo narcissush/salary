@@ -97,12 +97,12 @@
                    </Tab>
                    <Tab  text="حکم">
                        <content>
-                           <fx:include source="EmploymentContractTab.fxml" />
+                           <fx:include  fx:id="employmentContractTab" source="EmploymentContractTab.fxml" />
                        </content>
                    </Tab>
-                     <Tab  text="وام">
+                     <Tab text="وام">
                          <content>
-                             <fx:include source="EmploymentContractTab.fxml" />
+                             <fx:include source="EmploymentContractTab.fxml"  />
                          </content>
 
                      </Tab>

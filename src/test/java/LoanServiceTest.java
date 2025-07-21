@@ -1,5 +1,4 @@
 import salary.controller.AppState;
-import salary.model.entity.Employee;
 import salary.model.entity.Loan;
 import salary.model.entity.enums.LoanType;
 import salary.model.services.EmployeeService;
@@ -9,10 +8,10 @@ import java.time.LocalDate;
 
 public class LoanServiceTest {
     public static void main(String[] args) throws Exception {
-AppState.employee=EmployeeService.findById(1);
+AppState.employeeSelected =EmployeeService.findById(1);
         Loan loan = Loan.builder()
                 .id(4)
-                .employee(AppState.employee)
+                .employee(AppState.employeeSelected)
                 .loanType(LoanType.کارشناسی)
                 .loanAmount(50_000_000)
                 .loanInterest(10)

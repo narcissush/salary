@@ -1,5 +1,4 @@
 import salary.controller.AppState;
-import salary.model.entity.Employee;
 import salary.model.entity.WorkRecordMonthly;
 import salary.model.entity.enums.Month;
 import salary.model.entity.enums.Year;
@@ -8,11 +7,11 @@ import salary.model.services.WorkRecordMonthlyService;
 
 public class WorkRecordMonthlyServiceTest {
     public static void main(String[] args) throws Exception {
-        AppState.employee= EmployeeService.findById(1);
+        AppState.employeeSelected = EmployeeService.findById(1);
         WorkRecordMonthly workRecordMonthly =
                 WorkRecordMonthly.builder()
                         .id(1)
-                        .employee(AppState.employee)
+                        .employee(AppState.employeeSelected)
                         .month(Month.تیر)
                         .year(Year.Y1404)
                         .daysWorked(31)

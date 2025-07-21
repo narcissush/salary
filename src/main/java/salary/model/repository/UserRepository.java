@@ -119,9 +119,9 @@ public class UserRepository implements Repository<User> {
 
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            AppState.user = EntityMapper.userMapper(resultSet);
+            AppState.userSelected = EntityMapper.userMapper(resultSet);
         }
-        return AppState.user;
+        return AppState.userSelected;
     }
 
     @Override

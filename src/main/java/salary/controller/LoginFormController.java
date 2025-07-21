@@ -24,7 +24,7 @@ public class LoginFormController implements Initializable {
         loginBtn.setOnAction(event -> {
             try {
                 User user = UserService.findByUserAndPassword(usernameTxt.getText(), passwordTxt.getText());
-                AppState.user = user;
+                AppState.userSelected = user;
                 FormManager formManager = new FormManager();
                 formManager.showMainFormController();
 
