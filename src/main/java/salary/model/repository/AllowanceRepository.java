@@ -35,7 +35,17 @@ public class AllowanceRepository implements Repository<Allowance>{
 
     @Override
     public void edit(Allowance allowance) throws Exception {
+        preparedStatement = connection.prepareStatement(
+                "UPDATE ALLOWANCE SET year = ?, Housing_allowance = ?, food_allowance = ?, marriage_allowance = ?, child_allowance = ? WHERE id = ?"
+        );
 
+        preparedStatement.setString(1, allowance.getYear().name());
+        preparedStatement.setDouble(2, allowance.getHousingAllowance());
+        preparedStatement.setDouble(3, allowance.getFoodAllowance());
+        preparedStatement.setDouble(4, allowance.getMarriageAllowance());
+        preparedStatement.setDouble(5, allowance.getChildAllowance());
+        preparedStatement.setInt(6, allowance.getId());
+        preparedStatement.execute();
     }
 
     @Override
@@ -56,7 +66,7 @@ public class AllowanceRepository implements Repository<Allowance>{
         Allowance allowance = null;
         connection = ConnectionProvider.getConnectionProvider().getconnection();
         preparedStatement = connection.prepareStatement("select * from Allowance where year=?");
-        preparedStatement.setString(1, allowance.getYear().name());
+        preparedStatement.setString(1, year.name());
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
             allowance = EntityMapper.allowanceMapper(resultSet);

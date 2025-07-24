@@ -13,9 +13,16 @@ public class AllowanceService {
         }
     }
 
+    public static void  edit(Allowance allowance) throws Exception {
+        try (AllowanceRepository allowanceRepository = new AllowanceRepository()) {
+             allowanceRepository.edit(allowance);
+        }
+    }
+
+
     public static Allowance findByYear(Year year) throws Exception {
         try (AllowanceRepository allowanceRepository = new AllowanceRepository()) {
-            return allowanceRepository.findByYear(year);
+            return allowanceRepository.findByYear(Year.valueOf(year.toString()));
         }
     }
 
