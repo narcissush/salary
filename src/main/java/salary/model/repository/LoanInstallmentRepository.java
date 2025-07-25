@@ -1,119 +1,52 @@
 package salary.model.repository;
 
 import salary.model.entity.LoanInstallment;
+import salary.model.entity.EmployeeLoan;
 import salary.tools.ConnectionProvider;
-import salary.tools.EntityMapper;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoanInstallmentRepository{
+public class LoanInstallmentRepository {
     private final Connection connection;
-    private PreparedStatement preparedStatement;
-    private ResultSet resultSet;
 
     public LoanInstallmentRepository() throws Exception {
         this.connection = ConnectionProvider.getConnectionProvider().getconnection();
     }
 
-
-    public void save(LoanInstallment loanInstallment) throws Exception {
-        try {
-            loanInstallment.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "Loan_Installments_seq"));
-            preparedStatement = connection.prepareStatement(
-                    "INSERT INTO Loan_Installments VALUES (?, ?, ?, ?, ?)"
-            );
-            preparedStatement.setInt(1, loanInstallment.getId());
-            preparedStatement.setInt(2, loanInstallment.getLoan().getId());
-            preparedStatement.setInt(3, loanInstallment.getPayslip().getId());
-            preparedStatement.setDouble(4, loanInstallment.getAmountPaid());
-            preparedStatement.setDate(5, loanInstallment.getPaymentDate() != null ? Date.valueOf(loanInstallment.getPaymentDate()) : null);
-            preparedStatement.executeUpdate();
-        } finally {
-            closeResources();
+    public void save(LoanInstallment installment) throws Exception {
+        String sql = "INSERT INTO Loan_Installments (id, employee_loan_id, payslip_id, amount_paid, payment_date) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            installment.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "Loan_Installments_seq"));
+            stmt.setInt(1, installment.getId());
+            stmt.setInt(2, installment.getEmployeeLoan().getId());
+            stmt.setInt(3, installment.getPayslipId());
+            stmt.setDouble(4, installment.getAmountPaid());
+            stmt.setDate(5, Date.valueOf(installment.getPaymentDate()));
+            stmt.executeUpdate();
         }
     }
 
-    public void edit(LoanInstallment loanInstallment) throws Exception {
-        try {
-            preparedStatement = connection.prepareStatement(
-                    "UPDATE Loan_Installments SET Loan_id=?, Payslip_id=?, Amount_paid=?, Peyment_date=? WHERE id=?"
-            );
-            preparedStatement.setInt(1, loanInstallment.getLoan().getId());
-            preparedStatement.setInt(2, loanInstallment.getPayslip().getId());
-            preparedStatement.setDouble(3, loanInstallment.getAmountPaid());
-            preparedStatement.setDate(4, loanInstallment.getPaymentDate() != null ? Date.valueOf(loanInstallment.getPaymentDate()) : null);
-            preparedStatement.setInt(5, loanInstallment.getId());
-            preparedStatement.executeUpdate();
-        } finally {
-            closeResources();
-        }
-    }
-
-    public void delete(int id) throws Exception {
-        try {
-            preparedStatement = connection.prepareStatement(
-                    "DELETE FROM Loan_Installments WHERE id=?"
-            );
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-        } finally {
-            closeResources();
-        }
-    }
-
-    public List<LoanInstallment> findAll() throws Exception {
+    public List<LoanInstallment> findByEmployeeLoanId(int employeeLoanId) throws Exception {
         List<LoanInstallment> list = new ArrayList<>();
-        try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM Loan_Installments");
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                list.add(EntityMapper.loanItemMapper(resultSet));
+        String sql = "SELECT * FROM Loan_Installments WHERE employee_loan_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, employeeLoanId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                LoanInstallment installment = new LoanInstallment();
+                installment.setId(rs.getInt("id"));
+                EmployeeLoan empLoan = new EmployeeLoan();
+                empLoan.setId(rs.getInt("employee_loan_id"));
+                installment.setEmployeeLoan(empLoan);
+                installment.setPayslipId(rs.getInt("payslip_id"));
+                installment.setAmountPaid(rs.getDouble("amount_paid"));
+                installment.setPaymentDate(rs.getDate("payment_date").toLocalDate());
+                list.add(installment);
             }
-        } finally {
-            closeResources();
         }
         return list;
-    }
-
-    public LoanInstallment findById(int id) throws Exception {
-        LoanInstallment item = null;
-        try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM Loan_Installments WHERE id=?");
-            preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                item = EntityMapper.loanItemMapper(resultSet);
-            }
-        } finally {
-            closeResources();
-        }
-        return item;
-    }
-
-    public List<LoanInstallment> findByLoanId(int loanId) throws Exception {
-        List<LoanInstallment> list = new ArrayList<>();
-        try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM Loan_Installments WHERE Loan_id=?");
-            preparedStatement.setInt(1, loanId);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                list.add(EntityMapper.loanItemMapper(resultSet));
-            }
-        } finally {
-            closeResources();
-        }
-        return list;
-    }
-
-    private void closeResources() {
-        try {
-            if (resultSet != null) resultSet.close();
-        } catch (Exception ignored) {}
-
-        try {
-            if (preparedStatement != null) preparedStatement.close();
-        } catch (Exception ignored) {}
     }
 }

@@ -1,31 +1,22 @@
 package salary.controller;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
-import salary.model.entity.Employee;
-import salary.model.entity.EmploymentContract;
-import salary.model.entity.Loan;
 import salary.model.entity.LoanInstallment;
-import salary.model.entity.enums.Gender;
-import salary.model.entity.enums.LoanType;
-import salary.model.services.EmploymentContractService;
-import salary.model.services.LoanInstallmentService;
-import salary.model.services.LoanService;
+import salary.model.entity.LoanType;
+import salary.model.services.LoanTypeService;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class EmploymentLoanTabController implements Initializable {
     @FXML
-    private Button newLoanBtn, editLoanBtn, deleteLoanBtn;
+    private Button saveLoanBtn, editLoanBtn, deleteLoanBtn;
     @FXML
     private TextField loanIdTxt,loanAmountTxt,loanIntrestTxt,totalInstallmentTxt,amountPaidTxt;
     @FXML
@@ -57,19 +48,65 @@ public class EmploymentLoanTabController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loanTypeCmb.getItems().addAll(LoanType.values());
-        loanTable.getSelectionModel().selectedItemProperty().addListener((obs, oldLoan, selectedLoan) -> {
-            if (selectedLoan != null) {
-                try {
-                    List<LoanInstallment> installments = LoanInstallmentService.findByLoanId(selectedLoan.getId());
-                    fillLoanInstallmentTable(installments);
-                } catch (Exception e) {
-                    new Alert(Alert.AlertType.ERROR, "خطا در بارگذاری اقساط وام: " + e.getMessage()).show();
-                }
-            } else {
-                fillLoanInstallmentTable(null); // جدول خالی شود
+        try {
+            List<LoanType> loanTypes = LoanTypeService.findAll();
+            loanTypeCmb.setItems(FXCollections.observableArrayList(loanTypes));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        loanTypeCmb.setOnAction(event -> {
+            LoanType selected = loanTypeCmb.getValue();
+            if (selected != null) {
+                loanAmountTxt.setText(String.valueOf((int) selected.getLoanAmount()));
+                loanIntrestTxt.setText(String.valueOf(selected.getLoanInterest()));
+                totalInstallmentTxt.setText(String.valueOf(selected.getTotalInstallments()));
+
+                double totalWithInterest = selected.getLoanAmount() + (selected.getLoanAmount() * selected.getLoanInterest());
+                double monthlyInstallment = totalWithInterest / selected.getTotalInstallments();
+                amountPaidTxt.setText(String.valueOf((int) monthlyInstallment));
             }
         });
+
+        saveLoanBtn.setOnAction(event -> {
+            try {
+                // استخراج و بررسی مقادیر ورودی
+                LoanType selectedLoanType = loanTypeCmb.getValue();
+                if (selectedLoanType == null) {
+                    throw new Exception("نوع وام را انتخاب کنید.");
+                }
+
+                double loanAmount = Double.parseDouble(loanAmountTxt.getText());
+                double interest = Double.parseDouble(loanIntrestTxt.getText());
+                int totalInstallments = Integer.parseInt(totalInstallmentTxt.getText());
+                LocalDate startDate = startLoanDatePicker.getValue();
+
+                if (startDate == null) {
+                    throw new Exception("تاریخ شروع وام را وارد کنید.");
+                }
+
+                // ساخت وام
+//                Loan loan = Loan.builder()
+//                        .employee(AppState.employeeSelected)
+//                        .loanType(selectedLoanType)
+//                        .loanAmount(loanAmount)
+//                        .loanInterest(interest)
+//                        .totalInstallments(totalInstallments)
+//                        .loanStartDate(startDate)
+//                        .loanFinishDate(startDate.plusMonths(totalInstallments))
+//                        .build();
+
+                //LoanService.save(loan);
+                new Alert(Alert.AlertType.INFORMATION, "وام جدید ثبت شد!", ButtonType.OK).showAndWait();
+
+            } catch (NumberFormatException ex) {
+                new Alert(Alert.AlertType.ERROR, "مقادیر عددی را به‌درستی وارد کنید.").show();
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            }
+        });
+
+
     }
 
     public void fillLoanTable(List<Loan> loans) {

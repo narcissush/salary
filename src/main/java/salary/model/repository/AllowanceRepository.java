@@ -1,7 +1,6 @@
 package salary.model.repository;
 
 import salary.model.entity.Allowance;
-import salary.model.entity.Loan;
 import salary.model.entity.enums.Year;
 import salary.tools.ConnectionProvider;
 import salary.tools.EntityMapper;

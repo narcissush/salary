@@ -7,45 +7,37 @@ import java.util.List;
 
 public class LoanInstallmentService {
 
-    private static final LoanInstallmentRepository loanInstallmentRepository;
-
-    static {
-        try {
-            loanInstallmentRepository = new LoanInstallmentRepository();
-        } catch (Exception e) {
-            throw new RuntimeException("Error initializing LoanInstallmentRepository", e);
-        }
+    public static void save(LoanInstallment installment) throws Exception {
+        new LoanInstallmentRepository().save(installment);
     }
 
-    public static void save(LoanInstallment loanInstallment) throws Exception {
-        loanInstallmentRepository.save(loanInstallment);
-    }
-
-    public static void edit(LoanInstallment loanInstallment) throws Exception {
-        if (loanInstallmentRepository.findById(loanInstallment.getId()) != null) {
-            loanInstallmentRepository.edit(loanInstallment);
+    public static void edit(LoanInstallment installment) throws Exception {
+        LoanInstallmentRepository repo = new LoanInstallmentRepository();
+        if (repo.findById(installment.getId()) != null) {
+            repo.edit(installment);
         } else {
-            throw new Exception("LoanInstallment not found");
+            throw new Exception("Installment not found");
         }
     }
 
     public static void delete(int id) throws Exception {
-        if (loanInstallmentRepository.findById(id) != null) {
-            loanInstallmentRepository.delete(id);
+        LoanInstallmentRepository repo = new LoanInstallmentRepository();
+        if (repo.findById(id) != null) {
+            repo.delete(id);
         } else {
-            throw new Exception("LoanInstallment not found");
+            throw new Exception("Installment not found");
         }
     }
 
     public static List<LoanInstallment> findAll() throws Exception {
-        return loanInstallmentRepository.findAll();
+        return new LoanInstallmentRepository().findAll();
     }
 
     public static LoanInstallment findById(int id) throws Exception {
-        return loanInstallmentRepository.findById(id);
+        return new LoanInstallmentRepository().findById(id);
     }
 
-    public static List<LoanInstallment> findByLoanId(int loanId) throws Exception {
-        return loanInstallmentRepository.findByLoanId(loanId);
+    public static List<LoanInstallment> findByEmployeeLoanId(int employeeLoanId) throws Exception {
+        return new LoanInstallmentRepository().findByEmployeeLoanId(employeeLoanId);
     }
 }

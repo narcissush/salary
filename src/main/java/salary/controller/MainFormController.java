@@ -10,10 +10,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import salary.model.entity.Employee;
 import salary.model.entity.EmploymentContract;
-import salary.model.entity.Loan;
 import salary.model.services.EmployeeService;
 import salary.model.services.EmploymentContractService;
-import salary.model.services.LoanService;
+import salary.model.services.EmployeeLoanService;
 
 
 import java.net.URL;
@@ -66,7 +65,7 @@ public class MainFormController implements Initializable {
                             AppState.employmentContractSelected = null;
                             employmentContractTabController.resertForm();
                         }
-                        List<Loan> loans = LoanService.findByEmployeeId(AppState.employeeSelected.getId());
+                        List<Loan> loans = EmployeeLoanService.findByEmployeeId(AppState.employeeSelected.getId());
                         if (loans != null && !loans.isEmpty()) {
                             employmentLoanTabController.fillLoanTable(loans);
                         }

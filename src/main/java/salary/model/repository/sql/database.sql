@@ -101,24 +101,41 @@ CREATE TABLE Missions
 create sequence Missions_seq start with 1 increment by 1;
 
 
-CREATE TABLE loans
+CREATE TABLE loan_Type
 (
     id                 NUMBER PRIMARY KEY,
-    employee_id        NUMBER REFERENCES employees (id),
     loan_type          NVARCHAR2(20),
-    loan_amount        NUMBER, --مبلغ وام
-    loan_interest      NUMBER, --بهره وام
-    total_installments NUMBER,--تعداد افساط
-    Loan_Start_Date    Date,
-    Loan_Finish_date   Date
-
+    loan_amount        NUMBER(15, 2), --مبلغ وام
+    loan_interest      NUMBER(5, 2),  --بهره وام
+    total_installments NUMBER--تعداد افساط
 );
-create sequence loans_seq start with 1 increment by 1;
+create sequence loans_type_seq start with 1 increment by 1;
+
+CREATE TABLE Employee_Loan
+(
+    id               NUMBER PRIMARY KEY,
+    employee_id      NUMBER REFERENCES employees (id),
+    loan_type_id     NUMBER REFERENCES loan_type (id), -- ربط به نوع وام
+    loan_start_date  DATE,
+    loan_finish_date DATE
+);
+create sequence Employee_Loan_seq start with 1 increment by 1;
+
+CREATE TABLE Loan_Installments
+(
+    id               NUMBER PRIMARY KEY,
+    employee_loan_id NUMBER REFERENCES Employee_Loan (id) ON DELETE CASCADE,
+    payslip_id       NUMBER REFERENCES payslips (id),
+    amount_paid      NUMBER(15, 2),
+    payment_date     DATE
+);
+create sequence Loan_Installments_seq start with 1 increment by 1;
+
 
 CREATE TABLE allowance
 (
     id                 NUMBER PRIMARY KEY,
-    YEAR     NVARCHAR2(8),
+    YEAR               NVARCHAR2(8),
     HOUSING_ALLOWANCE  NUMBER(15, 2),
     MARRIAGE_ALLOWANCE NUMBER(15, 2),
     CHILD_ALLOWANCE    NUMBER(15, 2),
@@ -128,15 +145,7 @@ create sequence allowances_seq start with 1 increment by 1;
 
 
 
-CREATE TABLE Loan_Installments
-(
-    id           NUMBER PRIMARY KEY,
-    loan_id      NUMBER REFERENCES loans (id) ON DELETE CASCADE,
-    payslip_id   NUMBER REFERENCES payslips (id),
-    amount_paid  NUMBER, --مبلغ_پرداختی
-    payment_date DATE
-);
-create sequence Loan_Installments_seq start with 1 increment by 1;
+
 
 
 

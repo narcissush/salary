@@ -52,31 +52,37 @@ public class EntityMapper {
                 .build();
     }
 
-    public static Loan loanMapper(ResultSet resultSet) throws SQLException {
-        return Loan
-                .builder()
-                .id(resultSet.getInt("id"))
-                .employee(AppState.employeeSelected)
-                .loanType(LoanType.valueOf(resultSet.getString("loan_type")))
-                .loanAmount(resultSet.getDouble("loan_Amount"))
-                .loanInterest(resultSet.getDouble("loan_Interest"))
-                .totalInstallments(resultSet.getInt("total_Installments"))
-                .loanStartDate(resultSet.getDate("loan_start_Date") == null ? null : resultSet.getDate("loan_start_Date").toLocalDate())
-                .loanFinishDate(resultSet.getDate("loan_finish_Date") == null ? null : resultSet.getDate("loan_finish_Date").toLocalDate())
-
-                .build();
-    }
-
-    public static LoanInstallment loanItemMapper(ResultSet resultSet) throws SQLException {
-
-        return LoanInstallment
-                .builder()
-                .id(resultSet.getInt("id"))
-                .paymentDate(resultSet.getDate("payment_Date") == null ? null : resultSet.getDate("payment_Date").toLocalDate())
-                .amountPaid(resultSet.getDouble("amount_Paid"))
-                .payslip(AppState.payslipSelected)
-                .build();
-    }
+//    public static Loan loanTypeMapper(ResultSet resultSet) throws SQLException {
+//        LoanType loanTypeEntity = new LoanType();
+//        loanTypeEntity.setId(resultSet.getInt("loan_type_id"));
+//        loanTypeEntity.setLoanType(resultSet.getString("loan_type"));
+//        loanTypeEntity.setLoanAmount(resultSet.getDouble("loan_amount"));
+//        loanTypeEntity.setLoanInterest(resultSet.getDouble("loan_interest"));
+//        loanTypeEntity.setTotalInstallments(resultSet.getInt("total_installments"));
+//
+//        return Loan
+//                .builder()
+//                .id(resultSet.getInt("id"))
+//                .employee(AppState.employeeSelected)
+//                .loanType(loanTypeEntity) // فرض بر این که فیلد مربوطه در کلاس Loan تعریف شده
+//                .loanAmount(resultSet.getDouble("loan_amount"))
+//                .loanInterest(resultSet.getDouble("loan_interest"))
+//                .totalInstallments(resultSet.getInt("total_installments"))
+//                .loanStartDate(resultSet.getDate("loan_start_date") == null ? null : resultSet.getDate("loan_start_date").toLocalDate())
+//                .loanFinishDate(resultSet.getDate("loan_finish_date") == null ? null : resultSet.getDate("loan_finish_date").toLocalDate())
+//                .build();
+//    }
+//
+//    public static LoanInstallment loanItemMapper(ResultSet resultSet) throws SQLException {
+//
+//        return LoanInstallment
+//                .builder()
+//                .id(resultSet.getInt("id"))
+//                .paymentDate(resultSet.getDate("payment_Date") == null ? null : resultSet.getDate("payment_Date").toLocalDate())
+//                .amountPaid(resultSet.getDouble("amount_Paid"))
+//                .payslip(AppState.payslipSelected)
+//                .build();
+//    }
 
     public static Payslip payslipMapper(ResultSet resultSet) throws SQLException {
         return Payslip

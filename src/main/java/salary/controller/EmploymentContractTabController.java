@@ -180,8 +180,6 @@ public class EmploymentContractTabController implements Initializable {
         symbols.setGroupingSeparator('٬');
         DecimalFormat decimalFormat = new DecimalFormat("#,###.00", symbols);
 
-
-
         double monthlySalary = AppState.employmentContractSelected.getDailySalary() * 30;
         double housingAllowance = AppState.employmentContractSelected.getHousingAllowance();
         double foodAllowance = AppState.employmentContractSelected.getFoodAllowance();

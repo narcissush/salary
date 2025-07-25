@@ -1,10 +1,8 @@
 package salary.model.services;
 
 import salary.model.entity.Allowance;
-import salary.model.entity.Loan;
 import salary.model.entity.enums.Year;
 import salary.model.repository.AllowanceRepository;
-import salary.model.repository.LoanRepository;
 
 public class AllowanceService {
     public static void save(Allowance allowance) throws Exception {
