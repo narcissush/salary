@@ -7,44 +7,45 @@ import java.util.List;
 
 public class LoanInstallmentService {
 
+    private static final LoanInstallmentRepository loanInstallmentRepository;
 
-    public static void save(LoanInstallment loanInstallment) throws Exception {
-        try (LoanInstallmentRepository loanInstallmentRepository = new LoanInstallmentRepository()) {
-            loanInstallmentRepository.save(loanInstallment);
+    static {
+        try {
+            loanInstallmentRepository = new LoanInstallmentRepository();
+        } catch (Exception e) {
+            throw new RuntimeException("Error initializing LoanInstallmentRepository", e);
         }
     }
 
+    public static void save(LoanInstallment loanInstallment) throws Exception {
+        loanInstallmentRepository.save(loanInstallment);
+    }
+
     public static void edit(LoanInstallment loanInstallment) throws Exception {
-        try (LoanInstallmentRepository loanInstallmentRepository = new LoanInstallmentRepository()) {
-            if (loanInstallmentRepository.findById(loanInstallment.getId()) != null) {
-                loanInstallmentRepository.edit(loanInstallment);
-            } else {
-                throw new Exception("Employee not found");
-            }
+        if (loanInstallmentRepository.findById(loanInstallment.getId()) != null) {
+            loanInstallmentRepository.edit(loanInstallment);
+        } else {
+            throw new Exception("LoanInstallment not found");
         }
     }
 
     public static void delete(int id) throws Exception {
-        try (LoanInstallmentRepository loanInstallmentRepository = new LoanInstallmentRepository()) {
-            if (loanInstallmentRepository.findById(id) != null) {
-                loanInstallmentRepository.delete(id);
-            } else {
-                throw new Exception("LoanItem not found");
-            }
+        if (loanInstallmentRepository.findById(id) != null) {
+            loanInstallmentRepository.delete(id);
+        } else {
+            throw new Exception("LoanInstallment not found");
         }
     }
 
     public static List<LoanInstallment> findAll() throws Exception {
-        try (LoanInstallmentRepository loanInstallmentRepository = new LoanInstallmentRepository()) {
-            return loanInstallmentRepository.findAll();
-        }
+        return loanInstallmentRepository.findAll();
     }
 
     public static LoanInstallment findById(int id) throws Exception {
-        try (LoanInstallmentRepository loanInstallmentRepository = new LoanInstallmentRepository()) {
-            return loanInstallmentRepository.findById(id);
-        }
+        return loanInstallmentRepository.findById(id);
     }
 
-
+    public static List<LoanInstallment> findByLoanId(int loanId) throws Exception {
+        return loanInstallmentRepository.findByLoanId(loanId);
+    }
 }

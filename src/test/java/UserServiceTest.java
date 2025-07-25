@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class UserServiceTest {
     public static void main(String[] args) throws Exception {
         User user = User.builder()
-                .id(6)
+                .id(1)
                 .firstName("someyeh")
                 .lastName("hajizafeh")
                 .nationalId("001548963")
@@ -25,8 +25,8 @@ public class UserServiceTest {
                 .username("1")
                 .password("1")
                 .build();
-        //UserService.save(user);
-        UserService.edit(user);
+        UserService.save(user);
+        //UserService.edit(user);
         AppState.userSelected = UserService.findById(user.getId());
 
         //System.out.println(UserService.findByUserAndPassword("1","1"));

@@ -1,54 +1,43 @@
 package salary.model.services;
 
 import salary.model.entity.EmploymentContract;
-import salary.model.repository.EmploymentContractRepositiry;
+import salary.model.repository.EmploymentContractRepository;
 
 import java.util.List;
 
-public class EmploymentContractService  {
+public class EmploymentContractService {
 
-    public static void save(EmploymentContract employmentContract) throws Exception {
-        try (EmploymentContractRepositiry employmentContractRepositiry = new EmploymentContractRepositiry()) {
-            employmentContractRepositiry.save(employmentContract);
-        }
+    private static final EmploymentContractRepository repository = new EmploymentContractRepository();
+
+    public static void save(EmploymentContract contract) throws Exception {
+        repository.save(contract);
     }
 
-    public static void edit(EmploymentContract employmentContract) throws Exception {
-        try (EmploymentContractRepositiry employmentContractRepositiry = new EmploymentContractRepositiry()) {
-            if (employmentContractRepositiry.findById(employmentContract.getId()) != null) {
-                employmentContractRepositiry.edit(employmentContract);
-            } else {
-                throw new Exception("Employee not found");
-            }
+    public static void edit(EmploymentContract contract) throws Exception {
+        if (repository.findById(contract.getId()) != null) {
+            repository.edit(contract);
+        } else {
+            throw new Exception("Employment contract not found");
         }
     }
 
     public static void delete(int id) throws Exception {
-        try (EmploymentContractRepositiry employmentContractRepositiry = new EmploymentContractRepositiry()) {
-            if (employmentContractRepositiry.findById(id) != null) {
-                employmentContractRepositiry.delete(id);
-            } else {
-                throw new Exception("Employee not found");
-            }
+        if (repository.findById(id) != null) {
+            repository.delete(id);
+        } else {
+            throw new Exception("Employment contract not found");
         }
     }
 
     public static List<EmploymentContract> findAll() throws Exception {
-        try (EmploymentContractRepositiry employmentContractRepositiry = new EmploymentContractRepositiry()) {
-            return employmentContractRepositiry.findAll();
-        }
+        return repository.findAll();
     }
 
     public static EmploymentContract findById(int id) throws Exception {
-        try (EmploymentContractRepositiry employmentContractRepositiry = new EmploymentContractRepositiry()) {
-            return employmentContractRepositiry.findById(id);
-        }
+        return repository.findById(id);
     }
 
-    public static EmploymentContract findByEmployeeId(int employeeId) throws Exception {
-        try (EmploymentContractRepositiry employmentContractRepositiry = new EmploymentContractRepositiry()) {
-            return employmentContractRepositiry.findByEmployeeId(employeeId);
-        }
+    public static List<EmploymentContract> findByEmployeeId(int employeeId) throws Exception {
+        return repository.findByEmployeeId(employeeId);
     }
-
 }

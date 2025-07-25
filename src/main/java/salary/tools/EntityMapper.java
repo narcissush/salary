@@ -72,7 +72,6 @@ public class EntityMapper {
         return LoanInstallment
                 .builder()
                 .id(resultSet.getInt("id"))
-                //.loan(loan)
                 .paymentDate(resultSet.getDate("payment_Date") == null ? null : resultSet.getDate("payment_Date").toLocalDate())
                 .amountPaid(resultSet.getDouble("amount_Paid"))
                 .payslip(AppState.payslipSelected)
@@ -80,7 +79,6 @@ public class EntityMapper {
     }
 
     public static Payslip payslipMapper(ResultSet resultSet) throws SQLException {
-
         return Payslip
                 .builder()
                 .id(resultSet.getInt("id"))
@@ -88,7 +86,6 @@ public class EntityMapper {
                 .employee(AppState.employeeSelected)
                 .workRecordMonthly(AppState.workRecordMonthlySelected)
                 .issueDate(resultSet.getDate("issue_Date") == null ? null : resultSet.getDate("issue_Date").toLocalDate())
-
                 .build();
     }
 

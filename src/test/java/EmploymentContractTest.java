@@ -4,16 +4,14 @@ import salary.model.entity.enums.*;
 import salary.model.services.EmployeeService;
 import salary.model.services.EmploymentContractService;
 
-import java.time.LocalDate;
-
 public class EmploymentContractTest {
     public static void main(String[] args) throws Exception {
 
 
         EmploymentContract employmentContract =
                 EmploymentContract.builder()
-                        .id(1)
-                        .employee(EmployeeService.findById(6))
+                        .id(2)
+                        .employee(EmployeeService.findById(2))
                         .issuanceDate(null)
                         .hireDate(null)
                         .terminationDate(null)
@@ -31,9 +29,30 @@ public class EmploymentContractTest {
                         .build();
         EmploymentContractService.save(employmentContract);
 
-        AppState.employmentContractSelected= EmploymentContractService.findByEmployeeId(6);
+        AppState.employmentContractListSelected = EmploymentContractService.findByEmployeeId(1);
 
-        System.out.println(AppState.employmentContractSelected);
+        System.out.println(AppState.employmentContractListSelected);
+        AppState.employmentContractListSelected = EmploymentContractService.findByEmployeeId(2);
+
+        System.out.println(AppState.employmentContractListSelected);
+        AppState.employmentContractListSelected = EmploymentContractService.findByEmployeeId(1);
+
+        System.out.println(AppState.employmentContractListSelected);
+        AppState.employmentContractListSelected = EmploymentContractService.findByEmployeeId(2);
+
+        System.out.println(AppState.employmentContractListSelected);
+        AppState.employmentContractListSelected = EmploymentContractService.findByEmployeeId(1);
+
+        System.out.println(AppState.employmentContractListSelected);
+        AppState.employmentContractListSelected = EmploymentContractService.findByEmployeeId(2);
+
+        System.out.println(AppState.employmentContractListSelected);
+        AppState.employmentContractListSelected = EmploymentContractService.findByEmployeeId(1);
+
+        System.out.println(AppState.employmentContractListSelected);
+        AppState.employmentContractListSelected = EmploymentContractService.findByEmployeeId(2);
+
+        System.out.println(AppState.employmentContractListSelected);
         //System.out.println(EmploymentContractService.findAll());
         //System.out.println(employmentContract);
     }

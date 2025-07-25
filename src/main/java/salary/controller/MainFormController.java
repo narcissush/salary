@@ -9,12 +9,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import salary.model.entity.Employee;
+import salary.model.entity.EmploymentContract;
+import salary.model.entity.Loan;
 import salary.model.services.EmployeeService;
 import salary.model.services.EmploymentContractService;
+import salary.model.services.LoanService;
 
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,6 +36,8 @@ public class MainFormController implements Initializable {
     private EmployeeTabController employeeTabController;
     @FXML
     private EmploymentContractTabController employmentContractTabController;
+    @FXML
+    private EmploymentLoanTabController employmentLoanTabController;
 
 
     @Override
@@ -42,22 +48,37 @@ public class MainFormController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
             alert.show();
         }
-
         EventHandler<Event> tableChangeEvent = (mouseEvent -> {
-            try {
-                AppState.employeeSelected = employeeTable.getSelectionModel().getSelectedItem();
-                if (AppState.employeeSelected != null) {
-                    employeeTabController.setEmployeeInForm();
+
+                try {
+                    if (employeeTable.getSelectionModel().getSelectedItem() != null) {
+                        AppState.employeeSelected = employeeTable.getSelectionModel().getSelectedItem();
+                        employeeTabController.setEmployeeInForm();
+                        List<EmploymentContract> contracts = EmploymentContractService.findByEmployeeId(AppState.employeeSelected.getId());
+                        if (contracts != null && !contracts.isEmpty()) {
+                            AppState.employmentContractListSelected = contracts;
+                            AppState.currentContractIndex = contracts.size() - 1;
+                            AppState.employmentContractSelected = contracts.get(AppState.currentContractIndex);
+                            employmentContractTabController.setEmployeeContractInForm();
+                        } else {
+                            AppState.employmentContractListSelected = null;
+                            AppState.currentContractIndex = 0;
+                            AppState.employmentContractSelected = null;
+                            employmentContractTabController.resertForm();
+                        }
+                        List<Loan> loans = LoanService.findByEmployeeId(AppState.employeeSelected.getId());
+                        if (loans != null && !loans.isEmpty()) {
+                            employmentLoanTabController.fillLoanTable(loans);
+                        }
+                        else {
+                            employmentLoanTabController.fillLoanTable(Collections.emptyList());
+                        }
+                    }
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+                    alert.show();
                 }
-                if (EmploymentContractService.findByEmployeeId(AppState.employeeSelected.getId())!=null) {
-                    AppState.employmentContractSelected= EmploymentContractService.findByEmployeeId(AppState.employeeSelected.getId());
-                    employmentContractTabController.setEmployeeContractInForm();
-                }
-            } catch (Exception e) {
-//                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-//                alert.show();
-                e.printStackTrace();
-            }
+
         });
         employeeTable.setOnMouseReleased(tableChangeEvent);
         employeeTable.setOnKeyReleased(tableChangeEvent);

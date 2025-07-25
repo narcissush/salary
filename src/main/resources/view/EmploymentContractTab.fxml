@@ -24,7 +24,7 @@
          <children>
             <HBox prefHeight="63.0" prefWidth="683.0">
                <children>
-                  <Button fx:id="newContractBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="صدور حکم">
+                  <Button fx:id="newContractBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" text="صدور حکم">
 
                      <graphic>
                            <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
@@ -38,7 +38,7 @@
                      </HBox.margin>
 
                   </Button>
-                  <Button fx:id="saveContractBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="ذخیره">
+                  <Button fx:id="saveContractBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" text="ذخیره">
                      <HBox.margin>
                         <Insets right="5.0" top="5.0" />
                      </HBox.margin>
@@ -50,7 +50,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="editContractBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="ویرایش">
+                  <Button fx:id="editContractBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" text="ویرایش">
                      <HBox.margin>
                         <Insets right="5.0" top="5.0" />
                      </HBox.margin>
@@ -62,14 +62,26 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="deleteContractBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="قطع همکاری">
+                  <Button fx:id="nextContractBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="50.0">
                      <HBox.margin>
-                        <Insets right="5.0" top="5.0" />
+                        <Insets left="280.0" top="10.0" />
                      </HBox.margin>
                      <graphic>
-                        <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" preserveRatio="true">
                            <image>
-                              <Image url="@Img/delete.png" />
+                              <Image url="@Img/next.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="previousContractBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="50.0">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" preserveRatio="true">
+                           <image>
+                              <Image url="@Img/previews.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -105,7 +117,7 @@
                         <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="سمت : " GridPane.rowIndex="5" />
                         <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="واحد : " GridPane.rowIndex="6" />
                         <Label alignment="CENTER_RIGHT" prefWidth="130.0" text="نوع قرارداد :" GridPane.rowIndex="3" />
-                        <TextField fx:id="contractIdTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" />
+                        <TextField fx:id="contractIdTxt" disable="true" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" />
                         <DatePicker fx:id="hireDatePicker" layoutX="155.0" layoutY="110.0" maxWidth="250.0" prefHeight="40.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <DatePicker fx:id="issuanceDatePicker" maxWidth="250.0" prefHeight="40.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <ComboBox fx:id="contractTypeCmb" layoutX="156.0" layoutY="115.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -114,7 +126,7 @@
                         <ComboBox fx:id="departmentCmb" layoutX="156.0" layoutY="70.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <TextField fx:id="dailySalaryTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="14.0" />
                            </font>
                         </TextField>
                         <TextField fx:id="monthlySalaryTxt" disable="true" layoutX="571.0" layoutY="70.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
@@ -123,27 +135,27 @@
                            </font></TextField>
                         <TextField fx:id="housingAllowanceTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="14.0" />
                            </font></TextField>
                         <TextField fx:id="foodAllowanceTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="14.0" />
                            </font></TextField>
                         <TextField fx:id="marriageAllowanceTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="14.0" />
                            </font></TextField>
                         <TextField fx:id="childAllowanceTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="14.0" />
                            </font></TextField>
                         <TextField fx:id="bazarKarTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="14.0" />
                            </font></TextField>
                         <TextField fx:id="fogholadeShoghlTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="14.0" />
                            </font></TextField>
                         <Label alignment="CENTER_RIGHT" layoutX="22.0" layoutY="34.0" prefHeight="21.0" prefWidth="130.0" text="تاریخ صدور حکم:" GridPane.rowIndex="2" />
                         <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="34.0" prefHeight="0.0" prefWidth="130.0" text="دستمزد ماهیانه:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
@@ -158,7 +170,7 @@
                         <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="133.0" text="دستمزد روزانه : " GridPane.columnIndex="2" />
                         <Label alignment="TOP_CENTER" prefHeight="17.0" prefWidth="248.0" text="مزایا" GridPane.columnIndex="3" GridPane.rowIndex="2">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font size="14.0" />
                            </font>
                         </Label>
                         <TextField fx:id="totalSalartTxt" disable="true" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="9">

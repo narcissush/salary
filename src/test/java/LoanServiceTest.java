@@ -10,7 +10,7 @@ public class LoanServiceTest {
     public static void main(String[] args) throws Exception {
 AppState.employeeSelected =EmployeeService.findById(1);
         Loan loan = Loan.builder()
-                .id(4)
+                .id(1)
                 .employee(AppState.employeeSelected)
                 .loanType(LoanType.کارشناسی)
                 .loanAmount(50_000_000)

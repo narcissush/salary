@@ -3,6 +3,7 @@ import salary.model.entity.LoanInstallment;
 import salary.model.entity.Payslip;
 import salary.model.services.LoanInstallmentService;
 import salary.model.services.LoanService;
+import salary.model.services.PaysLipService;
 
 import java.time.LocalDate;
 
@@ -13,7 +14,7 @@ public class LoanInstallmentsServiceTest {
         Payslip payslip=new Payslip();
 
         loan= LoanService.findById(4);
-        //payslip= PaysLipService.findById(3);
+        payslip= PaysLipService.findById(1);
 
         LoanInstallment loanInstallment = LoanInstallment.builder()
                 .id(4)

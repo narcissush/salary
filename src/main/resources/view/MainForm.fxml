@@ -45,45 +45,37 @@
          </VBox.margin>
       </MenuBar>
       <SplitPane dividerPositions="0.5" prefHeight="780.0" prefWidth="1200.0">
-          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="307.0">
             <children>
-               <SplitPane dividerPositions="0.06682027649769585" nodeOrientation="RIGHT_TO_LEFT" orientation="VERTICAL" prefHeight="870.0" prefWidth="307.0">
-                  <items>
-                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <VBox layoutX="-2.0" layoutY="-1.0" prefHeight="780.0" prefWidth="307.0">
+                  <children>
+                     <HBox prefHeight="54.0" prefWidth="305.0">
                         <children>
-                           <HBox prefHeight="54.0" prefWidth="305.0">
-                              <children>
-                                 <Label text="جستجو">
-                                    <HBox.margin>
-                                       <Insets left="10.0" top="18.0" />
-                                    </HBox.margin>
-                                 </Label>
-                                 <TextField fx:id="searchIdTxt" prefHeight="35.0" prefWidth="100.0" promptText="کد پرسنلی">
-                                    <HBox.margin>
-                                       <Insets left="10.0" top="10.0" />
-                                    </HBox.margin>
-                                 </TextField>
-                                 <TextField fx:id="searchNameFamilyTxt" prefHeight="35.0" prefWidth="120.0" promptText="نام/نام خانوادگی">
-                                    <HBox.margin>
-                                       <Insets left="10.0" top="10.0" />
-                                    </HBox.margin>
-                                 </TextField>
-                              </children>
-                           </HBox>
+                           <Label text="جستجو">
+                              <HBox.margin>
+                                 <Insets left="10.0" top="18.0" />
+                              </HBox.margin>
+                           </Label>
+                           <TextField fx:id="searchIdTxt" prefHeight="35.0" prefWidth="100.0" promptText="کد پرسنلی">
+                              <HBox.margin>
+                                 <Insets left="10.0" top="10.0" />
+                              </HBox.margin>
+                           </TextField>
+                           <TextField fx:id="searchNameFamilyTxt" prefHeight="35.0" prefWidth="120.0" promptText="نام/نام خانوادگی">
+                              <HBox.margin>
+                                 <Insets left="10.0" top="10.0" />
+                              </HBox.margin>
+                           </TextField>
                         </children>
-                     </AnchorPane>
-                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="160.0">
-                        <children>
-                           <TableView fx:id="employeeTable" prefHeight="807.0" prefWidth="305.0" style="-fx-font-size: 16px;">
-                              <columns>
-                                 <TableColumn fx:id="employeeIdCol" prefWidth="75.0" text="کد پرسنلی" />
-                                 <TableColumn fx:id="employeeNameFamilyCol" prefWidth="229.0" text="نام و نام خانوادگی" />
-                              </columns>
-                           </TableView>
-                        </children>
-                     </AnchorPane>
-                  </items>
-               </SplitPane>
+                     </HBox>
+                     <TableView fx:id="employeeTable" prefHeight="683.0" prefWidth="307.0">
+                       <columns>
+                         <TableColumn fx:id="employeeIdCol" prefWidth="111.0" text="شماره پرسنلی" />
+                         <TableColumn fx:id="employeeNameFamilyCol" prefWidth="185.0" text="نام و نام خانوادگی" />
+                       </columns>
+                     </TableView>
+                  </children>
+               </VBox>
             </children>
           </AnchorPane>
          <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -95,26 +87,15 @@
                            <fx:include fx:id="employeeTab" source="EmployeeTab.fxml" />
                        </content>
                    </Tab>
-                   <Tab  text="حکم">
+                   <Tab text="حکم">
                        <content>
-                           <fx:include  fx:id="employmentContractTab" source="EmploymentContractTab.fxml" />
+                           <fx:include fx:id="employmentContractTab" source="EmploymentContractTab.fxml" />
                        </content>
                    </Tab>
                      <Tab text="وام">
                          <content>
-                             <fx:include source="EmploymentContractTab.fxml"  />
+                             <fx:include fx:id="employmentLoanTab" source="EmploymentLoanTab.fxml" />
                          </content>
-
-                     </Tab>
-                     <Tab text="حقوق">
-                         <content>
-                             <fx:include source="EmploymentContractTab.fxml" />
-                         </content>
-                     </Tab>
-                     <Tab text="تسویه">
-                       <content>
-                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                       </content>
                      </Tab>
                  </tabs>
                </TabPane>
