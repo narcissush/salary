@@ -2,6 +2,7 @@ package salary.model.repository;
 
 import salary.model.entity.LoanType;
 import salary.tools.ConnectionProvider;
+import salary.tools.EntityMapper;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,6 +27,25 @@ public class LoanTypeRepository {
             stmt.executeUpdate();
         }
     }
+    public void edit(LoanType loanType) throws Exception {
+        String sql = "UPDATE loan_type SET loan_type = ?, loan_amount = ?, loan_interest = ?, total_installments = ? WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, loanType.getLoanType());
+            stmt.setDouble(2, loanType.getLoanAmount());
+            stmt.setDouble(3, loanType.getLoanInterest());
+            stmt.setInt(4, loanType.getTotalInstallments());
+            stmt.setInt(5, loanType.getId()); // شرط WHERE برای شناسایی رکورد
+            stmt.executeUpdate();
+        }
+    }
+
+    public void delete(int id) throws Exception {
+        String sql = "DELETE FROM loan_type WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
+    }
 
     public List<LoanType> findAll() throws Exception {
         List<LoanType> list = new ArrayList<>();
@@ -33,13 +53,8 @@ public class LoanTypeRepository {
         try (PreparedStatement stmt = connection.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                LoanType loanType = new LoanType();
-                loanType.setId(rs.getInt("id"));
-                loanType.setLoanType(rs.getString("loan_type"));
-                loanType.setLoanAmount(rs.getDouble("loan_amount"));
-                loanType.setLoanInterest(rs.getDouble("loan_interest"));
-                loanType.setTotalInstallments(rs.getInt("total_installments"));
-                list.add(loanType);
+
+                list.add(EntityMapper.loanTypeMapper(rs));
             }
         }
         return list;
@@ -51,13 +66,8 @@ public class LoanTypeRepository {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                LoanType loanType = new LoanType();
-                loanType.setId(rs.getInt("id"));
-                loanType.setLoanType(rs.getString("loan_type"));
-                loanType.setLoanAmount(rs.getDouble("loan_amount"));
-                loanType.setLoanInterest(rs.getDouble("loan_interest"));
-                loanType.setTotalInstallments(rs.getInt("total_installments"));
-                return loanType;
+
+                return EntityMapper.loanTypeMapper(rs);
             }
         }
         return null;

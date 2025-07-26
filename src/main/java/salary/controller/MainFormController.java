@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import salary.model.entity.Employee;
+import salary.model.entity.EmployeeLoan;
 import salary.model.entity.EmploymentContract;
 import salary.model.services.EmployeeService;
 import salary.model.services.EmploymentContractService;
@@ -65,12 +66,12 @@ public class MainFormController implements Initializable {
                             AppState.employmentContractSelected = null;
                             employmentContractTabController.resertForm();
                         }
-                        List<Loan> loans = EmployeeLoanService.findByEmployeeId(AppState.employeeSelected.getId());
+                        List<EmployeeLoan> loans = EmployeeLoanService.findByEmployeeId(AppState.employeeSelected.getId());
                         if (loans != null && !loans.isEmpty()) {
-                            employmentLoanTabController.fillLoanTable(loans);
+                            employmentLoanTabController.fillEmployeeLoanTable(loans);
                         }
                         else {
-                            employmentLoanTabController.fillLoanTable(Collections.emptyList());
+                            employmentLoanTabController.fillEmployeeLoanTable(Collections.emptyList());
                         }
                     }
                 } catch (Exception e) {

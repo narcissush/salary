@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class LoanInstallment implements Serializable {
     private int id;
     private EmployeeLoan employeeLoan;
-    private int payslipId; // یا Payslip payslip;
+    private Payslip payslip; // یا Payslip payslip;
     private double amountPaid;
     private LocalDate paymentDate;
 

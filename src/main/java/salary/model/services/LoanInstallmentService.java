@@ -30,7 +30,8 @@ public class LoanInstallmentService {
     }
 
     public static List<LoanInstallment> findAll() throws Exception {
-        return new LoanInstallmentRepository().findAll();
+        LoanInstallmentRepository repo = new LoanInstallmentRepository();
+        return repo.findAll();
     }
 
     public static LoanInstallment findById(int id) throws Exception {

@@ -30,7 +30,7 @@ public class EmployeeLoanService {
     }
 
     public static List<EmployeeLoan> findAll() throws Exception {
-        return new EmployeeLoanRepository().findAll();
+        return  new EmployeeLoanRepository().findAll();
     }
 
     public static EmployeeLoan findById(int id) throws Exception {

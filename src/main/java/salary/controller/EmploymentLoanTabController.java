@@ -5,8 +5,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import salary.model.entity.EmployeeLoan;
 import salary.model.entity.LoanInstallment;
 import salary.model.entity.LoanType;
+import salary.model.services.EmployeeLoanService;
+import salary.model.services.EmployeeService;
 import salary.model.services.LoanTypeService;
 
 import java.net.URL;
@@ -16,28 +19,30 @@ import java.util.ResourceBundle;
 
 public class EmploymentLoanTabController implements Initializable {
     @FXML
-    private Button saveLoanBtn, editLoanBtn, deleteLoanBtn;
+    private Button selectLoanBtn, insertLoanBtn;
     @FXML
-    private TextField loanIdTxt,loanAmountTxt,loanIntrestTxt,totalInstallmentTxt,amountPaidTxt;
+    private TextField loanIdTxt, loanAmountTxt, loanIntrestTxt, totalInstallmentTxt, amountPaidTxt;
     @FXML
-    private DatePicker startLoanDatePicker;
+    private DatePicker startLoanDatePicker, endLoanDatePicker;
     @FXML
     private ComboBox<LoanType> loanTypeCmb;
 
     @FXML
-    private TableView<Loan> loanTable;
+    private TableView<EmployeeLoan> loanTable;
     @FXML
-    private TableColumn<Loan, String> loanIdCol;
+    private TableColumn<EmployeeLoan, String> loanIdCol;
     @FXML
-    private TableColumn<Loan, String> loanTypeCol;
+    private TableColumn<EmployeeLoan, String> loanTypeCol;
     @FXML
-    private TableColumn<Loan, String> startLoanDateCol;
+    private TableColumn<EmployeeLoan, String> startLoanDateCol;
     @FXML
-    private TableColumn<Loan, String> loanAmountCol;
+    private TableColumn<EmployeeLoan, String> endLoanDateCol;
     @FXML
-    private TableColumn<Loan, String> loanInterestCol;
+    private TableColumn<EmployeeLoan, String> loanAmountCol;
     @FXML
-    private TableColumn<Loan, String> totalInstallmentCol;
+    private TableColumn<EmployeeLoan, String> loanInterestCol;
+    @FXML
+    private TableColumn<EmployeeLoan, String> totalInstallmentCol;
 
     @FXML
     private TableView<LoanInstallment> loanInstallmentTable;
@@ -45,6 +50,8 @@ public class EmploymentLoanTabController implements Initializable {
     private TableColumn<LoanInstallment, String> amountPaidCol;
     @FXML
     private TableColumn<LoanInstallment, String> paymentDateCol;
+
+    LoanType loanTypeSelected = new LoanType();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -56,51 +63,52 @@ public class EmploymentLoanTabController implements Initializable {
         }
 
         loanTypeCmb.setOnAction(event -> {
-            LoanType selected = loanTypeCmb.getValue();
-            if (selected != null) {
-                loanAmountTxt.setText(String.valueOf((int) selected.getLoanAmount()));
-                loanIntrestTxt.setText(String.valueOf(selected.getLoanInterest()));
-                totalInstallmentTxt.setText(String.valueOf(selected.getTotalInstallments()));
+            loanTypeSelected = loanTypeCmb.getValue();
+            if (loanTypeSelected != null) {
+                loanAmountTxt.setText(String.valueOf((int) loanTypeSelected.getLoanAmount()));
+                loanIntrestTxt.setText(String.valueOf(loanTypeSelected.getLoanInterest()));
+                totalInstallmentTxt.setText(String.valueOf(loanTypeSelected.getTotalInstallments()));
 
-                double totalWithInterest = selected.getLoanAmount() + (selected.getLoanAmount() * selected.getLoanInterest());
-                double monthlyInstallment = totalWithInterest / selected.getTotalInstallments();
+                double totalWithInterest = loanTypeSelected.getLoanAmount() + (loanTypeSelected.getLoanAmount() * loanTypeSelected.getLoanInterest());
+                double monthlyInstallment = totalWithInterest / loanTypeSelected.getTotalInstallments();
                 amountPaidTxt.setText(String.valueOf((int) monthlyInstallment));
             }
         });
 
-        saveLoanBtn.setOnAction(event -> {
+        startLoanDatePicker.setOnAction(event -> {
+            LocalDate startDate = startLoanDatePicker.getValue();
+
+            if (startDate != null && loanTypeSelected != null) {
+                int installments = loanTypeSelected.getTotalInstallments();
+                LocalDate endDate = startDate.plusMonths(installments);
+                endLoanDatePicker.setValue(endDate);
+            }
+        });
+
+        selectLoanBtn.setOnAction(event -> {
             try {
-                // استخراج و بررسی مقادیر ورودی
-                LoanType selectedLoanType = loanTypeCmb.getValue();
-                if (selectedLoanType == null) {
+                if (loanTypeSelected == null) {
                     throw new Exception("نوع وام را انتخاب کنید.");
+                }
+                if (startLoanDatePicker.getValue() == null) {
+                    throw new Exception("تاریخ شروع وام را وارد کنید.");
                 }
 
                 double loanAmount = Double.parseDouble(loanAmountTxt.getText());
                 double interest = Double.parseDouble(loanIntrestTxt.getText());
                 int totalInstallments = Integer.parseInt(totalInstallmentTxt.getText());
                 LocalDate startDate = startLoanDatePicker.getValue();
+                LocalDate endDate = endLoanDatePicker.getValue();
+                EmployeeLoan employeeLoan = EmployeeLoan
+                        .builder()
+                        .employee(AppState.employeeSelected)
+                        .loanType(loanTypeSelected)
+                        .loanStartDate(startLoanDatePicker.getValue())
+                        .loanFinishDate(endLoanDatePicker.getValue())
+                        .build();
+                EmployeeLoanService.save(employeeLoan);
+                new Alert(Alert.AlertType.INFORMATION, "وام جدید برای پرسنل ثبت شد!", ButtonType.OK).showAndWait();
 
-                if (startDate == null) {
-                    throw new Exception("تاریخ شروع وام را وارد کنید.");
-                }
-
-                // ساخت وام
-//                Loan loan = Loan.builder()
-//                        .employee(AppState.employeeSelected)
-//                        .loanType(selectedLoanType)
-//                        .loanAmount(loanAmount)
-//                        .loanInterest(interest)
-//                        .totalInstallments(totalInstallments)
-//                        .loanStartDate(startDate)
-//                        .loanFinishDate(startDate.plusMonths(totalInstallments))
-//                        .build();
-
-                //LoanService.save(loan);
-                new Alert(Alert.AlertType.INFORMATION, "وام جدید ثبت شد!", ButtonType.OK).showAndWait();
-
-            } catch (NumberFormatException ex) {
-                new Alert(Alert.AlertType.ERROR, "مقادیر عددی را به‌درستی وارد کنید.").show();
             } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
@@ -109,15 +117,16 @@ public class EmploymentLoanTabController implements Initializable {
 
     }
 
-    public void fillLoanTable(List<Loan> loans) {
+    public void fillEmployeeLoanTable(List<EmployeeLoan> employeeLoan) {
         loanTable.refresh();
         loanIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         loanTypeCol.setCellValueFactory(new PropertyValueFactory<>("loanType"));
         startLoanDateCol.setCellValueFactory(new PropertyValueFactory<>("loanStartDate"));
+        endLoanDateCol.setCellValueFactory(new PropertyValueFactory<>("loanFinishDate"));
         loanAmountCol.setCellValueFactory(new PropertyValueFactory<>("loanAmount"));
         loanInterestCol.setCellValueFactory(new PropertyValueFactory<>("loanInterest"));
         totalInstallmentCol.setCellValueFactory(new PropertyValueFactory<>("totalInstallments"));
-        loanTable.setItems(FXCollections.observableArrayList(loans));
+        loanTable.setItems(FXCollections.observableArrayList(employeeLoan));
     }
 
     public void fillLoanInstallmentTable(List<LoanInstallment> installments) {
