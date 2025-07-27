@@ -17,10 +17,10 @@ public class WorkRecordMonthly implements Serializable {
     private Employee employee;
     private Month month;
     private Year year;
-    private int daysWorked;         // تعداد روزهای کارکرد در ماه
-    private String overtimeHours;   // ساعات اضافه‌کاری
-    private String underTimeHours;    // ساعات کسری‌کار
-    private String leave;    //مرخصی
-    private double advance;    //مساعده
+    private int daysWorked;
+    private String overtimeHours;
+    private String underTimeHours;
+    private String leave;
+
 }
 

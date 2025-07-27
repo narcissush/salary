@@ -75,8 +75,7 @@ CREATE TABLE Work_Record_Monthly
     days_Worked      number,
     over_time_Hours  nvarchar2(10),
     under_Time_Hours nvarchar2(10),
-    leave            nvarchar2(10),
-    advance          numeric(12, 2)
+    leave            nvarchar2(10)
 );
 create sequence Work_Record_Monthly_seq start with 1 increment by 1;
 
