@@ -11,24 +11,19 @@
 
 /* دکمه‌ها */
 .button {
-    -fx-background-color: linear-gradient(to bottom, #4a90e2, #357ABD);
+    -fx-background-color: linear-gradient(to bottom, #b9d3f2, #7faedb); /* آبی ملایم‌تر */
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 8;
     -fx-cursor: hand;
 }
 
-
 /* لیبل‌ها */
 .label {
     -fx-text-fill: #333333;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
-
 }
-
-/* فیلدها */
-
 
 /* جدول */
 .table-view {
@@ -42,12 +37,12 @@
 
 /* هدر جدول */
 .table-view .column-header-background {
-    -fx-background-color: #3c8dbc;
+    -fx-background-color: #7faedb; /* آبی ملایم‌تر */
 }
 
 .table-view .column-header,
 .table-view .filler {
-    -fx-background-color: #3c8dbc;
+    -fx-background-color: #7faedb;
     -fx-border-width: 0;
     -fx-border-color: transparent;
 }
@@ -61,19 +56,19 @@
 .table-row-cell {
     -fx-background-color: #ffffff;
     -fx-border-color: transparent;
-    -fx-cell-size: 45px;  /* افزایش ارتفاع ردیف */
+    -fx-cell-size: 45px;
 }
 
 .table-row-cell:filled:hover {
-    -fx-background-color: #f1f8ff;
+    -fx-background-color: #e9f0fb; /* روشن‌تر آبی */
 }
 
 .table-row-cell:filled:selected {
-    -fx-background-color: #dff0ff;
+    -fx-background-color: #d3e1fb; /* آبی ملایم‌تر */
 }
 
 .table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: #cceeff;
+    -fx-background-color: #b9cdf9; /* آبی خیلی ملایم */
 }
 
 /* محتوای سلول‌ها */
@@ -87,6 +82,7 @@
     -fx-font-style: italic;
 }
 
+/* فیلدهای متنی */
 .text-field {
     -fx-font-family: "Vazirmatn", "Tahoma";
     -fx-font-size: 14px;
@@ -94,7 +90,7 @@
     -fx-text-fill: #333;
 
     -fx-background-color: white;
-    -fx-border-color: #ccc;
+    -fx-border-color: #b7cdef; /* آبی ملایم‌تر */
     -fx-border-radius: 3;
     -fx-background-radius: 3;
 
@@ -102,12 +98,13 @@
     -fx-padding: 0 10 0 10;
 }
 
+/* کامبوباکس */
 .combo-box {
     -fx-font-family: "Vazirmatn", "Tahoma";
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-background-color: white;
-    -fx-border-color: #ccc;
+    -fx-border-color: #b7cdef; /* آبی ملایم‌تر */
     -fx-border-radius: 3;
     -fx-background-radius: 3;
     -fx-padding: 0 0 0 0;
@@ -121,7 +118,7 @@
 }
 
 .combo-box .arrow-button {
-    -fx-background-color: #3c8dbc;
+    -fx-background-color: #7faedb; /* آبی ملایم‌تر */
     -fx-background-radius: 0 3 3 0;
     -fx-padding: 0 10;
 }
@@ -130,6 +127,7 @@
     -fx-background-color: white;
 }
 
+/* تاریخ‌سنج */
 .date-picker {
     -fx-font-family: "Vazirmatn", "Tahoma";
     -fx-font-size: 14px;
@@ -138,7 +136,7 @@
 }
 
 .date-picker .arrow-button {
-    -fx-background-color: #3c8dbc;
+    -fx-background-color: #7faedb; /* آبی ملایم‌تر */
     -fx-padding: 0 10 0 10;
     -fx-background-radius: 0 3 3 0;
 }
@@ -149,7 +147,7 @@
 
 .date-picker .text-field {
     -fx-background-color: white;
-    -fx-border-color: #ccc;
+    -fx-border-color: #b7cdef; /* آبی ملایم‌تر */
     -fx-border-radius: 3;
     -fx-font-weight: bold;
     -fx-padding: 5 8 5 8;
@@ -159,7 +157,7 @@
 .titled-pane {
     -fx-font-weight: bold;
     -fx-font-size: 15px;
-    -fx-text-fill: #444;
+    -fx-text-fill: #6699cc; /* آبی ملایم‌تر */
 }
 
 /* عکس پروفایل */
