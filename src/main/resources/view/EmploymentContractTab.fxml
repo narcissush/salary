@@ -62,24 +62,24 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="nextContractBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="50.0">
+                  <Button fx:id="nextContractBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="40.0">
                      <HBox.margin>
                         <Insets left="280.0" top="10.0" />
                      </HBox.margin>
                      <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" preserveRatio="true">
+                        <ImageView fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                            <image>
                               <Image url="@Img/next.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="previousContractBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="50.0">
+                  <Button fx:id="previousContractBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="40.0">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
                      <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" preserveRatio="true">
+                        <ImageView fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                            <image>
                               <Image url="@Img/previews.png" />
                            </image>
@@ -158,16 +158,16 @@
                               <Font size="14.0" />
                            </font></TextField>
                         <Label alignment="CENTER_RIGHT" layoutX="22.0" layoutY="34.0" prefHeight="21.0" prefWidth="130.0" text="تاریخ صدور حکم:" GridPane.rowIndex="2" />
-                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="34.0" prefHeight="0.0" prefWidth="130.0" text="دستمزد ماهیانه:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="78.0" prefHeight="0.0" prefWidth="130.0" text="حق مسکن :" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="121.0" prefHeight="0.0" prefWidth="130.0" text="حق خواربار:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="164.0" prefHeight="0.0" prefWidth="130.0" text="حق تاهل:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="207.0" prefHeight="0.0" prefWidth="130.0" text="حق اولاد:" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="بازار کار: " GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="فوق العاده شغل: " GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="130.0" text="جمع کل :" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="34.0" prefHeight="17.0" prefWidth="142.0" text="دستمزد ماهیانه:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="78.0" prefHeight="0.0" prefWidth="145.0" text="حق مسکن :" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="121.0" prefHeight="0.0" prefWidth="145.0" text="حق خواربار:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="164.0" prefHeight="0.0" prefWidth="145.0" text="حق تاهل:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="207.0" prefHeight="0.0" prefWidth="145.0" text="حق اولاد:" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="145.0" text="بازار کار: " GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="145.0" text="فوق العاده شغل: " GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="145.0" text="جمع کل :" GridPane.columnIndex="2" GridPane.rowIndex="9" />
                         <Label alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="130.0" text="شماره حکم: " />
-                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="133.0" text="دستمزد روزانه : " GridPane.columnIndex="2" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="145.0" text="دستمزد روزانه : " GridPane.columnIndex="2" />
                         <Label alignment="TOP_CENTER" prefHeight="17.0" prefWidth="248.0" text="مزایا" GridPane.columnIndex="3" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />

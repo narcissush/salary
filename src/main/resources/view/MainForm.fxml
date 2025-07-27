@@ -97,6 +97,11 @@
                              <fx:include fx:id="employmentLoanTab" source="EmploymentLoanTab.fxml" />
                          </content>
                      </Tab>
+                     <Tab text="فیش حقوقی">
+                         <content>
+                             <fx:include fx:id="employeePaysLipTab" source="EmployeePayslipTab.fxml" />
+                         </content>
+                     </Tab>
                  </tabs>
                </TabPane>
             </children>
