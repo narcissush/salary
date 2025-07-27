@@ -152,7 +152,6 @@ public class EntityMapper {
                 .overtimeHours(resultSet.getString("over_time_Hours"))
                 .underTimeHours(resultSet.getString("under_time_Hours"))
                 .leave(resultSet.getString("leave")) // corrected column name
-                .advance(resultSet.getDouble("advance"))
                 .build();
     }
 

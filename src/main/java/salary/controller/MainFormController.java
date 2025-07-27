@@ -38,6 +38,8 @@ public class MainFormController implements Initializable {
     private EmploymentContractTabController employmentContractTabController;
     @FXML
     private EmploymentLoanTabController employmentLoanTabController;
+    @FXML
+    private EmployeePayslipTabController employeePayslipTabController;
 
 
     @Override

@@ -2,10 +2,8 @@ import salary.model.entity.Employee;
 import salary.model.entity.Payslip;
 import salary.model.entity.User;
 import salary.model.entity.WorkRecordMonthly;
-import salary.model.entity.enums.Month;
-import salary.model.entity.enums.Year;
 import salary.model.services.EmployeeService;
-import salary.model.services.PaysLipService;
+import salary.model.services.EmployeePaysLipService;
 import salary.model.services.UserService;
 import salary.model.services.WorkRecordMonthlyService;
 
@@ -29,7 +27,7 @@ public class PaysLipServiceTest {
                 .workRecordMonthly(workRecord)
                 .issueDate(LocalDate.of(2025,07,16))
                 .build();
-        PaysLipService.save(payslip);
+        EmployeePaysLipService.save(payslip);
         System.out.println(payslip);
     }
 }

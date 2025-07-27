@@ -8,11 +8,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PayslipRepository implements Repository<Payslip> {
+public class EmployeePayslipRepository implements Repository<Payslip> {
     private Connection connection;
     private PreparedStatement preparedStatement;
 
-    public PayslipRepository() throws SQLException {
+    public EmployeePayslipRepository() throws SQLException {
         connection = ConnectionProvider.getConnectionProvider().getconnection();
     }
 

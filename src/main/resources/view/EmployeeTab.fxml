@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" nodeOrientation="RIGHT_TO_LEFT" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.EmployeeTabController">
+<AnchorPane stylesheets="@Style.css" minHeight="0.0" minWidth="0.0" nodeOrientation="RIGHT_TO_LEFT" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.EmployeeTabController">
    <children>
       <VBox prefHeight="739.0" prefWidth="883.0">
          <children>

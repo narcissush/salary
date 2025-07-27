@@ -58,9 +58,7 @@ public class Deductions implements Serializable {
 
     }
 
-    public double getAdvance() {
-        return AppState.workRecordMonthlySelected.getAdvance();
-    }
+
 
     public double getLoanRepayment() {
         double totalLoan = 0;
@@ -75,7 +73,6 @@ public class Deductions implements Serializable {
         return getTax() +
                 getInsurance() +
                 getUnderTime() +
-                getAdvance() +
                 getLoanRepayment();
     }
 }

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" nodeOrientation="RIGHT_TO_LEFT" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.EmployeePayslipTabController">
+<AnchorPane stylesheets="@Style.css" minHeight="0.0" minWidth="0.0" nodeOrientation="RIGHT_TO_LEFT" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.EmployeePayslipTabController">
    <children>
       <VBox prefHeight="739.0" prefWidth="883.0">
          <children>
@@ -197,22 +197,75 @@
                                       <items>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                              <children>
-                                                <TableView fx:id="SalaryTable" prefHeight="385.0" prefWidth="332.0">
-                                                  <columns>
-                                                    <TableColumn fx:id="TitleCol" prefWidth="166.0" text="عنوان" />
-                                                    <TableColumn fx:id="SalaryCol" minWidth="20.0" prefWidth="163.0" text="مبلغ" />
-                                                  </columns>
-                                                </TableView>
+                                                 <GridPane fx:id="salaryGrid" layoutX="20" layoutY="20" hgap="10" vgap="5" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10">
+                                                     <padding>
+                                                         <Insets top="10" right="10" bottom="10" left="10"/>
+                                                     </padding>
+
+                                                     <!-- Header Row -->
+                                                     <Label text="عنوان" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+                                                     <Label text="مبلغ" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+
+                                                     <!-- Group: حقوق ماهانه -->
+                                                     <Label text="حقوق ماهانه" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2"
+                                                            style="-fx-background-color: #ccffcc; -fx-font-weight: bold; -fx-padding: 5;" />
+
+                                                     <!-- Rows: حقوق ماهانه -->
+                                                     <Label text="حق اولاد" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                                     <Label fx:id="childAllowanceLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                                                     <Label text="مسکن" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                                                     <Label fx:id="housingLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                                                     <Label text="بن" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                                                     <Label fx:id="bonLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                                                     <Label text="ایاب و ذهاب" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                                                     <Label fx:id="transportLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                                                     <Label text="اضافه کار" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                                                     <Label fx:id="overtimeLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+                                                     <Label text="اضافه کار تشویقی" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+                                                     <Label fx:id="bonusOvertimeLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
+                                                     <Label text="هزینه غذا" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+                                                     <Label fx:id="foodCostLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+
+                                                     <Label text="حق لباس" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+                                                     <Label fx:id="clothingLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+
+                                                     <Label text="سایر" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
+                                                     <Label fx:id="otherAllowancesLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+
+                                                     <!-- Group: سایر پرداخت‌ها -->
+                                                     <Label text="سایر پرداخت‌ها" GridPane.columnIndex="0" GridPane.rowIndex="11" GridPane.columnSpan="2"
+                                                            style="-fx-background-color: #e0ecff; -fx-font-weight: bold; -fx-padding: 5;" />
+
+                                                     <!-- Rows: سایر پرداخت‌ها -->
+                                                     <Label text="مالیات" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
+                                                     <Label fx:id="taxLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
+
+                                                     <Label text="بیمه سهم کارمند" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
+                                                     <Label fx:id="insuranceLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
+
+                                                     <Label text="وام قرض‌الحسنه" GridPane.columnIndex="0" GridPane.rowIndex="14"/>
+                                                     <Label fx:id="loanLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
+
+                                                     <Label text="بیمه عمر" GridPane.columnIndex="0" GridPane.rowIndex="15"/>
+                                                     <Label fx:id="lifeInsuranceLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="15"/>
+
+                                                     <Label text="کسر کار" GridPane.columnIndex="0" GridPane.rowIndex="16"/>
+                                                     <Label fx:id="absenceLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="16"/>
+
+                                                     <Label text="سپرده مسکن" GridPane.columnIndex="0" GridPane.rowIndex="17"/>
+                                                     <Label fx:id="housingDepositLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="17"/>
+
+                                                     <Label text="هزینه غذا (کسری)" GridPane.columnIndex="0" GridPane.rowIndex="18"/>
+                                                     <Label fx:id="foodDeductionLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="18"/>
+                                                 </GridPane>
                                              </children></AnchorPane>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                             <children>
-                                                <TableView fx:id="SalaryTable1" prefHeight="385.0" prefWidth="338.0">
-                                                   <columns>
-                                                      <TableColumn fx:id="salaryTitleCol1" prefWidth="166.0" text="عنوان" />
-                                                      <TableColumn fx:id="SalaryCol1" minWidth="20.0" prefWidth="163.0" text="مبلغ" />
-                                                   </columns>
-                                                </TableView>
-                                             </children></AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
                                       </items>
                                     </SplitPane>
                                  </children>

@@ -1,0 +1,175 @@
+@font-face {
+    font-family: 'IRANSans';
+    src: url('view/fonts/IRANSans.ttf') format('truetype');
+}
+
+.root {
+    -fx-font-family: "IRANSans", "Vazirmatn", "Tahoma";
+    -fx-font-size: 14px;
+    -fx-background-color: #f9f9f9;
+}
+
+/* دکمه‌ها */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #4a90e2, #357ABD);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+
+/* لیبل‌ها */
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+
+}
+
+/* فیلدها */
+
+
+/* جدول */
+.table-view {
+    -fx-font-family: "IRANSans", "Vazirmatn", "Tahoma";
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-color: #ffffff;
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 5;
+}
+
+/* هدر جدول */
+.table-view .column-header-background {
+    -fx-background-color: #3c8dbc;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: #3c8dbc;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* ردیف‌ها */
+.table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+    -fx-cell-size: 45px;  /* افزایش ارتفاع ردیف */
+}
+
+.table-row-cell:filled:hover {
+    -fx-background-color: #f1f8ff;
+}
+
+.table-row-cell:filled:selected {
+    -fx-background-color: #dff0ff;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: #cceeff;
+}
+
+/* محتوای سلول‌ها */
+.table-cell {
+    -fx-padding: 5 10 5 10;
+}
+
+/* متن نمایشی زمانی که جدول خالی است */
+.table-view .placeholder {
+    -fx-text-fill: #999999;
+    -fx-font-style: italic;
+}
+
+.text-field {
+    -fx-font-family: "Vazirmatn", "Tahoma";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+
+    -fx-pref-height: 40px;
+    -fx-padding: 0 10 0 10;
+}
+
+.combo-box {
+    -fx-font-family: "Vazirmatn", "Tahoma";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-padding: 0 0 0 0;
+    -fx-pref-height: 40px;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 6 10;
+    -fx-font-family: "Vazirmatn", "Tahoma";
+    -fx-font-size: 14px;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: #3c8dbc;
+    -fx-background-radius: 0 3 3 0;
+    -fx-padding: 0 10;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+.date-picker {
+    -fx-font-family: "Vazirmatn", "Tahoma";
+    -fx-font-size: 14px;
+    -fx-pref-height: 40px;
+    -fx-padding: 0 0 0 0;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #3c8dbc;
+    -fx-padding: 0 10 0 10;
+    -fx-background-radius: 0 3 3 0;
+}
+
+.date-picker .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+.date-picker .text-field {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 3;
+    -fx-font-weight: bold;
+    -fx-padding: 5 8 5 8;
+}
+
+/* پنل‌های عنوان‌دار */
+.titled-pane {
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-text-fill: #444;
+}
+
+/* عکس پروفایل */
+.image-view {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 2);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+/* فضای خالی بین اجزا */
+.hbox, .vbox {
+    -fx-spacing: 5;
+}
