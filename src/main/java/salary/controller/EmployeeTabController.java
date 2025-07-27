@@ -50,8 +50,6 @@ public class EmployeeTabController implements Initializable {
         educationCmb.getItems().addAll(Education.values());
         birthPlaceCmb.getItems().addAll(City.values());
 
-
-
         NewEmployeeBtn.setOnAction(event -> {
             saveEmployeeBtn.setDisable(false);
             resetForm();
@@ -61,7 +59,6 @@ public class EmployeeTabController implements Initializable {
             try {
                 Employee employee =
                         Employee.builder()
-                                //.id(Integer.parseInt(employeeIdTxt.getText()))
                                 .firstName(firstNameTxt.getText())
                                 .lastName(lastNameTxt.getText())
                                 .nationalId(nationalIdTxt.getText())
@@ -91,8 +88,6 @@ public class EmployeeTabController implements Initializable {
                 alert.show();
             }
         });
-
-
 
         editEmployeeBtn.setOnAction(event -> {
             try {

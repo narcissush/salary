@@ -31,7 +31,7 @@ public class EmployeeRepository {
             ps.setString(4, employee.getNationalId());
             ps.setString(5, employee.getFatherName());
             ps.setString(6, employee.getCertificateNumber());
-            ps.setDate(7, toSqlDate(employee.getBirthDate()));
+            ps.setDate(7, Date.valueOf(employee.getBirthDate()));
             ps.setString(8, employee.getBirthPlace().name());
             ps.setString(9, employee.getGender().name());
             ps.setString(10, employee.getEducation().name());
@@ -63,7 +63,7 @@ public class EmployeeRepository {
             ps.setString(3, employee.getNationalId());
             ps.setString(4, employee.getFatherName());
             ps.setString(5, employee.getCertificateNumber());
-            ps.setDate(6, toSqlDate(employee.getBirthDate()));
+            ps.setDate(6, Date.valueOf(employee.getBirthDate()));
             ps.setString(7, employee.getBirthPlace().name());
             ps.setString(8, employee.getGender().name());
             ps.setString(9, employee.getEducation().name());
@@ -122,13 +122,11 @@ public class EmployeeRepository {
                 }
             }
         }
-
         return null;
     }
 
     public Employee findByNationalId(String nationalId) throws Exception {
         String sql = "SELECT * FROM Employees WHERE National_Id=?";
-
         try (
                 Connection connection = ConnectionProvider.getConnectionProvider().getconnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
@@ -144,8 +142,4 @@ public class EmployeeRepository {
         return null;
     }
 
-    // تبدیل LocalDate به java.sql.Date
-    private Date toSqlDate(java.time.LocalDate date) {
-        return (date != null) ? Date.valueOf(date) : null;
-    }
 }

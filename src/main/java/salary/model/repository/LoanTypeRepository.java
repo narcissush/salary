@@ -34,7 +34,7 @@ public class LoanTypeRepository {
             stmt.setDouble(2, loanType.getLoanAmount());
             stmt.setDouble(3, loanType.getLoanInterest());
             stmt.setInt(4, loanType.getTotalInstallments());
-            stmt.setInt(5, loanType.getId()); // شرط WHERE برای شناسایی رکورد
+            stmt.setInt(5, loanType.getId());
             stmt.executeUpdate();
         }
     }
@@ -64,6 +64,19 @@ public class LoanTypeRepository {
         String sql = "SELECT * FROM loan_type WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+
+                return EntityMapper.loanTypeMapper(rs);
+            }
+        }
+        return null;
+    }
+
+    public LoanType findByType(String type) throws Exception {
+        String sql = "SELECT * FROM loan_type WHERE Loan_type = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, type);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
 

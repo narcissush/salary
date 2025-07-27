@@ -1,6 +1,10 @@
 package salary.controller;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -9,12 +13,16 @@ import salary.model.entity.EmployeeLoan;
 import salary.model.entity.LoanInstallment;
 import salary.model.entity.LoanType;
 import salary.model.services.EmployeeLoanService;
-import salary.model.services.EmployeeService;
 import salary.model.services.LoanTypeService;
+import salary.tools.DataConvert;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class EmploymentLoanTabController implements Initializable {
@@ -23,7 +31,7 @@ public class EmploymentLoanTabController implements Initializable {
     @FXML
     private TextField loanIdTxt, loanAmountTxt, loanIntrestTxt, totalInstallmentTxt, amountPaidTxt;
     @FXML
-    private DatePicker startLoanDatePicker, endLoanDatePicker;
+    private DatePicker loanStartDatePicker, loanFinishDatePicker;
     @FXML
     private ComboBox<LoanType> loanTypeCmb;
 
@@ -34,9 +42,9 @@ public class EmploymentLoanTabController implements Initializable {
     @FXML
     private TableColumn<EmployeeLoan, String> loanTypeCol;
     @FXML
-    private TableColumn<EmployeeLoan, String> startLoanDateCol;
+    private TableColumn<EmployeeLoan, String> LoanStartCol;
     @FXML
-    private TableColumn<EmployeeLoan, String> endLoanDateCol;
+    private TableColumn<EmployeeLoan, String> LoanFinishCol;
     @FXML
     private TableColumn<EmployeeLoan, String> loanAmountCol;
     @FXML
@@ -57,75 +65,98 @@ public class EmploymentLoanTabController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             List<LoanType> loanTypes = LoanTypeService.findAll();
-            loanTypeCmb.setItems(FXCollections.observableArrayList(loanTypes));
+            ObservableList<LoanType> items = FXCollections.observableArrayList(loanTypes);
+            loanTypeCmb.setItems(items);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         loanTypeCmb.setOnAction(event -> {
-            loanTypeSelected = loanTypeCmb.getValue();
-            if (loanTypeSelected != null) {
-                loanAmountTxt.setText(String.valueOf((int) loanTypeSelected.getLoanAmount()));
-                loanIntrestTxt.setText(String.valueOf(loanTypeSelected.getLoanInterest()));
-                totalInstallmentTxt.setText(String.valueOf(loanTypeSelected.getTotalInstallments()));
+            try {
+                DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("fa", "IR"));
+                symbols.setGroupingSeparator('٬');
+                DecimalFormat decimalFormat = new DecimalFormat("#,###.00", symbols);
 
-                double totalWithInterest = loanTypeSelected.getLoanAmount() + (loanTypeSelected.getLoanAmount() * loanTypeSelected.getLoanInterest());
-                double monthlyInstallment = totalWithInterest / loanTypeSelected.getTotalInstallments();
-                amountPaidTxt.setText(String.valueOf((int) monthlyInstallment));
+                loanTypeSelected = loanTypeCmb.getValue();
+
+                if (loanTypeSelected != null) {
+                    double loanAmount = loanTypeSelected.getLoanAmount();
+                    double interest = loanTypeSelected.getLoanInterest();
+                    int totalInstallments = loanTypeSelected.getTotalInstallments();
+
+                    loanAmountTxt.setText(decimalFormat.format(loanAmount));
+                    loanIntrestTxt.setText(decimalFormat.format(interest));
+                    totalInstallmentTxt.setText(String.valueOf(totalInstallments));
+
+                    double totalWithInterest = loanAmount + (loanAmount * interest);
+                    double monthlyInstallment = totalWithInterest / totalInstallments;
+                    amountPaidTxt.setText(decimalFormat.format(monthlyInstallment));
+                }
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
 
-        startLoanDatePicker.setOnAction(event -> {
-            LocalDate startDate = startLoanDatePicker.getValue();
+        loanStartDatePicker.setOnAction(event -> {
+            LocalDate startDate = loanStartDatePicker.getValue();
 
             if (startDate != null && loanTypeSelected != null) {
                 int installments = loanTypeSelected.getTotalInstallments();
                 LocalDate endDate = startDate.plusMonths(installments);
-                endLoanDatePicker.setValue(endDate);
+                loanFinishDatePicker.setValue(endDate);
             }
         });
 
         selectLoanBtn.setOnAction(event -> {
             try {
                 if (loanTypeSelected == null) {
-                    throw new Exception("نوع وام را انتخاب کنید.");
+                    new Alert(Alert.AlertType.INFORMATION, "نوع وام را انتخاب کنید!", ButtonType.OK).showAndWait();
                 }
-                if (startLoanDatePicker.getValue() == null) {
-                    throw new Exception("تاریخ شروع وام را وارد کنید.");
+                if (loanStartDatePicker.getValue() == null) {
+                    new Alert(Alert.AlertType.INFORMATION, "تاریخ دریافت وام را وارد نمایید.!", ButtonType.OK).showAndWait();
                 }
-
-                double loanAmount = Double.parseDouble(loanAmountTxt.getText());
-                double interest = Double.parseDouble(loanIntrestTxt.getText());
+                double loanAmount = DataConvert.ParseFarsiDouble(loanAmountTxt.getText());
+                double interest = DataConvert.ParseFarsiDouble(loanIntrestTxt.getText());
                 int totalInstallments = Integer.parseInt(totalInstallmentTxt.getText());
-                LocalDate startDate = startLoanDatePicker.getValue();
-                LocalDate endDate = endLoanDatePicker.getValue();
+                LocalDate startDate = loanStartDatePicker.getValue();
+                LocalDate endDate = loanFinishDatePicker.getValue();
                 EmployeeLoan employeeLoan = EmployeeLoan
                         .builder()
                         .employee(AppState.employeeSelected)
                         .loanType(loanTypeSelected)
-                        .loanStartDate(startLoanDatePicker.getValue())
-                        .loanFinishDate(endLoanDatePicker.getValue())
+                        .loanStartDate(loanStartDatePicker.getValue())
+                        .loanFinishDate(loanFinishDatePicker.getValue())
                         .build();
                 EmployeeLoanService.save(employeeLoan);
                 new Alert(Alert.AlertType.INFORMATION, "وام جدید برای پرسنل ثبت شد!", ButtonType.OK).showAndWait();
-
+                reset();
             } catch (Exception e) {
-                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+                throw new RuntimeException(e);
             }
         });
-
 
     }
 
     public void fillEmployeeLoanTable(List<EmployeeLoan> employeeLoan) {
         loanTable.refresh();
-        loanIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        loanTypeCol.setCellValueFactory(new PropertyValueFactory<>("loanType"));
-        startLoanDateCol.setCellValueFactory(new PropertyValueFactory<>("loanStartDate"));
-        endLoanDateCol.setCellValueFactory(new PropertyValueFactory<>("loanFinishDate"));
-        loanAmountCol.setCellValueFactory(new PropertyValueFactory<>("loanAmount"));
-        loanInterestCol.setCellValueFactory(new PropertyValueFactory<>("loanInterest"));
-        totalInstallmentCol.setCellValueFactory(new PropertyValueFactory<>("totalInstallments"));
+        loanIdCol.setCellValueFactory(new PropertyValueFactory<>("id")); // فیلد مستقیم
+
+        loanTypeCol.setCellValueFactory(cell ->
+                new SimpleStringProperty(cell.getValue().getLoanType().getLoanType()));
+
+        LoanStartCol.setCellValueFactory(new PropertyValueFactory<>("loanStartDate"));
+        LoanFinishCol.setCellValueFactory(new PropertyValueFactory<>("loanFinishDate"));
+
+        loanAmountCol.setCellValueFactory(cell ->
+                new SimpleDoubleProperty(cell.getValue().getLoanType().getLoanAmount()).asObject().asString());
+
+        loanInterestCol.setCellValueFactory(cell ->
+                new SimpleDoubleProperty(cell.getValue().getLoanType().getLoanInterest()).asObject().asString());
+
+        totalInstallmentCol.setCellValueFactory(cell ->
+                new SimpleIntegerProperty(cell.getValue().getLoanType().getTotalInstallments()).asObject().asString());
+
         loanTable.setItems(FXCollections.observableArrayList(employeeLoan));
     }
 
@@ -138,6 +169,18 @@ public class EmploymentLoanTabController implements Initializable {
         } else {
             loanInstallmentTable.setItems(FXCollections.observableArrayList(installments));
         }
+    }
+
+    public void reset() {
+        loanAmountTxt.clear();
+        loanIntrestTxt.clear();
+        totalInstallmentTxt.clear();
+        amountPaidTxt.clear();
+        loanFinishDatePicker.setValue(null);
+        loanFinishDatePicker.getEditor().clear();
+
+        loanStartDatePicker.setValue(null);
+        loanStartDatePicker.getEditor().clear();
     }
 
 }

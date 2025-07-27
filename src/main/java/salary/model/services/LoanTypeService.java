@@ -36,4 +36,7 @@ public class LoanTypeService {
     public static LoanType findById(int id) throws Exception {
         return new LoanTypeRepository().findById(id);
     }
+    public static LoanType findByType(String type) throws Exception {
+        return new LoanTypeRepository().findByType(type);
+    }
 }

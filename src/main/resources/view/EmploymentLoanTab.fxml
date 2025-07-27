@@ -81,12 +81,12 @@
                         <Label alignment="CENTER_RIGHT" layoutX="437.0" layoutY="31.0" prefHeight="17.0" prefWidth="146.0" text="کد ثبتی:" />
                         <TextField fx:id="loanIdTxt" layoutX="586.0" layoutY="20.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="1" />
                         <ComboBox fx:id="loanTypeCmb" layoutX="156.0" layoutY="115.0" maxWidth="252.0" prefHeight="42.0" prefWidth="252.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <DatePicker fx:id="startLoanDatePicker" layoutX="155.0" layoutY="110.0" maxWidth="250.0" prefHeight="40.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <DatePicker fx:id="endLoanDatePicker" layoutX="155.0" layoutY="118.0" maxWidth="250.0" prefHeight="40.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                         <TextField fx:id="loanAmountTxt" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" />
-                        <TextField fx:id="loanIdTxt" disable="true" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                         <TextField fx:id="totalInstallmentTxt" disable="true" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <TextField fx:id="amountPaidTxt" disable="true" layoutX="585.0" layoutY="69.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <DatePicker fx:id="loanStartDatePicker" layoutX="155.0" layoutY="110.0" maxWidth="250.0" prefHeight="40.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <DatePicker fx:id="loanFinishDatePicker" layoutX="155.0" layoutY="118.0" maxWidth="250.0" prefHeight="40.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                         <TextField fx:id="loanAmountTxt" editable="false" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" />
+                        <TextField fx:id="loanIntrestTxt" editable="false" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                         <TextField fx:id="totalInstallmentTxt" editable="false" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <TextField fx:id="amountPaidTxt" editable="false" layoutX="585.0" layoutY="69.0" maxWidth="250.0" prefHeight="40.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </content>
@@ -99,8 +99,8 @@
                           <columns>
                             <TableColumn fx:id="loanIdCol" prefWidth="75.0" text="شماره وام" />
                             <TableColumn fx:id="loanTypeCol" prefWidth="117.0" text="نام وام" />
-                              <TableColumn fx:id="startLoanDateCol" prefWidth="158.0" text="تاریخ دریافت" />
-                              <TableColumn prefWidth="107.0" text="تاریخ اتمام اقساط" />
+                              <TableColumn fx:id="LoanStartCol" prefWidth="158.0" text="تاریخ دریافت" />
+                              <TableColumn fx:id="LoanFinishCol" prefWidth="107.0" text="تاریخ اتمام اقساط" />
                               <TableColumn fx:id="loanAmountCol" minWidth="0.0" prefWidth="128.0" text="مبلغ وام" />
                               <TableColumn fx:id="loanInterestCol" prefWidth="116.0" text="درصد وام" />
                               <TableColumn fx:id="totalInstallmentCol" prefWidth="182.0" text="تعداد اقساط" />

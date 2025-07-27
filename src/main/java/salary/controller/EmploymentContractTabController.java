@@ -8,6 +8,7 @@ import salary.model.entity.EmploymentContract;
 import salary.model.entity.enums.*;
 import salary.model.services.AllowanceService;
 import salary.model.services.EmploymentContractService;
+import salary.tools.DataConvert;
 
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -40,11 +41,12 @@ public class EmploymentContractTabController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         saveContractBtn.setDisable(true);
+
+
+
         try {
             Allowance allowance = AllowanceService.findByYear(Year.Y1404);
-            if (allowance == null) {
-                System.err.println("AllowanceService.findByYear returned null!");
-            } else {
+            if (allowance != null) {
                 AppState.allowanceSelected = allowance;
             }
         } catch (Exception e) {
@@ -60,7 +62,6 @@ public class EmploymentContractTabController implements Initializable {
             if (AppState.employeeSelected != null) {
                 saveContractBtn.setDisable(false);
                 resertForm();
-                System.out.println("1");
 
             } else {
                 Alert info = new Alert(Alert.AlertType.INFORMATION,
@@ -81,23 +82,22 @@ public class EmploymentContractTabController implements Initializable {
                                 .department(departmentCmb.getSelectionModel().getSelectedItem())
                                 .jobTitle(jobTitleCmb.getSelectionModel().getSelectedItem())
                                 .position(positionCmb.getSelectionModel().getSelectedItem())
-                                .dailySalary(parseFarsiDouble(dailySalaryTxt.getText()))
-                                .bazarKar(parseFarsiDouble(bazarKarTxt.getText()))
-                                .fogholadeShoghl(parseFarsiDouble(fogholadeShoghlTxt.getText()))
-                                .housingAllowance(parseFarsiDouble(housingAllowanceTxt.getText()))
-                                .marriageAllowance(parseFarsiDouble(marriageAllowanceTxt.getText()))
-                                .childAllowance(parseFarsiDouble(childAllowanceTxt.getText()))
-                                .foodAllowance(parseFarsiDouble(foodAllowanceTxt.getText()))
+                                .dailySalary(DataConvert.ParseFarsiDouble(dailySalaryTxt.getText()))
+                                .bazarKar(DataConvert.ParseFarsiDouble(bazarKarTxt.getText()))
+                                .fogholadeShoghl(DataConvert.ParseFarsiDouble(fogholadeShoghlTxt.getText()))
+                                .housingAllowance(DataConvert.ParseFarsiDouble(housingAllowanceTxt.getText()))
+                                .marriageAllowance(DataConvert.ParseFarsiDouble(marriageAllowanceTxt.getText()))
+                                .childAllowance(DataConvert.ParseFarsiDouble(childAllowanceTxt.getText()))
+                                .foodAllowance(DataConvert.ParseFarsiDouble(foodAllowanceTxt.getText()))
                                 .build();
                 EmploymentContractService.save(employmentContract);
                 Alert info = new Alert(Alert.AlertType.INFORMATION,
-                        "حکم صادر گردید!", ButtonType.OK);
+                        "حکم جدید صادر گردید!", ButtonType.OK);
                 info.showAndWait();
                 AppState.employmentContractListSelected = EmploymentContractService.findByEmployeeId(employmentContract.getId());
                 saveContractBtn.setDisable(true);
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-                alert.show();
+                throw new RuntimeException(e);
             }
         });
 
@@ -114,13 +114,13 @@ public class EmploymentContractTabController implements Initializable {
                                 .department(departmentCmb.getSelectionModel().getSelectedItem())
                                 .jobTitle(jobTitleCmb.getSelectionModel().getSelectedItem())
                                 .position(positionCmb.getSelectionModel().getSelectedItem())
-                                .dailySalary(parseFarsiDouble(dailySalaryTxt.getText()))
-                                .bazarKar(parseFarsiDouble(bazarKarTxt.getText()))
-                                .fogholadeShoghl(parseFarsiDouble(fogholadeShoghlTxt.getText()))
-                                .housingAllowance(parseFarsiDouble(housingAllowanceTxt.getText()))
-                                .marriageAllowance(parseFarsiDouble(marriageAllowanceTxt.getText()))
-                                .childAllowance(parseFarsiDouble(childAllowanceTxt.getText()))
-                                .foodAllowance(parseFarsiDouble(foodAllowanceTxt.getText()))
+                                .dailySalary(DataConvert.ParseFarsiDouble(dailySalaryTxt.getText()))
+                                .bazarKar(DataConvert.ParseFarsiDouble(bazarKarTxt.getText()))
+                                .fogholadeShoghl(DataConvert.ParseFarsiDouble(fogholadeShoghlTxt.getText()))
+                                .housingAllowance(DataConvert.ParseFarsiDouble(housingAllowanceTxt.getText()))
+                                .marriageAllowance(DataConvert.ParseFarsiDouble(marriageAllowanceTxt.getText()))
+                                .childAllowance(DataConvert.ParseFarsiDouble(childAllowanceTxt.getText()))
+                                .foodAllowance(DataConvert.ParseFarsiDouble(foodAllowanceTxt.getText()))
                                 .build();
                 EmploymentContractService.edit(employmentContract);
                 Alert info = new Alert(Alert.AlertType.INFORMATION,
@@ -128,8 +128,7 @@ public class EmploymentContractTabController implements Initializable {
                 info.showAndWait();
                 AppState.employmentContractListSelected = EmploymentContractService.findByEmployeeId(employmentContract.getId());
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-                alert.show();
+                throw new RuntimeException(e);
             }
         });
         nextContractBtn.setOnAction(e -> {
@@ -213,15 +212,11 @@ public class EmploymentContractTabController implements Initializable {
             fogholadeShoghlTxt.setText(decimalFormat.format(fogholadeShoghl));
             totalSalartTxt.setText(decimalFormat.format(totalSalary));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
-    private double parseFarsiDouble(String text) {
-        if (text == null || text.isEmpty()) return 0.0;
-        text = text.replace("٬", "").replace("٫", ".").replace(" ", "");
-        return Double.parseDouble(text);
-    }
+
 }
 
 

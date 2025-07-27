@@ -56,26 +56,24 @@ public class EntityMapper {
     public static LoanType loanTypeMapper(ResultSet resultSet) throws SQLException {
         return LoanType
                 .builder()
-                .id(resultSet.getInt("loan_type_id"))
+                .id(resultSet.getInt("id"))
                 .loanType(resultSet.getString("loan_type"))
                 .loanAmount(resultSet.getDouble("loan_amount"))
                 .loanInterest(resultSet.getDouble("loan_interest"))
                 .totalInstallments(resultSet.getInt("total_installments"))
                 .build();
-
     }
 
     public static EmployeeLoan employeeLoanMapper(ResultSet resultSet) throws SQLException {
 
         LoanType loanType = new LoanType();
-        loanType.setId(resultSet.getInt("loan_type_id"));
+        loanType.setId(resultSet.getInt("lt_id"));
         loanType.setLoanType(resultSet.getString("loan_type"));
         loanType.setLoanAmount(resultSet.getDouble("loan_amount"));
         loanType.setLoanInterest(resultSet.getDouble("loan_interest"));
         loanType.setTotalInstallments(resultSet.getInt("total_installments"));
 
-        return EmployeeLoan
-                .builder()
+        return EmployeeLoan.builder()
                 .id(resultSet.getInt("id"))
                 .employee(AppState.employeeSelected)
                 .loanType(loanType)
@@ -86,32 +84,28 @@ public class EntityMapper {
 
     public static LoanInstallment loanInstallmentMapper(ResultSet resultSet) throws SQLException {
 
-        // ساخت LoanType
         LoanType loanType = new LoanType();
-        loanType.setId(resultSet.getInt("loan_type_id"));
+        loanType.setId(resultSet.getInt("id"));
         loanType.setLoanType(resultSet.getString("loan_type"));
         loanType.setLoanAmount(resultSet.getDouble("loan_amount"));
         loanType.setLoanInterest(resultSet.getDouble("loan_interest"));
         loanType.setTotalInstallments(resultSet.getInt("total_installments"));
 
-        // ساخت EmployeeLoan
         EmployeeLoan employeeLoan = EmployeeLoan
                 .builder()
-                .id(resultSet.getInt("employee_loan_id"))
-                .employee(AppState.employeeSelected) // یا از resultSet.getInt("employee_id")
+                .id(resultSet.getInt("id"))
+                .employee(AppState.employeeSelected)
                 .loanType(loanType)
                 .loanStartDate(resultSet.getDate("loan_start_date").toLocalDate())
                 .loanFinishDate(resultSet.getDate("loan_finish_date").toLocalDate())
                 .build();
 
-        // ساخت Payslip
         Payslip payslip = new Payslip();
-        payslip.setId(resultSet.getInt("payslip_id"));
+        payslip.setId(resultSet.getInt("id"));
         if (resultSet.getDate("issue_date") != null) {
             payslip.setIssueDate(resultSet.getDate("issue_date").toLocalDate());
         }
 
-        // ساخت LoanInstallment
         return LoanInstallment
                 .builder()
                 .id(resultSet.getInt("id"))
@@ -120,7 +114,6 @@ public class EntityMapper {
                 .amountPaid(resultSet.getDouble("amount_paid"))
                 .paymentDate(resultSet.getDate("payment_date") == null ? null : resultSet.getDate("payment_date").toLocalDate())
                 .build();
-
     }
 
 
@@ -150,7 +143,6 @@ public class EntityMapper {
 
 
     public static WorkRecordMonthly workRecordMonthlyMapper(ResultSet resultSet) throws SQLException {
-
         return WorkRecordMonthly.builder()
                 .id(resultSet.getInt("id"))
                 .month(Month.valueOf(resultSet.getString("month")))

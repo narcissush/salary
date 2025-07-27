@@ -13,42 +13,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeLoanRepository {
-    private final Connection connection;
 
-    public EmployeeLoanRepository() throws Exception {
-        this.connection = ConnectionProvider.getConnectionProvider().getconnection();
-    }
+
 
     public void save(EmployeeLoan loan) throws Exception {
         String sql = "INSERT INTO Employee_Loan (id, employee_id, loan_type_id, loan_start_date, loan_finish_date) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (
+                Connection connection = ConnectionProvider.getConnectionProvider().getconnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
             loan.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "Employee_Loan_seq"));
-            stmt.setInt(1, loan.getId());
-            stmt.setInt(2, AppState.employeeSelected.getId());
-            stmt.setInt(3, loan.getLoanType().getId());
-            stmt.setDate(4, Date.valueOf(loan.getLoanStartDate()));
-            stmt.setDate(5, Date.valueOf(loan.getLoanFinishDate()));
-            stmt.executeUpdate();
+            ps.setInt(1, loan.getId());
+            ps.setInt(2, AppState.employeeSelected.getId());
+            ps.setInt(3, loan.getLoanType().getId());
+            ps.setDate(4, Date.valueOf(loan.getLoanStartDate()));
+            ps.setDate(5, Date.valueOf(loan.getLoanFinishDate()));
+            ps.executeUpdate();
         }
     }
 
     public void edit(EmployeeLoan loan) throws Exception {
         String sql = "UPDATE Employee_Loan SET employee_id = ?, loan_type_id = ?, loan_start_date = ?, loan_finish_date = ? WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, AppState.employeeSelected.getId());
-            stmt.setInt(2, loan.getLoanType().getId());
-            stmt.setDate(3, Date.valueOf(loan.getLoanStartDate()));
-            stmt.setDate(4, Date.valueOf(loan.getLoanFinishDate()));
-            stmt.setInt(5, loan.getId()); // شناسه رکورد برای به‌روزرسانی
-            stmt.executeUpdate();
+        try (
+                Connection connection = ConnectionProvider.getConnectionProvider().getconnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, AppState.employeeSelected.getId());
+            ps.setInt(2, loan.getLoanType().getId());
+            ps.setDate(3, Date.valueOf(loan.getLoanStartDate()));
+            ps.setDate(4, Date.valueOf(loan.getLoanFinishDate()));
+            ps.setInt(5, loan.getId());
+            ps.executeUpdate();
         }
     }
 
     public void delete(int id) throws Exception {
         String sql = "DELETE FROM Employee_Loan WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
+        try (
+                Connection connection = ConnectionProvider.getConnectionProvider().getconnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
         }
     }
 
@@ -72,8 +78,11 @@ public class EmployeeLoanRepository {
     public List<EmployeeLoan> findAll() throws Exception {
         List<EmployeeLoan> list = new ArrayList<>();
         String sql = "SELECT * FROM Employee_Loan";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            ResultSet rs = stmt.executeQuery();
+        try (
+                Connection connection = ConnectionProvider.getConnectionProvider().getconnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(EntityMapper.employeeLoanMapper(rs));
             }
@@ -83,10 +92,19 @@ public class EmployeeLoanRepository {
 
     public List<EmployeeLoan> findByEmployeeId(int employeeId) throws Exception {
         List<EmployeeLoan> list = new ArrayList<>();
-        String sql = "SELECT * FROM Employee_Loan  WHERE employee_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, employeeId);
-            ResultSet rs = stmt.executeQuery();
+        String sql =
+                "SELECT el.id, el.employee_id, el.loan_start_date, el.loan_finish_date, " +
+                        "lt.id AS lt_id, lt.loan_type, lt.loan_amount, lt.loan_interest, lt.total_installments " +
+                        "FROM Employee_Loan el " +
+                        "JOIN Loan_Type lt ON el.loan_type_id = lt.id " +
+                        "WHERE el.employee_id = ?";
+
+        try (
+                Connection connection = ConnectionProvider.getConnectionProvider().getconnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, employeeId);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(EntityMapper.employeeLoanMapper(rs));
             }

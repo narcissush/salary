@@ -32,8 +32,7 @@ public class LoginFormController implements Initializable {
                 currentStage.close();
 
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-                alert.show();
+                throw new RuntimeException(e);
             }
         });
 

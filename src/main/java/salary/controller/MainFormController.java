@@ -75,8 +75,7 @@ public class MainFormController implements Initializable {
                         }
                     }
                 } catch (Exception e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-                    alert.show();
+                    throw new RuntimeException(e);
                 }
 
         });
@@ -94,8 +93,7 @@ public class MainFormController implements Initializable {
                     fillEmployeeTable(EmployeeService.findAll());
                 }
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-                alert.show();
+                throw new RuntimeException(e);
             }
         });
     }
