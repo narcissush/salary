@@ -5,9 +5,12 @@ import salary.model.entity.enums.Year;
 import salary.model.services.EmployeeService;
 import salary.model.services.WorkRecordMonthlyService;
 
+import java.sql.Time;
+import java.time.LocalTime;
+
 public class WorkRecordMonthlyServiceTest {
     public static void main(String[] args) throws Exception {
-        AppState.employeeSelected = EmployeeService.findById(1);
+//        AppState.employeeSelected = EmployeeService.findById(1);
         WorkRecordMonthly workRecordMonthly =
                 WorkRecordMonthly.builder()
                         .id(1)
@@ -18,10 +21,15 @@ public class WorkRecordMonthlyServiceTest {
                         .overtimeHours("05:20")
                         .underTimeHours("02:10")
                         .leave("12:20")
-                        .advance(10_000_000)
                         .build();
         WorkRecordMonthlyService.save(workRecordMonthly);
         System.out.println(WorkRecordMonthlyService.findById(workRecordMonthly.getId()));
 
+
+        LocalTime time = LocalTime.of(12, 20);
+
+        float hour = 1000;
+
+        float payment = (hour/60) *  (time.getHour()*60 + time.getMinute());
     }
 }

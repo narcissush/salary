@@ -8,7 +8,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeRepository {
+public class EmployeeRepository implements Repository<Employee>, AutoCloseable {
+    private Connection connection;
+    private PreparedStatement ps;
+
+    public EmployeeRepository() throws SQLException {
+        connection = ConnectionProvider.getConnectionProvider().getconnection();
+    }
 
     public void save(Employee employee) throws Exception {
         String sql = "INSERT INTO Employees (" +
@@ -18,33 +24,30 @@ public class EmployeeRepository {
                 "Phone_number, insurance_Number, bank_Account_Number" +
                 ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (
-                Connection connection = ConnectionProvider.getConnectionProvider().getconnection();
-                PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            int newId = ConnectionProvider.getConnectionProvider().getNextId(connection, "employees_seq");
-            employee.setId(newId);
+        int newId = ConnectionProvider.getConnectionProvider().getNextId(connection, "employees_seq");
+        employee.setId(newId);
 
-            ps.setInt(1, newId);
-            ps.setString(2, employee.getFirstName());
-            ps.setString(3, employee.getLastName());
-            ps.setString(4, employee.getNationalId());
-            ps.setString(5, employee.getFatherName());
-            ps.setString(6, employee.getCertificateNumber());
-            ps.setDate(7, Date.valueOf(employee.getBirthDate()));
-            ps.setString(8, employee.getBirthPlace().name());
-            ps.setString(9, employee.getGender().name());
-            ps.setString(10, employee.getEducation().name());
-            ps.setString(11, employee.getMajor().name());
-            ps.setString(12, employee.getMarriage().name());
-            ps.setInt(13, employee.getNumberOfChildren());
-            ps.setString(14, employee.getPhoneNumber());
-            ps.setString(15, employee.getInsuranceNumber());
-            ps.setString(16, employee.getBankAccountNumber());
+        ps = connection.prepareStatement(sql);
+        ps.setInt(1, newId);
+        ps.setString(2, employee.getFirstName());
+        ps.setString(3, employee.getLastName());
+        ps.setString(4, employee.getNationalId());
+        ps.setString(5, employee.getFatherName());
+        ps.setString(6, employee.getCertificateNumber());
+        ps.setDate(7, Date.valueOf(employee.getBirthDate()));
+        ps.setString(8, employee.getBirthPlace().name());
+        ps.setString(9, employee.getGender().name());
+        ps.setString(10, employee.getEducation().name());
+        ps.setString(11, employee.getMajor().name());
+        ps.setString(12, employee.getMarriage().name());
+        ps.setInt(13, employee.getNumberOfChildren());
+        ps.setString(14, employee.getPhoneNumber());
+        ps.setString(15, employee.getInsuranceNumber());
+        ps.setString(16, employee.getBankAccountNumber());
 
-            ps.executeUpdate();
-        }
+        ps.executeUpdate();
     }
+
 
     public void edit(Employee employee) throws Exception {
         String sql = "UPDATE Employees SET " +
@@ -54,92 +57,76 @@ public class EmployeeRepository {
                 "Phone_number = ?, insurance_Number = ?, bank_Account_Number = ? " +
                 "WHERE id = ?";
 
-        try (
-                Connection connection = ConnectionProvider.getConnectionProvider().getconnection();
-                PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            ps.setString(1, employee.getFirstName());
-            ps.setString(2, employee.getLastName());
-            ps.setString(3, employee.getNationalId());
-            ps.setString(4, employee.getFatherName());
-            ps.setString(5, employee.getCertificateNumber());
-            ps.setDate(6, Date.valueOf(employee.getBirthDate()));
-            ps.setString(7, employee.getBirthPlace().name());
-            ps.setString(8, employee.getGender().name());
-            ps.setString(9, employee.getEducation().name());
-            ps.setString(10, employee.getMajor().name());
-            ps.setString(11, employee.getMarriage().name());
-            ps.setInt(12, employee.getNumberOfChildren());
-            ps.setString(13, employee.getPhoneNumber());
-            ps.setString(14, employee.getInsuranceNumber());
-            ps.setString(15, employee.getBankAccountNumber());
-            ps.setInt(16, employee.getId());
+        ps = connection.prepareStatement(sql);
 
-            ps.executeUpdate();
-        }
+        ps.setString(1, employee.getFirstName());
+        ps.setString(2, employee.getLastName());
+        ps.setString(3, employee.getNationalId());
+        ps.setString(4, employee.getFatherName());
+        ps.setString(5, employee.getCertificateNumber());
+        ps.setDate(6, Date.valueOf(employee.getBirthDate()));
+        ps.setString(7, employee.getBirthPlace().name());
+        ps.setString(8, employee.getGender().name());
+        ps.setString(9, employee.getEducation().name());
+        ps.setString(10, employee.getMajor().name());
+        ps.setString(11, employee.getMarriage().name());
+        ps.setInt(12, employee.getNumberOfChildren());
+        ps.setString(13, employee.getPhoneNumber());
+        ps.setString(14, employee.getInsuranceNumber());
+        ps.setString(15, employee.getBankAccountNumber());
+        ps.setInt(16, employee.getId());
+        ps.executeUpdate();
     }
+
 
     public void delete(int id) throws Exception {
         String sql = "DELETE FROM Employees WHERE id=?";
+        ps = connection.prepareStatement(sql);
 
-        try (
-                Connection connection = ConnectionProvider.getConnectionProvider().getconnection();
-                PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        }
+        ps.setInt(1, id);
+        ps.executeUpdate();
+
     }
 
     public List<Employee> findAll() throws Exception {
         List<Employee> list = new ArrayList<>();
         String sql = "SELECT * FROM Employees ORDER BY id";
+        ps = connection.prepareStatement(sql);
 
-        try (
-                Connection connection = ConnectionProvider.getConnectionProvider().getconnection();
-                PreparedStatement ps = connection.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery()
-        ) {
-            while (rs.next()) {
-                list.add(EntityMapper.employeeMapper(rs));
-            }
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            list.add(EntityMapper.employeeMapper(rs));
         }
-
         return list;
     }
 
     public Employee findById(int id) throws Exception {
         String sql = "SELECT * FROM Employees WHERE id=?";
+        ps = connection.prepareStatement(sql);
 
-        try (
-                Connection connection = ConnectionProvider.getConnectionProvider().getconnection();
-                PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return EntityMapper.employeeMapper(rs);
-                }
-            }
-        }
-        return null;
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return EntityMapper.employeeMapper(rs);
+        } else
+            return null;
     }
 
     public Employee findByNationalId(String nationalId) throws Exception {
         String sql = "SELECT * FROM Employees WHERE National_Id=?";
-        try (
-                Connection connection = ConnectionProvider.getConnectionProvider().getconnection();
-                PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            ps.setString(1, nationalId);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return EntityMapper.employeeMapper(rs);
-                }
-            }
-        }
+        ps = connection.prepareStatement(sql);
 
-        return null;
+        ps.setString(1, nationalId);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return EntityMapper.employeeMapper(rs);
+        } else
+            return null;
     }
 
+    @Override
+    public void close() throws Exception {
+        ps.close();
+        connection.close();
+    }
 }

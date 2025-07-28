@@ -14,8 +14,8 @@ public class AllowanceServiceTest {
                 .childAllowance(8700000.00)
                 .build();
 
-       // AllowanceService.save(allowance);
-        AllowanceService.edit(allowance);
+       AllowanceService.save(allowance);
+        //AllowanceService.edit(allowance);
 
         System.out.println(AllowanceService.findByYear(allowance.getYear()));
 

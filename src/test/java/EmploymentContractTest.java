@@ -11,7 +11,7 @@ public class EmploymentContractTest {
         EmploymentContract employmentContract =
                 EmploymentContract.builder()
                         .id(2)
-                        .employee(EmployeeService.findById(2))
+//                        .employee(EmployeeService.findById(2))
                         .issuanceDate(null)
                         .hireDate(null)
                         .terminationDate(null)

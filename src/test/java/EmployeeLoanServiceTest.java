@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 public class EmployeeLoanServiceTest {
     public static void main(String[] args) throws Exception {
-AppState.employeeSelected = EmployeeService.findById(1);
+//AppState.employeeSelected = EmployeeService.findById(1);
         LoanType loanType=new LoanType();
         EmployeeLoan employeeloan = EmployeeLoan.builder()
                 .id(1)

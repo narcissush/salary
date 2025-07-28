@@ -16,7 +16,7 @@ public class PaysLipServiceTest {
         WorkRecordMonthly workRecordMonthly=new WorkRecordMonthly();
 
         user= UserService.findById(1);
-        employee= EmployeeService.findById(1);
+//        employee= EmployeeService.findById(1);
         workRecordMonthly= WorkRecordMonthlyService.findById(1);
 
         WorkRecordMonthly workRecord=new WorkRecordMonthly();

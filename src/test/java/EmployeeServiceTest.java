@@ -11,7 +11,7 @@ public class EmployeeServiceTest {
 
                 .id(6)
                 .firstName("نرگس")
-                .lastName("حاجی زاده")
+                .lastName(" حدید حاجی زاده")
                 .nationalId("0080386822")
                 .fatherName("علی")
                 .certificateNumber("17016")
@@ -26,9 +26,11 @@ public class EmployeeServiceTest {
                 .insuranceNumber("111111")
                 .bankAccountNumber("222222")
                 .build();
-        //EmployeeService.save(employee);
-        EmployeeService.edit(employee);
-        AppState.employeeSelected =EmployeeService.findById(employee.getId());
-        System.out.println(AppState.employeeSelected);
+ //       EmployeeService.save(employee);
+//        EmployeeService.edit(employee);
+  // AppState.employeeSelected =EmployeeService.findById(employee.getId());
+    //    System.out.println(AppState.employeeSelected);
+        System.out.println(EmployeeService.findAll());
+
     }
 }

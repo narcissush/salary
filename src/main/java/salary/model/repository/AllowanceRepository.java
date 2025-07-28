@@ -18,7 +18,7 @@ public class AllowanceRepository implements Repository<Allowance>{
     }
     @Override
     public void save(Allowance allowance) throws Exception {
-        allowance.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "allowance_seq"));
+        allowance.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "allowances_seq"));
         preparedStatement = connection.prepareStatement(
                 "insert into ALLOWANCE values (?, ?, ?, ?, ?,?)"
         );

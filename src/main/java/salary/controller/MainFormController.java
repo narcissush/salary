@@ -45,7 +45,7 @@ public class MainFormController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            fillEmployeeTable(EmployeeService.findAll());
+         fillEmployeeTable(EmployeeService.findAll());
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
             alert.show();
@@ -89,7 +89,7 @@ public class MainFormController implements Initializable {
             List<Employee> list = new ArrayList<>();
             try {
                 if (!searchIdTxt.getText().isEmpty()) {
-                    list.add(EmployeeService.findById(Integer.parseInt(searchIdTxt.getText())));
+                  list.add(EmployeeService.findById(Integer.parseInt(searchIdTxt.getText())));
                     fillEmployeeTable(list);
                 } else {
                     fillEmployeeTable(EmployeeService.findAll());
