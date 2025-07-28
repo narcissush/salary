@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,13 +18,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane stylesheets="@Style.css" minHeight="0.0" minWidth="0.0" nodeOrientation="RIGHT_TO_LEFT" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.EmployeePayslipTabController">
+<AnchorPane minHeight="0.0" minWidth="0.0" nodeOrientation="RIGHT_TO_LEFT" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.EmployeePayslipTabController">
    <children>
       <VBox prefHeight="739.0" prefWidth="883.0">
          <children>
             <HBox prefHeight="63.0" prefWidth="683.0">
                <children>
-                  <Button fx:id="selectLoanBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" text="ذخیره">
+                  <Button fx:id="savePaysLipBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" text="ذخیره">
 
                      <graphic>
                            <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
@@ -38,7 +38,7 @@
                      </HBox.margin>
 
                   </Button>
-                  <Button fx:id="selectLoanBtn1" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" text="ویرایش">
+                  <Button fx:id="editPaysLipBtn" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" text="ویرایش">
                      <graphic>
                         <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
                            <image>
@@ -50,7 +50,7 @@
                         <Insets right="5.0" top="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="insertLoanInstallmentBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" text="صدور فیش ">
+                  <Button fx:id="exportPaysLipBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" text="صدور فیش ">
                      <HBox.margin>
                         <Insets right="5.0" top="5.0" />
                      </HBox.margin>
@@ -98,7 +98,7 @@
                                                       <Insets bottom="5.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <ComboBox prefHeight="35.0" prefWidth="150.0">
+                                                <ComboBox fx:id="yearCmb" prefHeight="35.0" prefWidth="150.0">
                                                    <VBox.margin>
                                                       <Insets left="20.0" />
                                                    </VBox.margin>
@@ -112,7 +112,7 @@
                                                       <Insets bottom="5.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <ComboBox prefHeight="35.0" prefWidth="150.0">
+                                                <ComboBox fx:id="monthCmb" prefHeight="35.0" prefWidth="150.0">
                                                    <VBox.margin>
                                                       <Insets left="20.0" />
                                                    </VBox.margin>
@@ -126,7 +126,7 @@
                                                       <Insets bottom="5.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <TextField maxWidth="150.0" minHeight="35.0">
+                                                <TextField fx:id="daysWorkedTxt" maxWidth="150.0" minHeight="35.0">
                                                    <VBox.margin>
                                                       <Insets left="20.0" />
                                                    </VBox.margin>
@@ -140,7 +140,7 @@
                                                       <Insets bottom="5.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <TextField maxWidth="150.0" minHeight="35.0">
+                                                <TextField fx:id="overtimeHoursTxt" maxWidth="150.0" minHeight="35.0">
                                                    <VBox.margin>
                                                       <Insets left="20.0" />
                                                    </VBox.margin>
@@ -154,7 +154,7 @@
                                                       <Insets bottom="5.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <TextField maxWidth="150.0" minHeight="35.0">
+                                                <TextField fx:id="underTimeHoursTxt" maxWidth="150.0" minHeight="35.0">
                                                    <VBox.margin>
                                                       <Insets left="20.0" />
                                                    </VBox.margin>
@@ -168,14 +168,14 @@
                                                       <Insets bottom="5.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <TextField maxWidth="150.0" minHeight="35.0">
+                                                <TextField fx:id="leaveTxt" maxWidth="150.0" minHeight="35.0">
                                                    <VBox.margin>
                                                       <Insets left="20.0" />
                                                    </VBox.margin>
                                                 </TextField>
                                              </children>
                                           </VBox>
-                                          <Button fx:id="submitBtn" maxWidth="150.0" minHeight="30.0" mnemonicParsing="false" prefHeight="0.0" text="ثبت" GridPane.rowIndex="6">
+                                          <Button fx:id="calculatorBtn" maxWidth="150.0" minHeight="30.0" mnemonicParsing="false" prefHeight="0.0" text="محاسبه" GridPane.rowIndex="6">
                                              <GridPane.margin>
                                                 <Insets left="20.0" />
                                              </GridPane.margin>
@@ -197,73 +197,12 @@
                                       <items>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                              <children>
-                                                 <GridPane fx:id="salaryGrid" layoutX="20" layoutY="20" hgap="10" vgap="5" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10">
-                                                     <padding>
-                                                         <Insets top="10" right="10" bottom="10" left="10"/>
-                                                     </padding>
-
-                                                     <!-- Header Row -->
-                                                     <Label text="عنوان" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
-                                                     <Label text="مبلغ" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
-
-                                                     <!-- Group: حقوق ماهانه -->
-                                                     <Label text="حقوق ماهانه" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2"
-                                                            style="-fx-background-color: #ccffcc; -fx-font-weight: bold; -fx-padding: 5;" />
-
-                                                     <!-- Rows: حقوق ماهانه -->
-                                                     <Label text="حق اولاد" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                                                     <Label fx:id="childAllowanceLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-
-                                                     <Label text="مسکن" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                                                     <Label fx:id="housingLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-
-                                                     <Label text="بن" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                                                     <Label fx:id="bonLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-
-                                                     <Label text="ایاب و ذهاب" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-                                                     <Label fx:id="transportLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-
-                                                     <Label text="اضافه کار" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
-                                                     <Label fx:id="overtimeLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-
-                                                     <Label text="اضافه کار تشویقی" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
-                                                     <Label fx:id="bonusOvertimeLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
-
-                                                     <Label text="هزینه غذا" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
-                                                     <Label fx:id="foodCostLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
-
-                                                     <Label text="حق لباس" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
-                                                     <Label fx:id="clothingLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
-
-                                                     <Label text="سایر" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
-                                                     <Label fx:id="otherAllowancesLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
-
-                                                     <!-- Group: سایر پرداخت‌ها -->
-                                                     <Label text="سایر پرداخت‌ها" GridPane.columnIndex="0" GridPane.rowIndex="11" GridPane.columnSpan="2"
-                                                            style="-fx-background-color: #e0ecff; -fx-font-weight: bold; -fx-padding: 5;" />
-
-                                                     <!-- Rows: سایر پرداخت‌ها -->
-                                                     <Label text="مالیات" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
-                                                     <Label fx:id="taxLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
-
-                                                     <Label text="بیمه سهم کارمند" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
-                                                     <Label fx:id="insuranceLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
-
-                                                     <Label text="وام قرض‌الحسنه" GridPane.columnIndex="0" GridPane.rowIndex="14"/>
-                                                     <Label fx:id="loanLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
-
-                                                     <Label text="بیمه عمر" GridPane.columnIndex="0" GridPane.rowIndex="15"/>
-                                                     <Label fx:id="lifeInsuranceLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="15"/>
-
-                                                     <Label text="کسر کار" GridPane.columnIndex="0" GridPane.rowIndex="16"/>
-                                                     <Label fx:id="absenceLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="16"/>
-
-                                                     <Label text="سپرده مسکن" GridPane.columnIndex="0" GridPane.rowIndex="17"/>
-                                                     <Label fx:id="housingDepositLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="17"/>
-
-                                                     <Label text="هزینه غذا (کسری)" GridPane.columnIndex="0" GridPane.rowIndex="18"/>
-                                                     <Label fx:id="foodDeductionLabel" text="۰" GridPane.columnIndex="1" GridPane.rowIndex="18"/>
-                                                 </GridPane>
+                                                <TableView fx:id="salaryTable" prefHeight="320.0" prefWidth="322.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="titleCol" prefWidth="159.0" text="عنوان" />
+                                                    <TableColumn fx:id="amountCol" prefWidth="158.0" text="مبلغ" />
+                                                  </columns>
+                                                </TableView>
                                              </children></AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
                                       </items>

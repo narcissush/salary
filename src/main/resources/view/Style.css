@@ -1,15 +1,10 @@
-@font-face {
-    font-family: 'IRANSans';
-    src: url('view/fonts/IRANSans.ttf') format('truetype');
-}
-
 .root {
-    -fx-font-family: "IRANSans", "Vazirmatn", "Tahoma";
-    -fx-font-size: 14px;
+    -fx-font-family: "IRANSans", "Vazirmatn", "Tahoma" ;
+    -fx-font-size: 12px;
     -fx-background-color: #f9f9f9;
 }
 
-/* دکمه‌ها */
+
 .button {
     -fx-background-color: linear-gradient(to bottom, #b9d3f2, #7faedb); /* آبی ملایم‌تر */
     -fx-text-fill: white;
@@ -18,26 +13,25 @@
     -fx-cursor: hand;
 }
 
-/* لیبل‌ها */
+
 .label {
     -fx-text-fill: #333333;
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
+    -fx-font-size: 12px;
 }
 
-/* جدول */
+
 .table-view {
     -fx-font-family: "IRANSans", "Vazirmatn", "Tahoma";
-    -fx-font-size: 15px;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
     -fx-background-color: #ffffff;
     -fx-table-cell-border-color: transparent;
     -fx-padding: 5;
 }
 
-/* هدر جدول */
 .table-view .column-header-background {
-    -fx-background-color: #7faedb; /* آبی ملایم‌تر */
+    -fx-background-color: #7faedb;
 }
 
 .table-view .column-header,
@@ -52,7 +46,7 @@
     -fx-font-weight: bold;
 }
 
-/* ردیف‌ها */
+
 .table-row-cell {
     -fx-background-color: #ffffff;
     -fx-border-color: transparent;
@@ -60,29 +54,29 @@
 }
 
 .table-row-cell:filled:hover {
-    -fx-background-color: #e9f0fb; /* روشن‌تر آبی */
+    -fx-background-color: #e9f0fb;
 }
 
 .table-row-cell:filled:selected {
-    -fx-background-color: #d3e1fb; /* آبی ملایم‌تر */
+    -fx-background-color: #d3e1fb;
 }
 
 .table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: #b9cdf9; /* آبی خیلی ملایم */
+    -fx-background-color: #b9cdf9;
 }
 
-/* محتوای سلول‌ها */
+
 .table-cell {
     -fx-padding: 5 10 5 10;
 }
 
-/* متن نمایشی زمانی که جدول خالی است */
+
 .table-view .placeholder {
     -fx-text-fill: #999999;
     -fx-font-style: italic;
 }
 
-/* فیلدهای متنی */
+
 .text-field {
     -fx-font-family: "Vazirmatn", "Tahoma";
     -fx-font-size: 14px;
@@ -90,7 +84,7 @@
     -fx-text-fill: #333;
 
     -fx-background-color: white;
-    -fx-border-color: #b7cdef; /* آبی ملایم‌تر */
+    -fx-border-color: #b7cdef;
     -fx-border-radius: 3;
     -fx-background-radius: 3;
 
@@ -98,13 +92,12 @@
     -fx-padding: 0 10 0 10;
 }
 
-/* کامبوباکس */
 .combo-box {
     -fx-font-family: "Vazirmatn", "Tahoma";
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-background-color: white;
-    -fx-border-color: #b7cdef; /* آبی ملایم‌تر */
+    -fx-border-color: #b7cdef;
     -fx-border-radius: 3;
     -fx-background-radius: 3;
     -fx-padding: 0 0 0 0;
@@ -114,11 +107,11 @@
 .combo-box .list-cell {
     -fx-padding: 6 10;
     -fx-font-family: "Vazirmatn", "Tahoma";
-    -fx-font-size: 14px;
+    -fx-font-size: 12px;
 }
 
 .combo-box .arrow-button {
-    -fx-background-color: #7faedb; /* آبی ملایم‌تر */
+    -fx-background-color: #7faedb;
     -fx-background-radius: 0 3 3 0;
     -fx-padding: 0 10;
 }
@@ -127,16 +120,15 @@
     -fx-background-color: white;
 }
 
-/* تاریخ‌سنج */
 .date-picker {
     -fx-font-family: "Vazirmatn", "Tahoma";
     -fx-font-size: 14px;
-    -fx-pref-height: 40px;
+    -fx-pref-height: 35px;
     -fx-padding: 0 0 0 0;
 }
 
 .date-picker .arrow-button {
-    -fx-background-color: #7faedb; /* آبی ملایم‌تر */
+    -fx-background-color: #7faedb;
     -fx-padding: 0 10 0 10;
     -fx-background-radius: 0 3 3 0;
 }
@@ -147,27 +139,24 @@
 
 .date-picker .text-field {
     -fx-background-color: white;
-    -fx-border-color: #b7cdef; /* آبی ملایم‌تر */
+    -fx-border-color: #b7cdef;
     -fx-border-radius: 3;
     -fx-font-weight: bold;
     -fx-padding: 5 8 5 8;
 }
 
-/* پنل‌های عنوان‌دار */
 .titled-pane {
     -fx-font-weight: bold;
     -fx-font-size: 15px;
-    -fx-text-fill: #6699cc; /* آبی ملایم‌تر */
+    -fx-text-fill: #6699cc;
 }
 
-/* عکس پروفایل */
 .image-view {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 2);
     -fx-background-radius: 10;
     -fx-border-radius: 10;
 }
 
-/* فضای خالی بین اجزا */
 .hbox, .vbox {
     -fx-spacing: 5;
 }

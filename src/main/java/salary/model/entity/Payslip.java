@@ -1,5 +1,6 @@
 package salary.model.entity;
 
+import javafx.beans.value.ObservableValue;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -28,5 +29,6 @@ public class Payslip implements Serializable {
         return salaryComponents.getTotalSalaryComponents() - deductions.getTotalDeductions();
 
     }
+
 
 }
