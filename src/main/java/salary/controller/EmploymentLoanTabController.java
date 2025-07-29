@@ -63,14 +63,16 @@ public class EmploymentLoanTabController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            List<LoanType> loanTypes = LoanTypeService.findAll();
-            ObservableList<LoanType> items = FXCollections.observableArrayList(loanTypes);
-            loanTypeCmb.setItems(items);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
 
+        loanTypeCmb.setOnMousePressed(event -> {
+            try {
+                List<LoanType> loanTypes = LoanTypeService.findAll();
+                ObservableList<LoanType> items = FXCollections.observableArrayList(loanTypes);
+                loanTypeCmb.setItems(items);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
         loanTypeCmb.setOnAction(event -> {
             try {
                 DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("fa", "IR"));
@@ -80,18 +82,15 @@ public class EmploymentLoanTabController implements Initializable {
                 loanTypeSelected = loanTypeCmb.getValue();
 
                 if (loanTypeSelected != null) {
-                    double loanAmount = loanTypeSelected.getLoanAmount();
-                    double interest = loanTypeSelected.getLoanInterest();
-                    int totalInstallments = loanTypeSelected.getTotalInstallments();
-
-                    loanAmountTxt.setText(decimalFormat.format(loanAmount));
-                    loanIntrestTxt.setText(decimalFormat.format(interest));
-                    totalInstallmentTxt.setText(String.valueOf(totalInstallments));
-
-                    double totalWithInterest = loanAmount + (loanAmount * interest);
-                    double monthlyInstallment = totalWithInterest / totalInstallments;
-                    amountPaidTxt.setText(decimalFormat.format(monthlyInstallment));
+                    double P = loanTypeSelected.getLoanAmount();
+                    double annualInterest = loanTypeSelected.getLoanInterest();
+                    int n = loanTypeSelected.getTotalInstallments();
+                    loanAmountTxt.setText(decimalFormat.format(P));
+                    loanIntrestTxt.setText(decimalFormat.format(annualInterest)); // اگر عدد ده‌دهی است
+                    totalInstallmentTxt.setText(String.valueOf(n));
+                    amountPaidTxt.setText(decimalFormat.format(loanTypeSelected.getAmountPayMonthly()));
                 }
+
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -116,8 +115,8 @@ public class EmploymentLoanTabController implements Initializable {
                 if (loanStartDatePicker.getValue() == null) {
                     new Alert(Alert.AlertType.INFORMATION, "تاریخ دریافت وام را وارد نمایید.!", ButtonType.OK).showAndWait();
                 }
-                double loanAmount = DataConvert.ParseFarsiDouble(loanAmountTxt.getText());
-                double interest = DataConvert.ParseFarsiDouble(loanIntrestTxt.getText());
+                double loanAmount = DataConvert.ParseDouble(loanAmountTxt.getText());
+                double interest = DataConvert.ParseDouble(loanIntrestTxt.getText());
                 int totalInstallments = Integer.parseInt(totalInstallmentTxt.getText());
                 LocalDate startDate = loanStartDatePicker.getValue();
                 LocalDate endDate = loanFinishDatePicker.getValue();

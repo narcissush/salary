@@ -59,7 +59,7 @@ public class EntityMapper {
                 .id(resultSet.getInt("id"))
                 .loanType(resultSet.getString("loan_type"))
                 .loanAmount(resultSet.getDouble("loan_amount"))
-                .loanInterest(resultSet.getDouble("loan_interest"))
+                .loanInterest(resultSet.getInt("loan_interest"))
                 .totalInstallments(resultSet.getInt("total_installments"))
                 .build();
     }
@@ -70,7 +70,7 @@ public class EntityMapper {
         loanType.setId(resultSet.getInt("lt_id"));
         loanType.setLoanType(resultSet.getString("loan_type"));
         loanType.setLoanAmount(resultSet.getDouble("loan_amount"));
-        loanType.setLoanInterest(resultSet.getDouble("loan_interest"));
+        loanType.setLoanInterest(resultSet.getInt("loan_interest"));
         loanType.setTotalInstallments(resultSet.getInt("total_installments"));
 
         return EmployeeLoan.builder()
@@ -88,7 +88,7 @@ public class EntityMapper {
         loanType.setId(resultSet.getInt("id"));
         loanType.setLoanType(resultSet.getString("loan_type"));
         loanType.setLoanAmount(resultSet.getDouble("loan_amount"));
-        loanType.setLoanInterest(resultSet.getDouble("loan_interest"));
+        loanType.setLoanInterest(resultSet.getInt("loan_interest"));
         loanType.setTotalInstallments(resultSet.getInt("total_installments"));
 
         EmployeeLoan employeeLoan = EmployeeLoan

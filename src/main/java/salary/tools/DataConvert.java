@@ -3,9 +3,7 @@ package salary.tools;
 import com.github.mfathi91.time.PersianDate;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
-import java.util.Locale;
 
 public class DataConvert {
     public static LocalDate ShamsiToMiladi(String date) {
@@ -16,11 +14,19 @@ public class DataConvert {
         return PersianDate.fromGregorian(date);
     }
 
-    public static double ParseFarsiDouble(String text) {
+    public static double ParseDouble(String text) {
         if (text == null || text.isEmpty()) return 0.0;
         text = text.replace("٬", "").replace("٫", ".").replace(" ", "");
         return Double.parseDouble(text);
     }
 
 
+    public static String decimalFormat(int number) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(number);
+    }
+
 }
+
+
+

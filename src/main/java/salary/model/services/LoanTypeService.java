@@ -8,35 +8,46 @@ import java.util.List;
 public class LoanTypeService {
 
     public static void save(LoanType loanType) throws Exception {
-        new LoanTypeRepository().save(loanType);
+        try (LoanTypeRepository repository = new LoanTypeRepository()) {
+            repository.save(loanType);
+        }
     }
 
     public static void edit(LoanType loanType) throws Exception {
-        LoanTypeRepository repo = new LoanTypeRepository();
-        if (repo.findById(loanType.getId()) != null) {
-            repo.edit(loanType);
-        } else {
-            throw new Exception("LoanType not found");
+        try (LoanTypeRepository repository = new LoanTypeRepository()) {
+            if (repository.findById(loanType.getId()) != null) {
+                repository.edit(loanType);
+            } else {
+                throw new Exception("LoanType not found");
+            }
         }
     }
 
     public static void delete(int id) throws Exception {
-        LoanTypeRepository repo = new LoanTypeRepository();
-        if (repo.findById(id) != null) {
-            repo.delete(id);
-        } else {
-            throw new Exception("LoanType not found");
+        try (LoanTypeRepository repository = new LoanTypeRepository()) {
+            if (repository.findById(id) != null) {
+                repository.delete(id);
+            } else {
+                throw new Exception("LoanType not found");
+            }
         }
     }
 
     public static List<LoanType> findAll() throws Exception {
-        return new LoanTypeRepository().findAll();
+        try (LoanTypeRepository repository = new LoanTypeRepository()) {
+            return repository.findAll();
+        }
     }
 
     public static LoanType findById(int id) throws Exception {
-        return new LoanTypeRepository().findById(id);
+        try (LoanTypeRepository repository = new LoanTypeRepository()) {
+            return repository.findById(id);
+        }
     }
+
     public static LoanType findByType(String type) throws Exception {
-        return new LoanTypeRepository().findByType(type);
+        try (LoanTypeRepository repository = new LoanTypeRepository()) {
+            return repository.findByType(type);
+        }
     }
 }

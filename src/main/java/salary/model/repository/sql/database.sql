@@ -71,7 +71,7 @@ CREATE TABLE Work_Record_Monthly
     id               number primary key,
     employees_id     number REFERENCES employees (id),
     month            nvarchar2(10),
-    year             nvarchar2(5),
+    year             number,
     days_Worked      number,
     over_time_Hours  nvarchar2(10),
     under_Time_Hours nvarchar2(10),
@@ -105,7 +105,7 @@ CREATE TABLE loan_Type
     id                 NUMBER PRIMARY KEY,
     loan_type          NVARCHAR2(20),
     loan_amount        NUMBER(15, 2), --مبلغ وام
-    loan_interest      NUMBER(5, 2),  --بهره وام
+    loan_interest      NUMBER,  --بهره وام
     total_installments NUMBER--تعداد افساط
 );
 create sequence loans_type_seq start with 1 increment by 1;
@@ -134,7 +134,7 @@ create sequence Loan_Installments_seq start with 1 increment by 1;
 CREATE TABLE allowance
 (
     id                 NUMBER PRIMARY KEY,
-    YEAR               NVARCHAR2(8),
+    YEAR               number,
     HOUSING_ALLOWANCE  NUMBER(15, 2),
     MARRIAGE_ALLOWANCE NUMBER(15, 2),
     CHILD_ALLOWANCE    NUMBER(15, 2),

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AllowanceRepository implements Repository<Allowance>{
     private Connection connection;
-    private PreparedStatement preparedStatement;
+    private PreparedStatement ps;
 
     public AllowanceRepository() throws SQLException {
         connection = ConnectionProvider.getConnectionProvider().getconnection();
@@ -19,32 +19,31 @@ public class AllowanceRepository implements Repository<Allowance>{
     @Override
     public void save(Allowance allowance) throws Exception {
         allowance.setId(ConnectionProvider.getConnectionProvider().getNextId(connection, "allowances_seq"));
-        preparedStatement = connection.prepareStatement(
+        ps = connection.prepareStatement(
                 "insert into ALLOWANCE values (?, ?, ?, ?, ?,?)"
         );
-        preparedStatement.setInt(1, allowance.getId());
-        preparedStatement.setInt(2, allowance.getYear());
-        preparedStatement.setDouble(3, allowance.getHousingAllowance());
-        preparedStatement.setDouble(4, allowance.getFoodAllowance());
-        preparedStatement.setDouble(5, allowance.getMarriageAllowance());
-        preparedStatement.setDouble(6, allowance.getChildAllowance());
+        ps.setInt(1, allowance.getId());
+        ps.setInt(2, allowance.getYear());
+        ps.setDouble(3, allowance.getHousingAllowance());
+        ps.setDouble(4, allowance.getFoodAllowance());
+        ps.setDouble(5, allowance.getMarriageAllowance());
+        ps.setDouble(6, allowance.getChildAllowance());
 
-        preparedStatement.execute();
+        ps.execute();
     }
 
     @Override
     public void edit(Allowance allowance) throws Exception {
-        preparedStatement = connection.prepareStatement(
+        ps = connection.prepareStatement(
                 "UPDATE ALLOWANCE SET year = ?, Housing_allowance = ?, food_allowance = ?, marriage_allowance = ?, child_allowance = ? WHERE id = ?"
         );
-
-        preparedStatement.setInt(1, allowance.getYear());
-        preparedStatement.setDouble(2, allowance.getHousingAllowance());
-        preparedStatement.setDouble(3, allowance.getFoodAllowance());
-        preparedStatement.setDouble(4, allowance.getMarriageAllowance());
-        preparedStatement.setDouble(5, allowance.getChildAllowance());
-        preparedStatement.setInt(6, allowance.getId());
-        preparedStatement.execute();
+        ps.setInt(1, allowance.getYear());
+        ps.setDouble(2, allowance.getHousingAllowance());
+        ps.setDouble(3, allowance.getFoodAllowance());
+        ps.setDouble(4, allowance.getMarriageAllowance());
+        ps.setDouble(5, allowance.getChildAllowance());
+        ps.setInt(6, allowance.getId());
+        ps.execute();
     }
 
     @Override
@@ -64,9 +63,9 @@ public class AllowanceRepository implements Repository<Allowance>{
     public Allowance findByYear(int year) throws Exception {
         Allowance allowance = null;
         connection = ConnectionProvider.getConnectionProvider().getconnection();
-        preparedStatement = connection.prepareStatement("select * from Allowance where year=?");
-        preparedStatement.setInt(1, year);
-        ResultSet resultSet = preparedStatement.executeQuery();
+        ps = connection.prepareStatement("select * from Allowance where year=?");
+        ps.setInt(1, year);
+        ResultSet resultSet = ps.executeQuery();
         if (resultSet.next()) {
             allowance = EntityMapper.allowanceMapper(resultSet);
         }
@@ -76,6 +75,7 @@ public class AllowanceRepository implements Repository<Allowance>{
 
     @Override
     public void close() throws Exception {
-
+        ps.close();
+        connection.close();
     }
 }

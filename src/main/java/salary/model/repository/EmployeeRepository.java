@@ -58,7 +58,6 @@ public class EmployeeRepository implements Repository<Employee>, AutoCloseable {
                 "WHERE id = ?";
 
         ps = connection.prepareStatement(sql);
-
         ps.setString(1, employee.getFirstName());
         ps.setString(2, employee.getLastName());
         ps.setString(3, employee.getNationalId());

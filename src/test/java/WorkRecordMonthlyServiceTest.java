@@ -16,7 +16,7 @@ public class WorkRecordMonthlyServiceTest {
                         .id(1)
                         .employee(AppState.employeeSelected)
                         .month(Month.تیر)
-                        .year(Year.Y1404)
+                        .year(1404)
                         .daysWorked(31)
                         .overtimeHours("05:20")
                         .underTimeHours("02:10")

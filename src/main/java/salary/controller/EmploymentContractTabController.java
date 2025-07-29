@@ -3,6 +3,7 @@ package salary.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import salary.FormManager;
 import salary.model.entity.Allowance;
 import salary.model.entity.EmploymentContract;
 import salary.model.entity.enums.*;
@@ -15,6 +16,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EmploymentContractTabController implements Initializable {
@@ -41,8 +43,7 @@ public class EmploymentContractTabController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         saveContractBtn.setDisable(true);
-int year=DataConvert.MiladiToShamsi(LocalDate.now()).getYear();
-        System.out.println(year);
+        int year = DataConvert.MiladiToShamsi(LocalDate.now()).getYear();
 
 
         try {
@@ -61,9 +62,23 @@ int year=DataConvert.MiladiToShamsi(LocalDate.now()).getYear();
 
         newContractBtn.setOnAction(event -> {
             if (AppState.employeeSelected != null) {
-                saveContractBtn.setDisable(false);
-                resertForm();
+                if (AppState.allowanceSelected != null) {
+                    saveContractBtn.setDisable(false);
+                    resertForm();
 
+                } else {
+                    Alert confirm = new Alert(Alert.AlertType.INFORMATION,
+                            "مزایای شغلی یافت نشد.آیا تمایل به ثبت مزایا دارید؟", ButtonType.YES, ButtonType.NO);
+                    Optional<ButtonType> result = confirm.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.YES) {
+                        try {
+                            FormManager formManager = new FormManager();
+                            formManager.showAllowanceFormController();
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
             } else {
                 Alert info = new Alert(Alert.AlertType.INFORMATION,
                         "پرسنل را انتخاب نمایید!", ButtonType.OK);
@@ -83,13 +98,13 @@ int year=DataConvert.MiladiToShamsi(LocalDate.now()).getYear();
                                 .department(departmentCmb.getSelectionModel().getSelectedItem())
                                 .jobTitle(jobTitleCmb.getSelectionModel().getSelectedItem())
                                 .position(positionCmb.getSelectionModel().getSelectedItem())
-                                .dailySalary(DataConvert.ParseFarsiDouble(dailySalaryTxt.getText()))
-                                .bazarKar(DataConvert.ParseFarsiDouble(bazarKarTxt.getText()))
-                                .fogholadeShoghl(DataConvert.ParseFarsiDouble(fogholadeShoghlTxt.getText()))
-                                .housingAllowance(DataConvert.ParseFarsiDouble(housingAllowanceTxt.getText()))
-                                .marriageAllowance(DataConvert.ParseFarsiDouble(marriageAllowanceTxt.getText()))
-                                .childAllowance(DataConvert.ParseFarsiDouble(childAllowanceTxt.getText()))
-                                .foodAllowance(DataConvert.ParseFarsiDouble(foodAllowanceTxt.getText()))
+                                .dailySalary(DataConvert.ParseDouble(dailySalaryTxt.getText()))
+                                .bazarKar(DataConvert.ParseDouble(bazarKarTxt.getText()))
+                                .fogholadeShoghl(DataConvert.ParseDouble(fogholadeShoghlTxt.getText()))
+                                .housingAllowance(DataConvert.ParseDouble(housingAllowanceTxt.getText()))
+                                .marriageAllowance(DataConvert.ParseDouble(marriageAllowanceTxt.getText()))
+                                .childAllowance(DataConvert.ParseDouble(childAllowanceTxt.getText()))
+                                .foodAllowance(DataConvert.ParseDouble(foodAllowanceTxt.getText()))
                                 .build();
                 EmploymentContractService.save(employmentContract);
                 Alert info = new Alert(Alert.AlertType.INFORMATION,
@@ -115,13 +130,13 @@ int year=DataConvert.MiladiToShamsi(LocalDate.now()).getYear();
                                 .department(departmentCmb.getSelectionModel().getSelectedItem())
                                 .jobTitle(jobTitleCmb.getSelectionModel().getSelectedItem())
                                 .position(positionCmb.getSelectionModel().getSelectedItem())
-                                .dailySalary(DataConvert.ParseFarsiDouble(dailySalaryTxt.getText()))
-                                .bazarKar(DataConvert.ParseFarsiDouble(bazarKarTxt.getText()))
-                                .fogholadeShoghl(DataConvert.ParseFarsiDouble(fogholadeShoghlTxt.getText()))
-                                .housingAllowance(DataConvert.ParseFarsiDouble(housingAllowanceTxt.getText()))
-                                .marriageAllowance(DataConvert.ParseFarsiDouble(marriageAllowanceTxt.getText()))
-                                .childAllowance(DataConvert.ParseFarsiDouble(childAllowanceTxt.getText()))
-                                .foodAllowance(DataConvert.ParseFarsiDouble(foodAllowanceTxt.getText()))
+                                .dailySalary(DataConvert.ParseDouble(dailySalaryTxt.getText()))
+                                .bazarKar(DataConvert.ParseDouble(bazarKarTxt.getText()))
+                                .fogholadeShoghl(DataConvert.ParseDouble(fogholadeShoghlTxt.getText()))
+                                .housingAllowance(DataConvert.ParseDouble(housingAllowanceTxt.getText()))
+                                .marriageAllowance(DataConvert.ParseDouble(marriageAllowanceTxt.getText()))
+                                .childAllowance(DataConvert.ParseDouble(childAllowanceTxt.getText()))
+                                .foodAllowance(DataConvert.ParseDouble(foodAllowanceTxt.getText()))
                                 .build();
                 EmploymentContractService.edit(employmentContract);
                 Alert info = new Alert(Alert.AlertType.INFORMATION,

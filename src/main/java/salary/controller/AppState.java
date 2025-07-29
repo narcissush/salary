@@ -9,7 +9,7 @@ public class AppState {
     public static Allowance allowanceSelected;
     public static Employee employeeSelected;
     public static WorkRecordMonthly workRecordMonthlySelected;
-    public static Double totalLoanAmount;
+    public static Double totalLoanAmount=0.0;
 
     public static List<EmploymentContract> employmentContractListSelected;
     public static EmploymentContract employmentContractSelected;

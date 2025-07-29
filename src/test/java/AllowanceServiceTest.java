@@ -7,7 +7,7 @@ public class AllowanceServiceTest {
 
         Allowance allowance = Allowance.builder()
                 .id(1)
-                .year(Year.Y1404)
+                .year(1404)
                 .housingAllowance(9000000.00)
                 .foodAllowance(22000000.00)
                 .marriageAllowance(5000000.00)

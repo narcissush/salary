@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import salary.FormManager;
 import salary.model.entity.Employee;
 import salary.model.entity.EmployeeLoan;
 import salary.model.entity.EmploymentContract;
@@ -33,6 +34,8 @@ public class MainFormController implements Initializable {
     @FXML
     private TableColumn<Employee, String> employeeNameFamilyCol;
     @FXML
+    private MenuItem allowanceMenuItem,loanMenuItem;
+    @FXML
     private EmployeeTabController employeeTabController;
     @FXML
     private EmploymentContractTabController employmentContractTabController;
@@ -50,6 +53,23 @@ public class MainFormController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
             alert.show();
         }
+        allowanceMenuItem.setOnAction(event -> {
+            try {
+                FormManager formManager = new FormManager();
+                formManager.showAllowanceFormController();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        loanMenuItem.setOnAction(event -> {
+            try {
+                FormManager formManager = new FormManager();
+                formManager.showLoanTypeFormController();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         EventHandler<Event> tableChangeEvent = (mouseEvent -> {
 
                 try {
@@ -66,15 +86,12 @@ public class MainFormController implements Initializable {
                             AppState.employmentContractListSelected = null;
                             AppState.currentContractIndex = 0;
                             AppState.employmentContractSelected = null;
-                            employmentContractTabController.resertForm();
                         }
                         List<EmployeeLoan> loans = EmployeeLoanService.findByEmployeeId(AppState.employeeSelected.getId());
                         if (loans != null && !loans.isEmpty()) {
                             employmentLoanTabController.fillEmployeeLoanTable(loans);
                             for (EmployeeLoan loan : loans) {
-                                double totalWithInterest = loan.getLoanType().getLoanAmount() + (loan.getLoanType().getLoanAmount() * loan.getLoanType().getLoanInterest());
-                                double monthlyInstallment = totalWithInterest / loan.getLoanType().getLoanInterest();
-                                AppState.totalLoanAmount += monthlyInstallment;
+                                AppState.totalLoanAmount += loan.getLoanType().getAmountPayMonthly();
                             }
                         }
                         else {

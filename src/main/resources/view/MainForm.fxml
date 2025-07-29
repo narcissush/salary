@@ -15,20 +15,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox stylesheets="@Style.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.MainFormController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="800.0" prefWidth="1200.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salary.controller.MainFormController">
    <children>
       <MenuBar minHeight="35.0">
         <menus>
+            <Menu fx:id="importMenu" mnemonicParsing="false" text="ثبت اطلاعات">
+               <items>
+                  <MenuItem fx:id="allowanceMenuItem" mnemonicParsing="false" text="مزایای شغل" />
+                  <MenuItem fx:id="loanMenuItem" mnemonicParsing="false" text="وام" />
+               </items>
+            </Menu>
           <Menu fx:id="reportMenu" mnemonicParsing="false" text="گزارشات">
             <items>
               <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
-            <Menu fx:id="importMenu" mnemonicParsing="false" text="ورود اطلاعات">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Delete" />
-               </items>
-            </Menu>
           <Menu fx:id="userMenu" mnemonicParsing="false" text="کاربر">
             <items>
               <MenuItem mnemonicParsing="false" text="Delete" />

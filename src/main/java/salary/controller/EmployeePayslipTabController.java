@@ -10,6 +10,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import javafx.scene.layout.GridPane;
 import salary.model.entity.Deductions;
 import salary.model.entity.SalaryComponents;
 import salary.model.entity.SalaryItem;
@@ -24,9 +25,13 @@ public class EmployeePayslipTabController implements Initializable {
     @FXML
     private TextField daysWorkedTxt,overtimeHoursTxt,underTimeHoursTxt,leaveTxt;
     @FXML
+    private Label totalSalaryComponentsLbl,totalDeductionsLbl,totalSalaryLbl;
+    @FXML
     private ComboBox<Integer> yearCmb;
     @FXML
     private ComboBox<Month> monthCmb;
+    @FXML
+    private GridPane LoanListGridPane,totalSalaryGridPane;
 
     @FXML
     private TableView<SalaryItem> salaryComponentsTable,deductionsTable;
@@ -91,9 +96,14 @@ public class EmployeePayslipTabController implements Initializable {
                             .leave(leaveTxt.getText())
                             .build();
             AppState.workRecordMonthlySelected=workRecordMonthly;
-           int salaryComponents=fillSalaryComponentsTable();
-           int seductions=fillDeductionsTable();
 
+           int salaryComponents=fillSalaryComponentsTable();
+           int deductions=fillDeductionsTable();
+           int totalSalary=salaryComponents-deductions;
+
+            totalSalaryComponentsLbl.setText(String.valueOf(salaryComponents));
+            totalDeductionsLbl.setText(String.valueOf(deductions));
+            totalSalaryLbl.setText(String.valueOf(totalSalary));
         });
     }
 
@@ -107,8 +117,7 @@ public class EmployeePayslipTabController implements Initializable {
                 new SalaryItem("حق اولاد", (int) components.getTotalChildAllowance()),
                 new SalaryItem("حق تاهل", (int) components.getMarriageAllowance()),
                 new SalaryItem("اضافه‌کار", (int) components.getOverTime()),
-                new SalaryItem("ماموریت", (int) components.getMissionAllowance()),
-                new SalaryItem("جمع کل", (int) components.getTotalSalaryComponents())
+                new SalaryItem("ماموریت", (int) components.getMissionAllowance())
         );
         salaryComponentsTable.setItems(items);
         return (int) components.getTotalSalaryComponents();
@@ -119,8 +128,7 @@ public class EmployeePayslipTabController implements Initializable {
                 new SalaryItem("مالیات", (int) deductions.getTax()),
                 new SalaryItem("بیمه", (int) deductions.getInsurance()),
                 new SalaryItem("وام", (int) deductions.getLoanRepayment()),
-                new SalaryItem("کسرکار", (int) deductions.getUnderTime()),
-                new SalaryItem("جمع کسورات", (int) deductions.getTotalDeductions())
+                new SalaryItem("کسرکار", (int) deductions.getUnderTime())
                 );
         deductionsTable.setItems(items);
         return (int) deductions.getTotalDeductions();
