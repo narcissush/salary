@@ -17,23 +17,21 @@ public class SalaryComponents implements Serializable {
     List<Mission> missionList;
 
     public double getMonthlySalary() {
-        int a = (int) (AppState.workRecordMonthlySelected.getDaysWorked() * AppState.employmentContractSelected.getDailySalary());
-        System.out.println(a);
-        return a;
+        return (AppState.workRecordMonthlySelected.getDaysWorked() * AppState.employmentContractSelected.getDailySalary());
+
     }
 
     public double getTotalChildAllowance() {
-        double a = AppState.employeeSelected.getNumberOfChildren() *
+        return AppState.employeeSelected.getNumberOfChildren() *
                 (AppState.employmentContractSelected.getChildAllowance() / 30 * AppState.employmentContractSelected.getDailySalary());
-        return (int) Math.ceil(a);
+
     }
 
     public double getMarriageAllowance() {
         if (AppState.employeeSelected.getMarriage() == Marriage.متاهل) {
-            double a = (AppState.employmentContractSelected.getMarriageAllowance() / 30 * AppState.workRecordMonthlySelected.getDaysWorked());
-            return (int) Math.ceil(a);
+            return (AppState.employmentContractSelected.getMarriageAllowance() / 30 * AppState.workRecordMonthlySelected.getDaysWorked());
 
-        } else return 0.0;
+        } else return 0;
     }
 
     public double getHousingAllowance() {
@@ -43,8 +41,7 @@ public class SalaryComponents implements Serializable {
     }
 
     public double getFoodAllowance() {
-        double a = (AppState.employmentContractSelected.getFoodAllowance() / 30 * AppState.workRecordMonthlySelected.getDaysWorked());
-        return (int) Math.ceil(a);
+        return (AppState.employmentContractSelected.getFoodAllowance() / 30 * AppState.workRecordMonthlySelected.getDaysWorked());
 
     }
 

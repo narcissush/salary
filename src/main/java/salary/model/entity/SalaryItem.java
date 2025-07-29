@@ -6,7 +6,7 @@ public class SalaryItem {
         private final SimpleStringProperty title;
         private final SimpleDoubleProperty amount;
 
-        public SalaryItem(String title, Double amount) {
+        public SalaryItem(String title, int amount) {
             this.title = new SimpleStringProperty(title);
             this.amount = new SimpleDoubleProperty(amount);
         }

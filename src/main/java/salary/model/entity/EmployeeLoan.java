@@ -16,4 +16,9 @@ public class EmployeeLoan  implements Serializable {
     private LoanType loanType;
     private LocalDate loanStartDate;
     private LocalDate loanFinishDate;
+
+    public double totalLoanAmount(){
+
+    }
+
 }

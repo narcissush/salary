@@ -133,7 +133,7 @@ public class EntityMapper {
         return Allowance
                 .builder()
                 .id(resultSet.getInt("id"))
-                .year(Year.valueOf(resultSet.getString("year")))
+                .year(resultSet.getInt("year"))
                 .housingAllowance(resultSet.getDouble("Housing_Allowance"))
                 .foodAllowance(resultSet.getDouble("food_Allowance"))
                 .marriageAllowance(resultSet.getDouble("marriage_Allowance"))
@@ -146,7 +146,7 @@ public class EntityMapper {
         return WorkRecordMonthly.builder()
                 .id(resultSet.getInt("id"))
                 .month(Month.valueOf(resultSet.getString("month")))
-                .year(Year.valueOf(resultSet.getString("year")))
+                .year(resultSet.getInt("year"))
                 .employee(AppState.employeeSelected)
                 .daysWorked(resultSet.getInt("days_worked"))
                 .overtimeHours(resultSet.getString("over_time_Hours"))

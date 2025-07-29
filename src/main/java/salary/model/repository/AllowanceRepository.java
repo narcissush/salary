@@ -23,7 +23,7 @@ public class AllowanceRepository implements Repository<Allowance>{
                 "insert into ALLOWANCE values (?, ?, ?, ?, ?,?)"
         );
         preparedStatement.setInt(1, allowance.getId());
-        preparedStatement.setString(2, allowance.getYear().name());
+        preparedStatement.setInt(2, allowance.getYear());
         preparedStatement.setDouble(3, allowance.getHousingAllowance());
         preparedStatement.setDouble(4, allowance.getFoodAllowance());
         preparedStatement.setDouble(5, allowance.getMarriageAllowance());
@@ -38,7 +38,7 @@ public class AllowanceRepository implements Repository<Allowance>{
                 "UPDATE ALLOWANCE SET year = ?, Housing_allowance = ?, food_allowance = ?, marriage_allowance = ?, child_allowance = ? WHERE id = ?"
         );
 
-        preparedStatement.setString(1, allowance.getYear().name());
+        preparedStatement.setInt(1, allowance.getYear());
         preparedStatement.setDouble(2, allowance.getHousingAllowance());
         preparedStatement.setDouble(3, allowance.getFoodAllowance());
         preparedStatement.setDouble(4, allowance.getMarriageAllowance());
@@ -61,11 +61,11 @@ public class AllowanceRepository implements Repository<Allowance>{
     public Allowance findById(int id) throws Exception {
         return null;
     }
-    public Allowance findByYear(Year year) throws Exception {
+    public Allowance findByYear(int year) throws Exception {
         Allowance allowance = null;
         connection = ConnectionProvider.getConnectionProvider().getconnection();
         preparedStatement = connection.prepareStatement("select * from Allowance where year=?");
-        preparedStatement.setString(1, year.name());
+        preparedStatement.setInt(1, year);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
             allowance = EntityMapper.allowanceMapper(resultSet);

@@ -7,13 +7,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import salary.model.entity.Deductions;
 import salary.model.entity.SalaryComponents;
 import salary.model.entity.SalaryItem;
 import salary.model.entity.WorkRecordMonthly;
 import salary.model.entity.enums.Month;
-import salary.model.entity.enums.Year;
+import salary.tools.DataConvert;
 
 
 public class EmployeePayslipTabController implements Initializable {
@@ -22,25 +24,60 @@ public class EmployeePayslipTabController implements Initializable {
     @FXML
     private TextField daysWorkedTxt,overtimeHoursTxt,underTimeHoursTxt,leaveTxt;
     @FXML
-    private ComboBox<Year> yearCmb;
+    private ComboBox<Integer> yearCmb;
     @FXML
     private ComboBox<Month> monthCmb;
 
     @FXML
-    private TableView<SalaryItem> salaryTable;
+    private TableView<SalaryItem> salaryComponentsTable,deductionsTable;
 
     @FXML
-    private TableColumn<SalaryItem, String> titleCol;
+    private TableColumn<SalaryItem, String> titleSalaryComponentsCol,titleDeductionsCol;
 
     @FXML
-    private TableColumn<SalaryItem, Number> amountCol;
+    private TableColumn<SalaryItem, Number> amountSalaryComponentsCol,amountDeductionsCol;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        titleCol.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
-        amountCol.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
-        yearCmb.getItems().addAll(Year.values());
+        titleSalaryComponentsCol.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
+        amountSalaryComponentsCol.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
+
+        titleDeductionsCol.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
+        amountDeductionsCol.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
+
+        amountSalaryComponentsCol.setCellFactory(column -> new TableCell<SalaryItem, Number>() {
+            @Override
+            protected void updateItem(Number value, boolean empty) {
+                super.updateItem(value, empty);
+                if (empty || value == null) {
+                    setText(null);
+                } else {
+                    setText(String.valueOf(value.intValue()));
+                }
+            }
+        });
+
+        amountDeductionsCol.setCellFactory(column -> new TableCell<SalaryItem, Number>() {
+            @Override
+            protected void updateItem(Number value, boolean empty) {
+                super.updateItem(value, empty);
+                if (empty || value == null) {
+                    setText(null);
+                } else {
+                    setText(String.valueOf(value.intValue()));
+                }
+            }
+        });
+
+
+        ObservableList<Integer> years = FXCollections.observableArrayList();
+        for (int i = 1400; i <= 1420; i++) {
+            years.add(i);
+        }
+        yearCmb.setItems(years);
+        int currentYear = DataConvert.MiladiToShamsi(LocalDate.now()).getYear();
+        yearCmb.getSelectionModel().select(Integer.valueOf(currentYear));
         monthCmb.getItems().addAll(Month.values());
 
         calculatorBtn.setOnAction(event -> {
@@ -54,27 +91,39 @@ public class EmployeePayslipTabController implements Initializable {
                             .leave(leaveTxt.getText())
                             .build();
             AppState.workRecordMonthlySelected=workRecordMonthly;
-            fillTable();
-
+           int salaryComponents=fillSalaryComponentsTable();
+           int seductions=fillDeductionsTable();
 
         });
     }
 
-    public void fillTable() {
+    public Integer fillSalaryComponentsTable() {
 
         SalaryComponents components=new SalaryComponents();
-
         ObservableList<SalaryItem> items = FXCollections.observableArrayList(
-                new SalaryItem("حقوق ماهانه", (double) components.getMonthlySalary()),
-                new SalaryItem("حق اولاد",(double) components.getTotalChildAllowance()),
-                new SalaryItem("حق مسکن", (double)components.getHousingAllowance()),
-                new SalaryItem("حق اولاد",(double) components.getTotalChildAllowance()),
-                new SalaryItem("بن خواربار",(double) components.getFoodAllowance()),
-                new SalaryItem("اضافه‌کار",(double) components.getOverTime()),
-                new SalaryItem("جمع کل", (double)components.getTotalSalaryComponents())
+                new SalaryItem("حقوق ماهانه", (int) components.getMonthlySalary()),
+                new SalaryItem("حق مسکن", (int) components.getHousingAllowance()),
+                new SalaryItem("بن خواربار", (int) components.getFoodAllowance()),
+                new SalaryItem("حق اولاد", (int) components.getTotalChildAllowance()),
+                new SalaryItem("حق تاهل", (int) components.getMarriageAllowance()),
+                new SalaryItem("اضافه‌کار", (int) components.getOverTime()),
+                new SalaryItem("ماموریت", (int) components.getMissionAllowance()),
+                new SalaryItem("جمع کل", (int) components.getTotalSalaryComponents())
         );
-
-        salaryTable.setItems(items);
+        salaryComponentsTable.setItems(items);
+        return (int) components.getTotalSalaryComponents();
+    }
+    public Integer fillDeductionsTable() {
+        Deductions deductions=new Deductions();
+        ObservableList<SalaryItem> items = FXCollections.observableArrayList(
+                new SalaryItem("مالیات", (int) deductions.getTax()),
+                new SalaryItem("بیمه", (int) deductions.getInsurance()),
+                new SalaryItem("وام", (int) deductions.getLoanRepayment()),
+                new SalaryItem("کسرکار", (int) deductions.getUnderTime()),
+                new SalaryItem("جمع کسورات", (int) deductions.getTotalDeductions())
+                );
+        deductionsTable.setItems(items);
+        return (int) deductions.getTotalDeductions();
     }
 
 }

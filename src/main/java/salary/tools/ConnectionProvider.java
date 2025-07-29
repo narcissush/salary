@@ -18,8 +18,8 @@ public class ConnectionProvider {
     public Connection getconnection() throws SQLException {
         dataSource.setDriverClassName("oracle.jdbc.OracleDriver");
         dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
-        dataSource.setUsername("javase");
-        dataSource.setPassword("java123");
+        dataSource.setUsername("admin");
+        dataSource.setPassword("admin123");
 //        dataSource.setMinIdle(5);
 //        dataSource.setMaxIdle(20);
         return dataSource.getConnection();

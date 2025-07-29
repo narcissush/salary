@@ -71,6 +71,11 @@ public class MainFormController implements Initializable {
                         List<EmployeeLoan> loans = EmployeeLoanService.findByEmployeeId(AppState.employeeSelected.getId());
                         if (loans != null && !loans.isEmpty()) {
                             employmentLoanTabController.fillEmployeeLoanTable(loans);
+                            for (EmployeeLoan loan : loans) {
+                                double totalWithInterest = loan.getLoanType().getLoanAmount() + (loan.getLoanType().getLoanAmount() * loan.getLoanType().getLoanInterest());
+                                double monthlyInstallment = totalWithInterest / loan.getLoanType().getLoanInterest();
+                                AppState.totalLoanAmount += monthlyInstallment;
+                            }
                         }
                         else {
                             employmentLoanTabController.fillEmployeeLoanTable(Collections.emptyList());

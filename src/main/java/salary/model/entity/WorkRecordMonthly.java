@@ -16,7 +16,7 @@ public class WorkRecordMonthly implements Serializable {
     private int id;
     private Employee employee;
     private Month month;
-    private Year year;
+    private int year;
     private int daysWorked;
     private String overtimeHours;
     private String underTimeHours;

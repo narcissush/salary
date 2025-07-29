@@ -11,7 +11,7 @@ import salary.model.services.AllowanceService;
 @SuperBuilder
 public class Allowance {
     private int id;
-    private Year year;
+    private int year;
     private Double housingAllowance;
     private Double marriageAllowance;
     private Double childAllowance;

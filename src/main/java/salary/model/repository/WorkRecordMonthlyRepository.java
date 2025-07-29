@@ -25,7 +25,7 @@ public class WorkRecordMonthlyRepository implements Repository<WorkRecordMonthly
         preparedStatement.setInt(1, workRecordMonthly.getId());
         preparedStatement.setInt(2,workRecordMonthly.getEmployee().getId());
         preparedStatement.setString(3, workRecordMonthly.getMonth().name());
-        preparedStatement.setString(4, workRecordMonthly.getYear().name());
+        preparedStatement.setInt(4, workRecordMonthly.getYear());
         preparedStatement.setInt(5, workRecordMonthly.getDaysWorked());
         preparedStatement.setString(6, workRecordMonthly.getOvertimeHours());
         preparedStatement.setString(7, workRecordMonthly.getUnderTimeHours());
@@ -40,7 +40,7 @@ public class WorkRecordMonthlyRepository implements Repository<WorkRecordMonthly
         );
         preparedStatement.setInt(1,workRecordMonthly.getEmployee().getId());
         preparedStatement.setString(2, workRecordMonthly.getMonth().name());
-        preparedStatement.setString(3, workRecordMonthly.getYear().name());
+        preparedStatement.setInt(3, workRecordMonthly.getYear());
         preparedStatement.setInt(4, workRecordMonthly.getDaysWorked());
         preparedStatement.setString(5, workRecordMonthly.getOvertimeHours());
         preparedStatement.setString(6, workRecordMonthly.getUnderTimeHours());

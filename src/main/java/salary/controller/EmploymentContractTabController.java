@@ -41,11 +41,12 @@ public class EmploymentContractTabController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         saveContractBtn.setDisable(true);
-
+int year=DataConvert.MiladiToShamsi(LocalDate.now()).getYear();
+        System.out.println(year);
 
 
         try {
-            Allowance allowance = AllowanceService.findByYear(Year.Y1404);
+            Allowance allowance = AllowanceService.findByYear(year);
             if (allowance != null) {
                 AppState.allowanceSelected = allowance;
             }

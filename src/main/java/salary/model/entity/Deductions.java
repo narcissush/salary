@@ -1,11 +1,14 @@
 package salary.model.entity;
 
+import java.util.Collections;
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import salary.controller.AppState;
+import salary.model.services.EmployeeLoanService;
 
 import java.io.Serializable;
 
@@ -61,17 +64,14 @@ public class Deductions implements Serializable {
 
 
     public double getLoanRepayment() {
-        double totalLoan = 0;
-        for (LoanInstallment loanInstallment : loanList) {
-            totalLoan += loanInstallment.getAmountPaid();
-        }
-        return totalLoan;
+        return AppState.totalLoanAmount;
     }
 
 
     public double getTotalDeductions() {
         return getTax() +
                 getInsurance() +
+                getLoanRepayment()+
                 getUnderTime() +
                 getLoanRepayment();
     }

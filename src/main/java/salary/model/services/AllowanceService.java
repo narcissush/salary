@@ -18,9 +18,9 @@ public class AllowanceService {
     }
 
 
-    public static Allowance findByYear(Year year) throws Exception {
+    public static Allowance findByYear(int year) throws Exception {
         try (AllowanceRepository allowanceRepository = new AllowanceRepository()) {
-            return allowanceRepository.findByYear(Year.valueOf(year.toString()));
+            return allowanceRepository.findByYear(year);
         }
     }
 
