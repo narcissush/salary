@@ -51,24 +51,23 @@ public class SalaryComponents implements Serializable {
         String input = AppState.workRecordMonthlySelected.getOvertimeHours();
         int hours = 0;
         int minutes = 0;
+        if (!input.equals("")) {
+            if (input.contains(":")) {
+                String[] parts = input.split(":");
+                hours = Integer.parseInt(parts[0]);
+                minutes = Integer.parseInt(parts[1]);
+            } else {
+                hours = Integer.parseInt(input);
+                minutes = 0;
+            }
+            double overtimeRate = AppState.employmentContractSelected.getDailySalary() / 8.0 * 1.4;
+            double overtimePay = hours * overtimeRate
+                    + (minutes / 60.0) * overtimeRate;
 
-        if (input !=null & input.contains(":")){
-            String[] parts = input.split(":");
 
-            hours = Integer.parseInt(parts[0]);
-            minutes = Integer.parseInt(parts[1]);
+            return overtimePay;
         }
-        else{
-            hours = Integer.parseInt(input);
-            minutes = 0;
-        }
-
-        double overtimeRate = AppState.employmentContractSelected.getDailySalary() / 8.0 * 1.4;
-
-        double overtimePay = hours * overtimeRate
-                + (minutes / 60.0) * overtimeRate;
-
-        return overtimePay;
+        else return 0.0;
     }
 
     public double getMissionAllowance() {

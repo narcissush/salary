@@ -19,6 +19,23 @@
     -fx-font-weight: bold;
     -fx-font-size: 12px;
 }
+#totalSalaryComponentsLbl{
+    -fx-text-fill: #0e62e2;
+    -fx-font-size: 14px;
+}
+#totalDeductionsLbl{
+    -fx-text-fill: #ec2207;
+    -fx-font-size: 14px;
+
+}
+#totalSalaryLbl{
+    -fx-text-fill: #38f406;
+    -fx-font-size: 14px;
+
+}
+#salaryComponentsTable{
+
+}
 
 
 .table-view {
@@ -75,6 +92,12 @@
     -fx-text-fill: #999999;
     -fx-font-style: italic;
 }
+
+
+
+
+
+
 
 
 .text-field {

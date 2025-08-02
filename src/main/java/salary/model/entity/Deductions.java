@@ -65,20 +65,23 @@ public class Deductions implements Serializable {
         String input = AppState.workRecordMonthlySelected.getUnderTimeHours();
         int hours = 0;
         int minutes = 0;
-        if (input != null & input.contains(":")) {
-            String[] parts = input.split(":");
+        if(!input.isEmpty()) {
+            if (input != null & input.contains(":")) {
+                String[] parts = input.split(":");
 
-            hours = Integer.parseInt(parts[0]);
-            minutes = Integer.parseInt(parts[1]);
-        } else {
-            hours = Integer.parseInt(input);
-            minutes = 0;
+                hours = Integer.parseInt(parts[0]);
+                minutes = Integer.parseInt(parts[1]);
+            } else {
+                hours = Integer.parseInt(input);
+                minutes = 0;
+            }
+
+            double underTimeRate = employmentContract.getDailySalary() / 8.0;
+            double underTimePay = hours * underTimeRate
+                    + (minutes / 60.0) * underTimeRate;
+            return underTimePay;
         }
-
-        double underTimeRate = employmentContract.getDailySalary() / 8.0;
-        double underTimePay = hours * underTimeRate
-                + (minutes / 60.0) * underTimeRate;
-        return underTimePay;
+        else return 0;
 
     }
 

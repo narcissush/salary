@@ -94,7 +94,6 @@ public class MainFormController implements Initializable {
                             for (EmployeeLoan loan : loans) {
                                 AppState.totalLoanAmount += loan.getLoanType().getAmountPayMonthly();
                             }
-                            System.out.println(AppState.totalLoanAmount);
                         }
                         else {
                             employmentLoanTabController.fillEmployeeLoanTable(Collections.emptyList());
