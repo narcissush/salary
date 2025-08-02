@@ -17,26 +17,42 @@ import java.io.Serializable;
 @SuperBuilder
 
 public class Deductions implements Serializable {
-        List<LoanInstallment> loanList;
-        SalaryComponents salaryComponents=new SalaryComponents();
+    List<LoanInstallment> loanList;
+    SalaryComponents salaryComponents = new SalaryComponents();
 
     public double getTax() {
-//        double exemption = 240_000_000;
-//        double taxable = Math.max(0, salaryComponents.getTotalSalaryComponents() - exemption);
-//        double tax = 0;
-//
-//        double[] limits = {240_000_000, 300_000_000, 380_000_000, 500_000_000, 667_000_000};
-//        double[] rates = {0.10, 0.15, 0.20, 0.25, 0.30};
-//
-//        double remaining = taxable;
-//        for (int i = 0; i < rates.length; i++) {
-//            double bracket = i < limits.length ? limits[i] : remaining;
-//            double amount = Math.min(remaining, bracket);
-//            tax += amount * rates[i];
-//            remaining -= amount;
-//            if (remaining <= 0) break;
-//        }
-        return 0.0;
+        SalaryComponents components = new SalaryComponents();
+        double totalSalary = components.getTotalSalaryComponents();
+
+        double tax;
+        if (240_000_000< totalSalary && totalSalary <= 300_000_000) {
+            tax = (totalSalary - 240_000_000) * 0.10;
+
+
+        } else if (300_000_000 < totalSalary && totalSalary <= 380_000_000) {
+            tax = 6_000_000 +
+                    ((totalSalary - 300_000_000) *0.15);
+
+        } else if (380_000_000 < totalSalary && totalSalary <= 500_000_000) {
+            tax = 6_000_000 +
+                    12_000_000 +
+                    ((totalSalary - 380_000_000) *0.20);
+
+        } else if (500_000_000 < totalSalary && totalSalary <= 660_000_000) {
+            tax = 6_000_000 +
+                    12_000_000 +
+                    24_000_000 +
+                    ((totalSalary - 500_000_000) *0.25);
+
+        } else if (660_000_000 < totalSalary) {
+            tax = 6_000_000 +
+                    12_000_000 +
+                    24_000_000 +
+                    40_000_000 +
+                    ((totalSalary - 660_000_000) *0.30);
+        } else return 0;
+
+        return tax;
     }
 
     public double getInsurance() {
@@ -47,20 +63,24 @@ public class Deductions implements Serializable {
 
         EmploymentContract employmentContract = new EmploymentContract();
         String input = AppState.workRecordMonthlySelected.getUnderTimeHours();
-        String[] parts = input.split(":");
+        int hours = 0;
+        int minutes = 0;
+        if (input != null & input.contains(":")) {
+            String[] parts = input.split(":");
 
-        int hours = Integer.parseInt(parts[0]);
-        int minutes = Integer.parseInt(parts[1]);
+            hours = Integer.parseInt(parts[0]);
+            minutes = Integer.parseInt(parts[1]);
+        } else {
+            hours = Integer.parseInt(input);
+            minutes = 0;
+        }
 
         double underTimeRate = employmentContract.getDailySalary() / 8.0;
-
         double underTimePay = hours * underTimeRate
                 + (minutes / 60.0) * underTimeRate;
-
         return underTimePay;
 
     }
-
 
 
     public double getLoanRepayment() {
@@ -71,7 +91,6 @@ public class Deductions implements Serializable {
     public double getTotalDeductions() {
         return getTax() +
                 getInsurance() +
-                getLoanRepayment()+
                 getUnderTime() +
                 getLoanRepayment();
     }

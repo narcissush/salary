@@ -17,6 +17,4 @@ public class EmployeeLoan  implements Serializable {
     private LocalDate loanStartDate;
     private LocalDate loanFinishDate;
 
-
-
 }

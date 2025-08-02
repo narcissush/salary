@@ -7,7 +7,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.scene.layout.GridPane;
@@ -40,7 +43,7 @@ public class EmployeePayslipTabController implements Initializable {
     private TableColumn<SalaryItem, String> titleSalaryComponentsCol,titleDeductionsCol;
 
     @FXML
-    private TableColumn<SalaryItem, Number> amountSalaryComponentsCol,amountDeductionsCol;
+    private TableColumn<SalaryItem, String> amountSalaryComponentsCol,amountDeductionsCol;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,29 +54,6 @@ public class EmployeePayslipTabController implements Initializable {
         titleDeductionsCol.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         amountDeductionsCol.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
 
-        amountSalaryComponentsCol.setCellFactory(column -> new TableCell<SalaryItem, Number>() {
-            @Override
-            protected void updateItem(Number value, boolean empty) {
-                super.updateItem(value, empty);
-                if (empty || value == null) {
-                    setText(null);
-                } else {
-                    setText(String.valueOf(value.intValue()));
-                }
-            }
-        });
-
-        amountDeductionsCol.setCellFactory(column -> new TableCell<SalaryItem, Number>() {
-            @Override
-            protected void updateItem(Number value, boolean empty) {
-                super.updateItem(value, empty);
-                if (empty || value == null) {
-                    setText(null);
-                } else {
-                    setText(String.valueOf(value.intValue()));
-                }
-            }
-        });
 
 
         ObservableList<Integer> years = FXCollections.observableArrayList();
@@ -86,6 +66,11 @@ public class EmployeePayslipTabController implements Initializable {
         monthCmb.getItems().addAll(Month.values());
 
         calculatorBtn.setOnAction(event -> {
+            DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("fa", "IR"));
+            symbols.setGroupingSeparator('٬');
+            DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
+
+
             WorkRecordMonthly workRecordMonthly=
                     WorkRecordMonthly.builder()
                             .year(yearCmb.getSelectionModel().getSelectedItem())
@@ -101,34 +86,44 @@ public class EmployeePayslipTabController implements Initializable {
            int deductions=fillDeductionsTable();
            int totalSalary=salaryComponents-deductions;
 
-            totalSalaryComponentsLbl.setText(String.valueOf(salaryComponents));
-            totalDeductionsLbl.setText(String.valueOf(deductions));
-            totalSalaryLbl.setText(String.valueOf(totalSalary));
+            totalSalaryComponentsLbl.setText(decimalFormat.format(salaryComponents));
+            totalDeductionsLbl.setText(decimalFormat.format(deductions));
+            totalSalaryLbl.setText(decimalFormat.format(totalSalary));
         });
     }
 
     public Integer fillSalaryComponentsTable() {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("fa", "IR"));
+        symbols.setGroupingSeparator('٬');
+        DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
 
         SalaryComponents components=new SalaryComponents();
         ObservableList<SalaryItem> items = FXCollections.observableArrayList(
-                new SalaryItem("حقوق ماهانه", (int) components.getMonthlySalary()),
-                new SalaryItem("حق مسکن", (int) components.getHousingAllowance()),
-                new SalaryItem("بن خواربار", (int) components.getFoodAllowance()),
-                new SalaryItem("حق اولاد", (int) components.getTotalChildAllowance()),
-                new SalaryItem("حق تاهل", (int) components.getMarriageAllowance()),
-                new SalaryItem("اضافه‌کار", (int) components.getOverTime()),
-                new SalaryItem("ماموریت", (int) components.getMissionAllowance())
+                new SalaryItem("حقوق ماهانه", decimalFormat.format(components.getMonthlySalary())),
+                new SalaryItem("حق مسکن", decimalFormat.format(components.getHousingAllowance())),
+                new SalaryItem("بن خواربار", decimalFormat.format(components.getFoodAllowance())),
+                new SalaryItem("حق اولاد", decimalFormat.format(components.getTotalChildAllowance())),
+                new SalaryItem("حق تاهل", decimalFormat.format(components.getMarriageAllowance())),
+                new SalaryItem("بازارکار", decimalFormat.format(components.getBazarKar())),
+                new SalaryItem("فوق العاده شغل", decimalFormat.format(components.getFogholadeShoghl())),
+                new SalaryItem("اضافه‌کار", decimalFormat.format(components.getOverTime())),
+                new SalaryItem("ماموریت", decimalFormat.format(components.getMissionAllowance()))
         );
         salaryComponentsTable.setItems(items);
         return (int) components.getTotalSalaryComponents();
     }
+
     public Integer fillDeductionsTable() {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("fa", "IR"));
+        symbols.setGroupingSeparator('٬');
+        DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
+
         Deductions deductions=new Deductions();
         ObservableList<SalaryItem> items = FXCollections.observableArrayList(
-                new SalaryItem("مالیات", (int) deductions.getTax()),
-                new SalaryItem("بیمه", (int) deductions.getInsurance()),
-                new SalaryItem("وام", (int) deductions.getLoanRepayment()),
-                new SalaryItem("کسرکار", (int) deductions.getUnderTime())
+                new SalaryItem("مالیات", decimalFormat.format(deductions.getTax())),
+                new SalaryItem("بیمه", decimalFormat.format(deductions.getInsurance())),
+                new SalaryItem("وام", decimalFormat.format(deductions.getLoanRepayment())),
+                new SalaryItem("کسرکار", decimalFormat.format(deductions.getUnderTime()))
                 );
         deductionsTable.setItems(items);
         return (int) deductions.getTotalDeductions();

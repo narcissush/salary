@@ -23,7 +23,7 @@ public class SalaryComponents implements Serializable {
 
     public double getTotalChildAllowance() {
         return AppState.employeeSelected.getNumberOfChildren() *
-                (AppState.employmentContractSelected.getChildAllowance() / 30 * AppState.employmentContractSelected.getDailySalary());
+                (AppState.employmentContractSelected.getChildAllowance() / 30 * AppState.workRecordMonthlySelected.getDaysWorked());
 
     }
 
@@ -49,13 +49,21 @@ public class SalaryComponents implements Serializable {
     public double getOverTime() {
 
         String input = AppState.workRecordMonthlySelected.getOvertimeHours();
-        String[] parts = input.split(":");
+        int hours = 0;
+        int minutes = 0;
 
-        int hours = Integer.parseInt(parts[0]);
-        int minutes = Integer.parseInt(parts[1]);
+        if (input !=null & input.contains(":")){
+            String[] parts = input.split(":");
 
-        double baseRate = AppState.employmentContractSelected.getDailySalary() / 8.0;
-        double overtimeRate = baseRate * 1.4;
+            hours = Integer.parseInt(parts[0]);
+            minutes = Integer.parseInt(parts[1]);
+        }
+        else{
+            hours = Integer.parseInt(input);
+            minutes = 0;
+        }
+
+        double overtimeRate = AppState.employmentContractSelected.getDailySalary() / 8.0 * 1.4;
 
         double overtimePay = hours * overtimeRate
                 + (minutes / 60.0) * overtimeRate;
@@ -73,13 +81,23 @@ public class SalaryComponents implements Serializable {
         return 100_000;
     }
 
+    public double getBazarKar() {
+        return AppState.employmentContractSelected.getBazarKar() / 30 * AppState.workRecordMonthlySelected.getDaysWorked();
+    }
+
+    public double getFogholadeShoghl() {
+        return AppState.employmentContractSelected.getFogholadeShoghl() / 30 * AppState.workRecordMonthlySelected.getDaysWorked();
+    }
+
     public double getTotalSalaryComponents() {
         return getMonthlySalary() +
                 getTotalChildAllowance() +
                 getMarriageAllowance() +
                 getHousingAllowance() +
                 getFoodAllowance() +
-                getOverTime();
-        //           getMissionAllowance();
+                getBazarKar() +
+                getFogholadeShoghl() +
+                getOverTime() +
+                getMissionAllowance();
     }
 }

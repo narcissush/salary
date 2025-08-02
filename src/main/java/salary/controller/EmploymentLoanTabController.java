@@ -86,12 +86,10 @@ public class EmploymentLoanTabController implements Initializable {
                     double annualInterest = loanTypeSelected.getLoanInterest();
                     int n = loanTypeSelected.getTotalInstallments();
                     loanAmountTxt.setText(decimalFormat.format(P));
-                    loanIntrestTxt.setText(decimalFormat.format(annualInterest)); // اگر عدد ده‌دهی است
+                    loanIntrestTxt.setText(decimalFormat.format(annualInterest));
                     totalInstallmentTxt.setText(String.valueOf(n));
                     amountPaidTxt.setText(decimalFormat.format(loanTypeSelected.getAmountPayMonthly()));
                 }
-
-
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -99,7 +97,6 @@ public class EmploymentLoanTabController implements Initializable {
 
         loanStartDatePicker.setOnAction(event -> {
             LocalDate startDate = loanStartDatePicker.getValue();
-
             if (startDate != null && loanTypeSelected != null) {
                 int installments = loanTypeSelected.getTotalInstallments();
                 LocalDate endDate = startDate.plusMonths(installments);
@@ -139,7 +136,7 @@ public class EmploymentLoanTabController implements Initializable {
 
     public void fillEmployeeLoanTable(List<EmployeeLoan> employeeLoan) {
         loanTable.refresh();
-        loanIdCol.setCellValueFactory(new PropertyValueFactory<>("id")); // فیلد مستقیم
+        loanIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         loanTypeCol.setCellValueFactory(cell ->
                 new SimpleStringProperty(cell.getValue().getLoanType().getLoanType()));

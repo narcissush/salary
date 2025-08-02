@@ -99,7 +99,7 @@
                                                       <Insets bottom="5.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <ComboBox fx:id="yearCmb" prefHeight="35.0" prefWidth="150.0">
+                                                <ComboBox fx:id="yearCmb" editable="true" prefHeight="35.0" prefWidth="150.0">
                                                    <VBox.margin>
                                                       <Insets left="20.0" />
                                                    </VBox.margin>
@@ -113,7 +113,7 @@
                                                       <Insets bottom="5.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <ComboBox fx:id="monthCmb" prefHeight="35.0" prefWidth="150.0">
+                                                <ComboBox fx:id="monthCmb" editable="true" prefHeight="35.0" prefWidth="150.0">
                                                    <VBox.margin>
                                                       <Insets left="20.0" />
                                                    </VBox.margin>
@@ -200,7 +200,7 @@
                                              <children>
                                                 <VBox prefHeight="644.0" prefWidth="330.0">
                                                    <children>
-                                                      <TableView fx:id="salaryComponentsTable" prefHeight="396.0" prefWidth="322.0">
+                                                      <TableView fx:id="salaryComponentsTable" prefHeight="802.0" prefWidth="330.0">
                                                         <columns>
                                                           <TableColumn fx:id="titleSalaryComponentsCol" prefWidth="119.0" text="عنوان" />
                                                           <TableColumn fx:id="amountSalaryComponentsCol" prefWidth="198.0" text="مبلغ" />
@@ -257,9 +257,9 @@
                                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                          </rowConstraints>
                                                          <children>
-                                                            <Label  text="جمع پرداخت ها:" GridPane.rowIndex="1" />
-                                                            <Label text="جمع کسورات:" GridPane.rowIndex="2" />
-                                                            <Label text="خالص پرداختی:" GridPane.rowIndex="3" />
+                                                            <Label prefHeight="17.0" prefWidth="167.0" text="جمع پرداخت ها:" GridPane.rowIndex="1" />
+                                                            <Label prefHeight="17.0" prefWidth="171.0" text="جمع کسورات:" GridPane.rowIndex="2" />
+                                                            <Label prefHeight="17.0" prefWidth="169.0" text="خالص پرداختی:" GridPane.rowIndex="3" />
                                                             <Label fx:id="totalSalaryComponentsLbl" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                             <Label fx:id="totalDeductionsLbl" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                             <Label fx:id="totalSalaryLbl" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
